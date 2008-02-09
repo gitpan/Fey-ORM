@@ -1,0 +1,49 @@
+---
+name: Fey-ORM
+version: 0.01
+author:
+  - 'Dave Rolsky, <autarch@urth.org>'
+abstract: A Fey-based ORM
+license: perl
+resources:
+  license: http://dev.perl.org/licenses/
+requires:
+  Exception::Class: 0
+  Exporter: 0
+  Fey: 0.03
+  Fey::DBIManager: 0
+  List::MoreUtils: 0
+  Moose: 0.34
+  MooseX::AttributeHelpers: 0
+  MooseX::ClassAttribute: 0
+  MooseX::StrictConstructor: 0
+  Scalar::Util: 0
+build_requires:
+  Fey::Test: 0
+  Test::More: 0
+provides:
+  Fey::Hash::ColumnsKey:
+    file: lib/Fey/Hash/ColumnsKey.pm
+  Fey::Meta::Class::Schema:
+    file: lib/Fey/Meta/Class/Schema.pm
+  Fey::Meta::Class::Table:
+    file: lib/Fey/Meta/Class/Table.pm
+  Fey::Meta::Method::Constructor:
+    file: lib/Fey/Meta/Method/Constructor.pm
+  Fey::ORM:
+    file: lib/Fey/ORM.pm
+    version: 0.01
+  Fey::ORM::Schema:
+    file: lib/Fey/ORM/Schema.pm
+  Fey::ORM::Table:
+    file: lib/Fey/ORM/Table.pm
+  Fey::Object:
+    file: lib/Fey/Object.pm
+  Fey::Object::Iterator:
+    file: lib/Fey/Object/Iterator.pm
+  Fey::Object::Iterator::Caching:
+    file: lib/Fey/Object/Iterator/Caching.pm
+generated_by: Module::Build version 0.2808
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2

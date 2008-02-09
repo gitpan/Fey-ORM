@@ -1,0 +1,58 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.55.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 e12df81ceffebc2bc5bbe94959e362ccaf8c152a Build.PL
+SHA1 a1a9aec323673e0bdc64de67a30e896c6f1ca070 Changes
+SHA1 58dd2950924d6124fa8ac4a2ba2969bff6811554 MANIFEST
+SHA1 93732e3e6ac2f9f77c56886d567e1c273b95d818 META.yml
+SHA1 cd14ada78fb37a0d926edd86eddcdf7f939de582 Makefile.PL
+SHA1 a969ba23f0813fe44b5950ef63ac6e34cd3f4ebe README
+SHA1 1a25e3a237efab98bd82449b3eca28b2237709bf TODO
+SHA1 023f8f3aaa7590cf2e875575b05bab276959c3a7 eg/Vendor.pm
+SHA1 3c7f043c7ed3f1a91757edae3693432e57386537 lib/Fey/Hash/ColumnsKey.pm
+SHA1 55d7d397178179fa765ba6b3007257b86aeaf808 lib/Fey/Meta/Class/Schema.pm
+SHA1 7b08210dff0c8da460a7e11723c1fe436a0396ca lib/Fey/Meta/Class/Table.pm
+SHA1 5d9576161a4c36bbf613872df53d1519690c7426 lib/Fey/Meta/Method/Constructor.pm
+SHA1 37e0c29e691037adc0c5d63a14f8ec28d53625d0 lib/Fey/ORM.pm
+SHA1 c02d56923cf41466455e57441d0d302d88d9bdb8 lib/Fey/ORM/Manual.pod
+SHA1 29e089924f5a81bccdf4d674ac6d5ec291374634 lib/Fey/ORM/Manual/Intro.pod
+SHA1 5172be1d3e99817f73dd7d32a3423a5a816a9086 lib/Fey/ORM/Schema.pm
+SHA1 aa5249b0bbcf711c745c09ed63e456d3c7acb10a lib/Fey/ORM/Table.pm
+SHA1 cad5536b5089a032794ee8c9ec6764dcd0a37269 lib/Fey/Object.pm
+SHA1 4460dcfa3dd4b97dd469101fa86d607ea01494c1 lib/Fey/Object/Iterator.pm
+SHA1 97f3303d98de6588839e0206758fc69f9113b7bd lib/Fey/Object/Iterator/Caching.pm
+SHA1 9961ed69cb2a47d25ff6c2cd9cf9d38853ca676f t/Class/Schema.t
+SHA1 106a0b8838f2953db51ba581e44db4622457c493 t/Class/Table-has_many.t
+SHA1 021fb7e6d3accdff832944ccbade95fca49a950e t/Class/Table-has_one.t
+SHA1 6967a98502e58ca8fa976b286563e17f03a02074 t/Class/Table.t
+SHA1 670030dccd1be9ed4ab9ba776d601f7bb1b00bbd t/Object-cache.t
+SHA1 3f45d6bce9cb638a269c81acf095385d25ca0cc5 t/Object-has_many.t
+SHA1 306e99ce4b871dc2966d88866a2ce4f7a0e3551e t/Object-has_one.t
+SHA1 23535381dcbd2a775379a8f0aaf65a269080aa50 t/Object.t
+SHA1 3ccd4d6f0f4f9c0c4262a22d6c5ee506c6d23d0d t/Object/Iterator.t
+SHA1 33d898469756e48388ed48cde2bc80eeaec341c0 t/Object/Iterator/Caching.t
+SHA1 9ade2293d6e5ea77d94532132c89cd205ea85ed7 t/kwalitee.t
+SHA1 79b1cd48ef970e3671a4da392c88b6c1b1c12aa3 t/lib/Fey/ORM/Test.pm
+SHA1 c471d19ea87ab9f9458a73a979f7d5f5536e04cf t/lib/Fey/ORM/Test/Iterator.pm
+SHA1 d5fbd4efed891d4d7f505aad1c08c3426a28e695 t/pod-coverage.t
+SHA1 cec881e89926d320475f9de2b7fad02c2169f510 t/pod.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHreAY3Or3ZzQuifMRAuVaAJwL3/QTNrAVVijDc46vXdAB92VTbQCeIRdl
+FIUpEE+Z3eP/NEuIhXOpOtA=
+=gAN+
+-----END PGP SIGNATURE-----
