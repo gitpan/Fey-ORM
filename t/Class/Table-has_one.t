@@ -1,11 +1,12 @@
 use strict;
 use warnings;
 
-use Test::More tests => 14;
+use Test::More tests => 21;
 
 use lib 't/lib';
 
 use Fey::ORM::Test qw( schema );
+use Fey::Placeholder;
 use List::Util qw( first );
 
 
@@ -37,8 +38,8 @@ my $Schema = schema();
     ok( $attr, 'found attribute for user' );
     is( ref $attr->default(), 'CODE',
         'user attribute default is a coderef' );
-    is( $attr->type_constraint()->name(), 'Fey::Object',
-        'user attribute type constraint is Fey::Object' );
+    is( $attr->type_constraint()->name(), 'Fey::Object::Table',
+        'user attribute type constraint is Fey::Object::Table' );
 }
 
 {
@@ -59,8 +60,8 @@ my $Schema = schema();
     ok( $attr, 'found attribute for my_user' );
     is( ref $attr->default(), 'CODE',
         'my_user attribute default is a coderef' );
-    is( $attr->type_constraint()->name(), 'Fey::Object',
-        'my_user attribute type constraint is Fey::Object' );
+    is( $attr->type_constraint()->name(), 'Fey::Object::Table',
+        'my_user attribute type constraint is Fey::Object::Table' );
 }
 
 {
@@ -94,6 +95,12 @@ my $Schema = schema();
 
     ::is( $@, '',
           'no exception declaring a self-referential has_one' );
+
+    my $table = Fey::Table->new( name => 'NewTable' );
+    eval { has_one $table };
+
+    ::like( $@, qr/\QA table object passed to has_one() must have a schema/,
+            'table without a schema passed to has_one()' );
 }
 
 {
@@ -138,3 +145,60 @@ my $Schema = schema();
     ::is( $@, '', 'no error when specifying passing a disambiguating fk to has_one' );
 }
 
+{
+    package Message;
+
+    my $select =
+        Fey::SQL->new_select()->select( $Schema->table('Message') )
+                ->where( $Schema->table('Message')->column('parent_message_id'),
+                         '=', Fey::Placeholder->new() )
+                ->order_by( $Schema->table('Message')->column('message_id'), 'DESC' )
+                ->limit(1);
+
+    has_one 'most_recent_child' =>
+        ( table       => $Schema->table('Message'),
+          select      => $select,
+          bind_params => sub { $_[0]->message_id() },
+        );
+}
+
+{
+    can_ok( 'Message', 'most_recent_child' );
+
+    my $attr = Message->meta()->get_attribute('most_recent_child');
+    ok( $attr, 'found attribute for most_recent_child' );
+    is( ref $attr->default(), 'CODE',
+        'most_recent_child attribute default is a coderef' );
+    is( $attr->type_constraint()->name(), 'Maybe[Fey::Object::Table]',
+        'most_recent_child attribute type constraint is Maybe[Fey::Object::Table]' );
+}
+
+
+{
+    package Message;
+
+    __PACKAGE__->meta()->remove_attribute('most_recent_child');
+
+    my $select =
+        Fey::SQL->new_select()
+                ->select( $Schema->table('Message') )
+                ->from( $Schema->table('Message') )
+                ->where( $Schema->table('Message')->column('parent_message_id'),
+                         '=', Fey::Placeholder->new() )
+                ->order_by( $Schema->table('Message')->column('message_id'), 'DESC' )
+                ->limit(1);
+
+    has_one 'most_recent_child' =>
+        ( table       => $Schema->table('Message'),
+          select      => $select,
+          bind_params => sub { $_[0]->message_id() },
+          cache       => 0,
+        );
+}
+
+{
+    can_ok( 'Message', 'most_recent_child' );
+
+    ok( ! Message->meta()->get_attribute('most_recent_child'),
+        'Message does not have a most_recent_child attribute, but does have a method for it' );
+}

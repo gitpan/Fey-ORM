@@ -14,7 +14,7 @@ use Moose::Util::TypeConstraints;
 subtype 'ArrayRefOfClasses'
     => as 'ArrayRef',
     => where { return unless @{$_};
-               return if grep { ! $_->isa('Fey::Object') } @{ $_ };
+               return if grep { ! $_->isa('Fey::Object::Table') } @{ $_ };
                return 1;
              };
 
@@ -44,7 +44,7 @@ has index =>
       is       => 'ro',
       isa      => 'Int',
       default  => 0,
-      init_arg => "\0index",
+      init_arg => undef,
       provides => { 'inc'   => '_inc_index',
                     'reset' => '_reset_index',
                   },

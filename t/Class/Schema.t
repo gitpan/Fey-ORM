@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 5;
+use Test::More tests => 7;
 
 use lib 't/lib';
 
@@ -23,7 +23,20 @@ is( Schema->Schema()->name(), $Schema->name(),
 isa_ok( Schema->DBIManager(), 'Fey::DBIManager' );
 is( Schema->SQLFactoryClass(), 'Fey::SQL',
     'SQLFactoryClass() is Fey::SQL' );
+ok( Schema->isa('Fey::Object::Schema'),
+    q{Schema->isa('Fey::Object::Schema')} );
 
 is( Fey::Meta::Class::Schema->ClassForSchema($Schema),
     'Schema',
     'ClassForSchema() return Schema as class name' );
+
+{
+    package Schema2;
+
+    use Fey::ORM::Schema;
+
+    eval { has_schema $Schema };
+
+    ::like( $@, qr/associate the same schema with multiple classes/,
+            'cannot associate the same schema with multiple classes' );
+}

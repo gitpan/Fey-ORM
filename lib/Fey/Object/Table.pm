@@ -1,4 +1,4 @@
-package Fey::Object;
+package Fey::Object::Table;
 
 use strict;
 use warnings;
@@ -354,6 +354,7 @@ sub _get_column_values
     {
         my $set = q{_set_} . $col;
         my $has = q{has_} . $col;
+
         $self->$set( $col_values{$col} )
             unless $self->$has();
     }
@@ -403,7 +404,8 @@ sub _SelectSQLForKey
 
     my %key = map { $_->name() => 1 } @{ $key };
 
-    my @non_key = grep { ! $key{$_} } $table->columns();
+    my @non_key =
+        grep { ! $key{ $_->name() } } $table->columns();
 
     $select = $class->SchemaClass()->SQLFactoryClass()->new_select();
     $select->select( sort { $a->name() cmp $b->name() } @non_key );
@@ -452,7 +454,7 @@ __END__
 
 =head1 NAME
 
-Fey::Object - Base class for table-based objects
+Fey::Object::Table - Base class for table-based objects
 
 =head1 SYNOPSIS
 

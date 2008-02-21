@@ -8,7 +8,7 @@ our @EXPORT = ## no critic ProhibitAutomaticExportation
 use base 'Exporter';
 
 use Fey::Meta::Class::Table;
-use Fey::Object;
+use Fey::Object::Table;
 use Fey::Validate qw( validate_pos TABLE_TYPE );
 use Moose ();
 
@@ -22,7 +22,7 @@ sub import
     return if $caller eq 'main';
 
     Moose::init_meta( $caller,
-                      'Fey::Object',
+                      'Fey::Object::Table',
                       'Fey::Meta::Class::Table',
                     );
 
@@ -180,9 +180,9 @@ Given a C<Fey::Table> object, this method associates that table with
 the calling class.
 
 Calling C<has_table()> will make your class a subclass of
-L<Fey::Object>, which provides basic CRUD operations for
+L<Fey::Object::Table>, which provides basic CRUD operations for
 L<Fey::ORM>. You should make sure to review the docs for
-L<Fey::Object>.
+L<Fey::Object::Table>.
 
 Calling this function also generates a number of methods and
 attributes in the calling class.
@@ -252,6 +252,21 @@ fetched once, and is cached afterwards. This is independent of the
 object caching for a particular class. If you turn off caching, then
 the object is fetched every time the method is called.
 
+=head2 has_one 'name' => ( table => $table, select => $select, bind_params => $sub, cache => $bool )
+
+This is an alternative form of C<has_one()> that lets you declare a
+relationship to another table via an arbitrary SELECT statement.
+
+In this form, you provide a C<Fey::SQL::Select> object to define the
+SQL used to fetch the foreign row. You can provide a C<bind_params>
+parameter as a code reference, which will be called as a method on
+your object. It is expected to return one or more bind parameters. The
+C<cache> parameter works exactly the same as in the first form of
+C<has_one()>.
+
+Note that if you want to provide bind_params for the SQL you provide,
+you need to make sure it has placeholders.
+
 =head2 has_many($table)
 
 =head2 has_many 'name' => ( table => $table, fk => $fk, cache => $bool, order_by => [ ... ] )
@@ -282,11 +297,15 @@ setting C<cache> to a true value.
 When caching is enabled, the iterator returned is of the
 C<Fey::Object::Iterator::Caching> class.
 
+Note that you will always get an iterator object back from your
+has_many methods and attributes, even if there are no matching rows in
+the foreign table.
+
 You can also specify an C<order_by> parameter as an array
 reference. This should be an array like you would pass to C<<
 Fey::SQL::Select->order_by() >>.
 
-=head2 transform $column => inflate { ... }, deflate { ... }
+=head2 transform $column1, $column2 => inflate { ... } deflate { ... }
 
 The C<transform()> function declares an inflator, deflator, or both
 for the specified column. The inflator will be used to wrap the normal
@@ -320,6 +339,13 @@ Just as with an inflator, your deflator should be prepared to accept
 an undef if the column is nullable.
 
 You can only declare one inflator and one deflator for each column.
+
+You can use the same inflator and deflator for more than one column at
+once:
+
+  transform 'creation_date', 'modification_date' =>
+      inflate { ... }
+      deflate { ... };
 
 =head2 inflate { .. }
 

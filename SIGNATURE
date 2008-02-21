@@ -14,45 +14,47 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 e12df81ceffebc2bc5bbe94959e362ccaf8c152a Build.PL
-SHA1 a1a9aec323673e0bdc64de67a30e896c6f1ca070 Changes
-SHA1 58dd2950924d6124fa8ac4a2ba2969bff6811554 MANIFEST
-SHA1 93732e3e6ac2f9f77c56886d567e1c273b95d818 META.yml
+SHA1 cea125bbfc0d0e443c7dfe0c87e799d7a6951c0f Build.PL
+SHA1 60c0556c43aa1925b538a8e173b2f02e5aad5b6f Changes
+SHA1 a79a6e75a471c4db42e54ce7d869d99cd1295367 MANIFEST
+SHA1 7cd0c35c3122e5756f69ac019d74455f713e0051 META.yml
 SHA1 cd14ada78fb37a0d926edd86eddcdf7f939de582 Makefile.PL
 SHA1 a969ba23f0813fe44b5950ef63ac6e34cd3f4ebe README
-SHA1 1a25e3a237efab98bd82449b3eca28b2237709bf TODO
+SHA1 0534c59fe256279fda5f07e0e3e0c3cfc557b1b2 TODO
 SHA1 023f8f3aaa7590cf2e875575b05bab276959c3a7 eg/Vendor.pm
 SHA1 3c7f043c7ed3f1a91757edae3693432e57386537 lib/Fey/Hash/ColumnsKey.pm
 SHA1 55d7d397178179fa765ba6b3007257b86aeaf808 lib/Fey/Meta/Class/Schema.pm
-SHA1 7b08210dff0c8da460a7e11723c1fe436a0396ca lib/Fey/Meta/Class/Table.pm
+SHA1 0abfd62169a14d2f119224103ed2766784bc4820 lib/Fey/Meta/Class/Table.pm
 SHA1 5d9576161a4c36bbf613872df53d1519690c7426 lib/Fey/Meta/Method/Constructor.pm
-SHA1 37e0c29e691037adc0c5d63a14f8ec28d53625d0 lib/Fey/ORM.pm
+SHA1 7736af7990b52e0a9dc86f8557109730c5a7e638 lib/Fey/ORM.pm
 SHA1 c02d56923cf41466455e57441d0d302d88d9bdb8 lib/Fey/ORM/Manual.pod
-SHA1 29e089924f5a81bccdf4d674ac6d5ec291374634 lib/Fey/ORM/Manual/Intro.pod
-SHA1 5172be1d3e99817f73dd7d32a3423a5a816a9086 lib/Fey/ORM/Schema.pm
-SHA1 aa5249b0bbcf711c745c09ed63e456d3c7acb10a lib/Fey/ORM/Table.pm
-SHA1 cad5536b5089a032794ee8c9ec6764dcd0a37269 lib/Fey/Object.pm
-SHA1 4460dcfa3dd4b97dd469101fa86d607ea01494c1 lib/Fey/Object/Iterator.pm
-SHA1 97f3303d98de6588839e0206758fc69f9113b7bd lib/Fey/Object/Iterator/Caching.pm
-SHA1 9961ed69cb2a47d25ff6c2cd9cf9d38853ca676f t/Class/Schema.t
-SHA1 106a0b8838f2953db51ba581e44db4622457c493 t/Class/Table-has_many.t
-SHA1 021fb7e6d3accdff832944ccbade95fca49a950e t/Class/Table-has_one.t
-SHA1 6967a98502e58ca8fa976b286563e17f03a02074 t/Class/Table.t
-SHA1 670030dccd1be9ed4ab9ba776d601f7bb1b00bbd t/Object-cache.t
-SHA1 3f45d6bce9cb638a269c81acf095385d25ca0cc5 t/Object-has_many.t
-SHA1 306e99ce4b871dc2966d88866a2ce4f7a0e3551e t/Object-has_one.t
-SHA1 23535381dcbd2a775379a8f0aaf65a269080aa50 t/Object.t
+SHA1 ce43b310ba883d035df7cba54579a8d6e3fff584 lib/Fey/ORM/Manual/Intro.pod
+SHA1 15fe40aa2e0ef8500339d7f21d5e1f64521dfd32 lib/Fey/ORM/Schema.pm
+SHA1 b5b71930b2daf7f31ba2857c471210804b521d51 lib/Fey/ORM/Table.pm
+SHA1 6be5c7120ca1f68c1e2dd45daedad6ba1ba495b6 lib/Fey/Object/Iterator.pm
+SHA1 f5d2cb7743a44172c336568ef190033c513fe445 lib/Fey/Object/Iterator/Caching.pm
+SHA1 b86636864a1574572a3a41ccae503121a3387da5 lib/Fey/Object/Schema.pm
+SHA1 8dac9a70cd323532f69cf5290673d7c793f529dd lib/Fey/Object/Table.pm
+SHA1 78659f048bab5942d3acad71811d3630875a47d4 t/Class/Schema.t
+SHA1 ac1f832f8f540d65fbf2cbc969a4cfa329cd5248 t/Class/Table-has_many.t
+SHA1 833dd56121e7473da84fbbcdeb3490ad4750d526 t/Class/Table-has_one.t
+SHA1 e31a1bd15d1de23e6614978422203d01809542fa t/Class/Table.t
 SHA1 3ccd4d6f0f4f9c0c4262a22d6c5ee506c6d23d0d t/Object/Iterator.t
 SHA1 33d898469756e48388ed48cde2bc80eeaec341c0 t/Object/Iterator/Caching.t
+SHA1 a6be731825d0fe97a91791347e109f62163baca1 t/Object/Schema.t
+SHA1 77695f0cd964c427fc55dceeaa2a7d24717032ec t/Object/Table-cache.t
+SHA1 bc8f52962819c0a18972bb6a507bfbcad18aa032 t/Object/Table-has_many.t
+SHA1 ba237b7d9ae4a4bade317e071cc9881bd862d80e t/Object/Table-has_one.t
+SHA1 834d44ca98dabc3563948ac0de3e8a4ca30d41e8 t/Object/Table.t
 SHA1 9ade2293d6e5ea77d94532132c89cd205ea85ed7 t/kwalitee.t
-SHA1 79b1cd48ef970e3671a4da392c88b6c1b1c12aa3 t/lib/Fey/ORM/Test.pm
+SHA1 b6f5463a12ca78b4db0043a0c03f820d58d34877 t/lib/Fey/ORM/Test.pm
 SHA1 c471d19ea87ab9f9458a73a979f7d5f5536e04cf t/lib/Fey/ORM/Test/Iterator.pm
 SHA1 d5fbd4efed891d4d7f505aad1c08c3426a28e695 t/pod-coverage.t
 SHA1 cec881e89926d320475f9de2b7fad02c2169f510 t/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFHreAY3Or3ZzQuifMRAuVaAJwL3/QTNrAVVijDc46vXdAB92VTbQCeIRdl
-FIUpEE+Z3eP/NEuIhXOpOtA=
-=gAN+
+iD8DBQFHvenX3Or3ZzQuifMRAl9gAKDem2DwUwXKAZCYX1+4ZIsV3cKnVACg5oz7
+nFTOTLt+RbNSTTb/ajJR8Lo=
+=5iFp
 -----END PGP SIGNATURE-----

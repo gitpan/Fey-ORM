@@ -5,15 +5,18 @@ lib/Fey/Hash/ColumnsKey.pm
 lib/Fey/Meta/Class/Schema.pm
 lib/Fey/Meta/Class/Table.pm
 lib/Fey/Meta/Method/Constructor.pm
-lib/Fey/Object.pm
 lib/Fey/Object/Iterator.pm
 lib/Fey/Object/Iterator/Caching.pm
+lib/Fey/Object/Schema.pm
+lib/Fey/Object/Table.pm
 lib/Fey/ORM.pm
 lib/Fey/ORM/Manual.pod
 lib/Fey/ORM/Manual/Intro.pod
 lib/Fey/ORM/Schema.pm
 lib/Fey/ORM/Table.pm
+Makefile.PL
 MANIFEST			This list of files
+META.yml
 README
 t/Class/Schema.t
 t/Class/Table-has_many.t
@@ -22,15 +25,14 @@ t/Class/Table.t
 t/kwalitee.t
 t/lib/Fey/ORM/Test.pm
 t/lib/Fey/ORM/Test/Iterator.pm
-t/Object-cache.t
-t/Object-has_many.t
-t/Object-has_one.t
-t/Object.t
 t/Object/Iterator.t
 t/Object/Iterator/Caching.t
+t/Object/Schema.t
+t/Object/Table-cache.t
+t/Object/Table-has_many.t
+t/Object/Table-has_one.t
+t/Object/Table.t
 t/pod-coverage.t
 t/pod.t
 TODO
-Makefile.PL
-META.yml
 SIGNATURE    Added here by Module::Build
