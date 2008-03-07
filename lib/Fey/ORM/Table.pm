@@ -224,11 +224,11 @@ schema.
 
 =head2 has_one($table)
 
-=head2 has_one 'name' => ( table => $table, fk => $fk, cache => $bool )
+=head2 has_one 'name' => ( table => $table, fk => $fk, cache => $bool, undef => $bool, handles => ... )
 
 The C<has_one()> function declares a relationship between the calling
 class's table and another table. The method it creates returns an
-object of the foreign table's class.
+object of the foreign table's class, or undef or none exists.
 
 With the single-argument form, you can simply pass a single
 C<Fey::Table> object. This works when there is a single foreign key
@@ -252,7 +252,16 @@ fetched once, and is cached afterwards. This is independent of the
 object caching for a particular class. If you turn off caching, then
 the object is fetched every time the method is called.
 
-=head2 has_one 'name' => ( table => $table, select => $select, bind_params => $sub, cache => $bool )
+The C<undef> parameter allows you to explicitly say whether the
+attribute can be undefined. Normally this is calculated by looking at
+the foreign key and seeing if any of the source columns are nullable.
+
+The C<handles> parameter works exactly like it does for any Moose
+attribute, but it only works if C<cache> is true, since otherwise the
+relationship is implemented via a simple method, not a Moose
+attribute.
+
+=head2 has_one 'name' => ( table => $table, select => $select, bind_params => $sub, cache => $bool, undef => $bool, handles => ... )
 
 This is an alternative form of C<has_one()> that lets you declare a
 relationship to another table via an arbitrary SELECT statement.
@@ -263,6 +272,9 @@ parameter as a code reference, which will be called as a method on
 your object. It is expected to return one or more bind parameters. The
 C<cache> parameter works exactly the same as in the first form of
 C<has_one()>.
+
+In this form the C<undef> parameter defaults to true, but you can set
+it to a false value.
 
 Note that if you want to provide bind_params for the SQL you provide,
 you need to make sure it has placeholders.
@@ -305,7 +317,7 @@ You can also specify an C<order_by> parameter as an array
 reference. This should be an array like you would pass to C<<
 Fey::SQL::Select->order_by() >>.
 
-=head2 transform $column1, $column2 => inflate { ... } deflate { ... }
+=head2 transform $column1, $column2 => inflate { ... } => deflate { ... }
 
 The C<transform()> function declares an inflator, deflator, or both
 for the specified column. The inflator will be used to wrap the normal
@@ -343,9 +355,9 @@ You can only declare one inflator and one deflator for each column.
 You can use the same inflator and deflator for more than one column at
 once:
 
-  transform 'creation_date', 'modification_date' =>
-      inflate { ... }
-      deflate { ... };
+  transform 'creation_date', 'modification_date'
+      => inflate { ... }
+      => deflate { ... };
 
 =head2 inflate { .. }
 

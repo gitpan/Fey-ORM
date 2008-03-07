@@ -1,6 +1,6 @@
 ---
 name: Fey-ORM
-version: 0.03
+version: 0.04
 author:
   - 'Dave Rolsky, <autarch@urth.org>'
 abstract: A Fey-based ORM
@@ -32,7 +32,7 @@ provides:
     file: lib/Fey/Meta/Method/Constructor.pm
   Fey::ORM:
     file: lib/Fey/ORM.pm
-    version: 0.03
+    version: 0.04
   Fey::ORM::Schema:
     file: lib/Fey/ORM/Schema.pm
   Fey::ORM::Table:
