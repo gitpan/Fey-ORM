@@ -10,6 +10,7 @@ lib/Fey/Object/Iterator/Caching.pm
 lib/Fey/Object/Schema.pm
 lib/Fey/Object/Table.pm
 lib/Fey/ORM.pm
+lib/Fey/ORM/Exceptions.pm
 lib/Fey/ORM/Manual.pod
 lib/Fey/ORM/Manual/Intro.pod
 lib/Fey/ORM/Schema.pm

@@ -11,17 +11,11 @@ use List::MoreUtils qw( all );
 use Scalar::Util qw( blessed );
 
 use Fey::Exceptions qw( param_error );
-use Exception::Class
-    ( 'Fey::Exception::NoSuchRow' =>
-      { description => 'No row was found for a specified key.',
-        isa         => 'Fey::Exception',
-        alias       => 'no_such_row',
-      },
-    );
+use Fey::ORM::Exceptions qw( no_such_row );
 
 use MooseX::StrictConstructor;
 
-extends 'Moose::Object';
+extends 'MooseX::Object::StrictConstructor';
 
 
 sub new
@@ -379,7 +373,18 @@ sub _pk_vals
 {
     my $self = shift;
 
-    return map { $self->$_() } map { $_->name() } $self->Table()->primary_key();
+    my @pk;
+
+    for my $col_name ( map { $_->name() } $self->Table()->primary_key() )
+    {
+        my $pred = 'has_' . $col_name;
+
+        return unless $self->$pred();
+
+        push @pk, $self->$col_name();
+    }
+
+    return @pk;
 }
 
 sub _MakeSelectByPKSQL
@@ -590,7 +595,9 @@ If there is no source for the given SQL, it will die.
 =head2 $object->_pk_vals()
 
 This method returns an array of primary key values for the object's
-row.
+row. This may return an empty array if the primary key for the object
+has not yet been determined. This can happen if you try to call this
+on an object before its attributes have been fetched from the dbms.
 
 =head1 AUTHOR
 
