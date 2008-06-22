@@ -65,7 +65,7 @@ sub unimport ## no critic RequireFinalReturn
 
         my $caller = caller();
 
-        $caller->meta()->_has_table($table);
+        $caller->meta()->_associate_table($table);
     }
 }
 
@@ -207,16 +207,6 @@ class:
 
 Returns the L<Fey::Table> object passed to C<has_table()>.
 
-=head3 CallingClass->HasInflator($name)
-
-Returns a boolean indicating whether or not there is an inflator
-defined for the named column.
-
-=head3 CallingClass->HasDeflator($name)
-
-Returns a boolean indicating whether or not there is an inflator
-defined for the named column.
-
 =head3 CallingClass->SchemaClass()
 
 Returns the name of the class associated with the caller's table's
@@ -251,6 +241,9 @@ When caching is enabled, the object for the foreign table is only
 fetched once, and is cached afterwards. This is independent of the
 object caching for a particular class. If you turn off caching, then
 the object is fetched every time the method is called.
+
+Also, a private clearer method is created when caching is enabled, of
+the form C<< $object->_clear_$name() >>.
 
 The C<undef> parameter allows you to explicitly say whether the
 attribute can be undefined. Normally this is calculated by looking at
@@ -308,6 +301,9 @@ setting C<cache> to a true value.
 
 When caching is enabled, the iterator returned is of the
 C<Fey::Object::Iterator::Caching> class.
+
+Also, a private clearer method is created when caching is enabled, of
+the form C<< $object->_clear_$name() >>.
 
 Note that you will always get an iterator object back from your
 has_many methods and attributes, even if there are no matching rows in

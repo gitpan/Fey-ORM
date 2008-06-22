@@ -2,14 +2,14 @@ NAME
     Fey::ORM - A Fey-based ORM
 
 SYNOPSIS
-    For a "table-based" class for the User table:
+    A "table-based" class for the User table:
 
       package MyApp::Model::User;
 
       use MyApp::Model::Schema;
       use Fey::Class::Table;
 
-      my $schema = MyApp::Model::Schema->new();
+      my $schema = MyApp::Model::Schema->Schema();
 
       has_table $schema->table('User');
 
@@ -18,7 +18,7 @@ SYNOPSIS
       has_many 'messages' =>
           ( table =>  $schema->table('Messages') );
 
-    Here is what "MyApp::Model::Schema" might look like:
+    "MyApp::Model::Schema" might look like this:
 
       package MyApp::Model::Schema;
 

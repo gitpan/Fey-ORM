@@ -12,6 +12,7 @@ use Fey::Validate qw( validate SCALAR_TYPE ARRAYREF_TYPE BOOLEAN_TYPE
 use Fey::Hash::ColumnsKey;
 use Fey::Object::Iterator;
 use Fey::Object::Iterator::Caching;
+use Fey::Meta::Attribute::FromSelect;
 use Fey::Meta::Class::Schema;
 use List::MoreUtils qw( all );
 
@@ -49,6 +50,65 @@ has '_object_cache' =>
       clearer => '_clear_object_cache',
     );
 
+has 'table' =>
+    ( is        => 'rw',
+      isa       => 'Fey::Table',
+      writer    => '_set_table',
+      predicate => '_has_table',
+    );
+
+has 'inflators' =>
+    ( metaclass => 'Collection::Hash',
+      is        => 'rw',
+      isa       => 'HashRef[CodeRef]',
+      default   => sub { {} },
+      lazy      => 1,
+      provides  => { set    => '_add_inflator',
+                     exists => 'has_inflator',
+                   },
+    );
+
+has 'deflators' =>
+    ( metaclass => 'Collection::Hash',
+      is        => 'rw',
+      isa       => 'HashRef[CodeRef]',
+      default   => sub { {} },
+      lazy      => 1,
+      provides  => { set    => '_add_deflator',
+                     get    => 'deflator_for',
+                     exists => 'has_deflator',
+                   },
+    );
+
+has 'schema_class',
+    ( is      => 'ro',
+      isa     => 'ClassName',
+      lazy    => 1,
+      default => sub { Fey::Meta::Class::Schema
+                           ->ClassForSchema( $_[0]->table()->schema() ) },
+    );
+
+has '_select_sql_cache',
+    ( is      => 'ro',
+      isa     => 'Fey::Hash::ColumnsKey',
+      lazy    => 1,
+      default => sub { Fey::Hash::ColumnsKey->new() },
+    );
+
+has '_select_by_pk_sql',
+    ( is        => 'ro',
+      isa       => 'Fey::SQL::Select',
+      lazy      => 1,
+      default   => sub { return $_[0]->name()->_MakeSelectByPKSQL() },
+    );
+
+has '_count_sql',
+    ( is         => 'ro',
+      isa        => 'Fey::SQL::Select',
+      lazy_build => 1,
+    );
+
+
 sub ClassForTable
 {
     my $class = shift;
@@ -82,7 +142,7 @@ sub _search_cache
 
     my $cache = $self->_object_cache();
 
-    for my $key ( $self->name()->Table()->candidate_keys() )
+    for my $key ( $self->table()->candidate_keys() )
     {
         my @names = map { $_->name() } @{ $key };
         next unless all { defined $p->{$_} } @names;
@@ -101,7 +161,7 @@ sub _write_to_cache
 
     my $cache = $self->_object_cache();
 
-    for my $key ( $self->name()->Table()->candidate_keys() )
+    for my $key ( $self->table()->candidate_keys() )
     {
         my @names = map { $_->name() } @{ $key };
 
@@ -115,7 +175,7 @@ sub _write_to_cache
     }
 }
 
-sub _has_table
+sub _associate_table
 {
     my $self  = shift;
     my $table = shift;
@@ -123,7 +183,7 @@ sub _has_table
     my $caller = $self->name();
 
     param_error 'Cannot call has_table() more than once per class'
-        if $caller->can('_HasTable') && $caller->_HasTable();
+        if $self->_has_table();
 
     param_error 'Cannot associate the same table with multiple classes'
         if $self->ClassForTable($table);
@@ -136,17 +196,16 @@ sub _has_table
     param_error 'You must load your schema class before calling has_table()'
         unless $class
         && $class->can('meta')
-        && $class->can('_HasSchema')
-        && $class->_HasSchema();
+        && $class->meta()->_has_schema();
 
     param_error 'A table object passed to has_table() must have at least one key'
         unless $table->primary_key();
 
     $self->_SetTableForClass( $self->name() => $table );
 
-    $self->_make_class_attributes();
+    $self->_add_methods();
 
-    $caller->_SetTable($table);
+    $self->_set_table($table);
 
     $self->_make_column_attributes();
 }
@@ -155,7 +214,7 @@ sub _make_column_attributes
 {
     my $self = shift;
 
-    my $table = $self->name()->Table();
+    my $table = $self->table();
 
     for my $column ( $table->columns() )
     {
@@ -177,89 +236,15 @@ sub _make_column_attributes
     }
 }
 
-sub _make_class_attributes
+sub _add_methods
 {
     my $self = shift;
 
     my $caller = $self->name();
 
-    MooseX::ClassAttribute::process_class_attribute
-        ( $caller,
-          'Table',
-          ( is        => 'rw',
-            isa       => 'Fey::Table',
-            writer    => '_SetTable',
-            predicate => '_HasTable',
-          ),
-        );
+    $self->add_method( Table => sub { $_[0]->meta()->table() } );
 
-    MooseX::ClassAttribute::process_class_attribute
-        ( $caller,
-          '_Inflators',
-          ( metaclass => 'Collection::Hash',
-            is        => 'rw',
-            isa       => 'HashRef[CodeRef]',
-            default   => sub { {} },
-            lazy      => 1,
-            provides  => { set    => '_SetInflator',
-                           exists => 'HasInflator',
-                         },
-          ),
-        );
-
-    MooseX::ClassAttribute::process_class_attribute
-        ( $caller,
-          '_Deflators',
-          ( metaclass => 'Collection::Hash',
-            is        => 'rw',
-            isa       => 'HashRef[CodeRef]',
-            default   => sub { {} },
-            lazy      => 1,
-            provides  => { set    => '_SetDeflator',
-                           exists => 'HasDeflator',
-                         },
-          ),
-        );
-
-    MooseX::ClassAttribute::process_class_attribute
-        ( $caller,
-          'SchemaClass',
-          ( is      => 'ro',
-            isa     => 'ClassName',
-            lazy    => 1,
-            default => sub { Fey::Meta::Class::Schema->ClassForSchema( $_[0]->Table()->schema() ) },
-          ),
-        );
-
-    MooseX::ClassAttribute::process_class_attribute
-        ( $caller,
-          '_SelectSQLCache',
-          ( is      => 'ro',
-            isa     => 'Fey::Hash::ColumnsKey',
-            lazy    => 1,
-            default => sub { Fey::Hash::ColumnsKey->new() },
-          ),
-        );
-
-    MooseX::ClassAttribute::process_class_attribute
-        ( $caller,
-          '_SelectByPKSQL',
-          ( is        => 'ro',
-            isa       => 'Fey::SQL::Select',
-            lazy      => 1,
-            default   => sub { return $caller->_MakeSelectByPKSQL() },
-          ),
-        );
-
-    MooseX::ClassAttribute::process_class_attribute
-        ( $caller,
-          '_CountSQL',
-          ( is        => 'ro',
-            isa       => 'Fey::SQL::Select',
-            lazy      => 1,
-            default   => sub { return $caller->_MakeCountSQL() },
-          ),
-        );
+    $self->add_method( SchemaClass => sub { $_[0]->meta()->schema_class() } );
 }
 
 # XXX - can this be overridden or customized? should it account for
@@ -352,15 +337,15 @@ sub _add_transform
 
         $self->add_around_method_modifier( $attr->clearer(), $clear_inflator );
 
-        $self->name()->_SetInflator( $name => $inflate_sub );
+        $self->_add_inflator( $name => $inflate_sub );
     }
 
     if ( $p{deflate} )
     {
         param_error "Cannot provide more than one deflator for a column ($name)"
-            if $self->name()->HasDeflator($name);
+            if $self->has_deflator($name);
 
-        $self->name()->_SetDeflator( $name => $p{deflate} );
+        $self->_add_deflator( $name => $p{deflate} );
     }
 }
 
@@ -384,7 +369,7 @@ sub _add_transform
             unless $p{table}->has_schema();
 
         param_error 'You must call has_table() before calling has_one().'
-            unless $self->name()->can('_HasTable') && $self->name()->_HasTable();
+            unless $self->_has_table();
 
         $self->_make_has_one(%p);
     }
@@ -437,6 +422,7 @@ sub _make_has_one
                        lazy    => 1,
                        default => $default_sub,
                        writer  => q{_set_} . $name,
+                       clearer => q{_clear_} . $name,
                      );
 
         $attr_p{handles} = $p{handles}
@@ -456,7 +442,7 @@ sub _find_one_fk
     my $to   = shift;
     my $func = shift;
 
-    my $from = $self->name()->Table();
+    my $from = $self->table();
 
     my @fk = $from->schema()->foreign_keys_between_tables( $from, $to );
 
@@ -616,7 +602,7 @@ sub _make_has_one_default_sub_via_fk
             unless $p{table}->has_schema();
 
         param_error 'You must call has_table() before calling has_many().'
-            unless $self->name()->can('_HasTable') && $self->name()->_HasTable();
+            unless $self->_has_table();
 
         $self->_make_has_many(%p);
     }
@@ -656,6 +642,7 @@ sub _make_has_many
               lazy    => 1,
               default => $default_sub,
               writer  => q{_set_} . $name,
+              clearer => q{_clear_} . $name,
             );
 
         my $method = sub { my $iterator = $_[0]->$attr_name();
@@ -707,7 +694,7 @@ sub _make_has_many_default_sub_via_fk
 
     my $target_table = $p{table};
 
-    my $select = $self->name()->SchemaClass()->SQLFactoryClass()->new_select();
+    my $select = $self->schema_class()->SQLFactoryClass()->new_select();
     $select->select($target_table)
            ->from($target_table);
 
@@ -739,6 +726,22 @@ sub _make_has_many_default_sub_via_fk
               bind_params => $bind_params_sub,
             );
 }
+
+sub _build__count_sql
+{
+    my $self = shift;
+
+    my $table = $self->table();
+
+    my $select = $self->schema_class()->SQLFactoryClass()->new_select();
+
+    $select
+        ->select( Fey::Literal::Function->new( 'COUNT', '*' ) )
+        ->from($table);
+
+    return $select;
+}
+
 
 use Fey::Meta::Method::Constructor;
 
@@ -790,6 +793,20 @@ of the class which "has" that table, if any.
 
 Given a class, this method returns the C<Fey::Table> object associated
 with that class, if any.
+
+=head2 $meta->table()
+
+Returns the C<Fey::Table> for the metaclass's class.
+
+=head2 $meta->has_inflator($name)
+
+Returns a boolean indicating whether or not there is an inflator
+defined for the named column.
+
+=head2 $meta->has_deflator($name)
+
+Returns a boolean indicating whether or not there is an inflator
+defined for the named column.
 
 =head2 $meta->make_immutable()
 

@@ -2,6 +2,7 @@ Build.PL
 Changes
 eg/Vendor.pm
 lib/Fey/Hash/ColumnsKey.pm
+lib/Fey/Meta/Attribute/FromSelect.pm
 lib/Fey/Meta/Class/Schema.pm
 lib/Fey/Meta/Class/Table.pm
 lib/Fey/Meta/Method/Constructor.pm
@@ -32,6 +33,7 @@ t/Object/Schema.t
 t/Object/Table-cache.t
 t/Object/Table-has_many.t
 t/Object/Table-has_one.t
+t/Object/Table-select-attr.t
 t/Object/Table.t
 t/pod-coverage.t
 t/pod.t

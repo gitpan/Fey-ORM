@@ -1,6 +1,6 @@
 ---
 name: Fey-ORM
-version: 0.06
+version: 0.07
 author:
   - 'Dave Rolsky, <autarch@urth.org>'
 abstract: A Fey-based ORM
@@ -24,6 +24,8 @@ build_requires:
 provides:
   Fey::Hash::ColumnsKey:
     file: lib/Fey/Hash/ColumnsKey.pm
+  Fey::Meta::Attribute::FromSelect:
+    file: lib/Fey/Meta/Attribute/FromSelect.pm
   Fey::Meta::Class::Schema:
     file: lib/Fey/Meta/Class/Schema.pm
   Fey::Meta::Class::Table:
@@ -32,7 +34,7 @@ provides:
     file: lib/Fey/Meta/Method/Constructor.pm
   Fey::ORM:
     file: lib/Fey/ORM.pm
-    version: 0.06
+    version: 0.07
   Fey::ORM::Exceptions:
     file: lib/Fey/ORM/Exceptions.pm
   Fey::ORM::Schema:
