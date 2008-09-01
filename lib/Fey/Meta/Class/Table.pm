@@ -16,11 +16,11 @@ use Fey::Meta::Attribute::FromSelect;
 use Fey::Meta::Class::Schema;
 use List::MoreUtils qw( all );
 
-use Moose qw( extends has );
+use Moose qw( extends with has );
 use MooseX::AttributeHelpers;
 use MooseX::ClassAttribute;
 
-extends 'MooseX::StrictConstructor::Meta::Class';
+extends 'Moose::Meta::Class';
 
 class_has '_ClassToTableMap' =>
     ( metaclass => 'Collection::Hash',
@@ -142,7 +142,7 @@ sub _search_cache
 
     my $cache = $self->_object_cache();
 
-    for my $key ( $self->table()->candidate_keys() )
+    for my $key ( @{ $self->table()->candidate_keys() } )
     {
         my @names = map { $_->name() } @{ $key };
         next unless all { defined $p->{$_} } @names;
@@ -161,7 +161,7 @@ sub _write_to_cache
 
     my $cache = $self->_object_cache();
 
-    for my $key ( $self->table()->candidate_keys() )
+    for my $key ( @{ $self->table()->candidate_keys() } )
     {
         my @names = map { $_->name() } @{ $key };
 
@@ -199,7 +199,7 @@ sub _associate_table
         && $class->meta()->_has_schema();
 
     param_error 'A table object passed to has_table() must have at least one key'
-        unless $table->primary_key();
+        unless @{ $table->primary_key() };
 
     $self->_SetTableForClass( $self->name() => $table );
 
@@ -540,7 +540,7 @@ sub _make_has_one_default_sub_via_fk
     my $fk = $p{fk};
 
     my %column_map;
-    for my $pair ( $fk->column_pairs() )
+    for my $pair ( @{ $fk->column_pairs() } )
     {
         my ( $from, $to ) = @{ $pair };
 
@@ -688,7 +688,7 @@ sub _make_has_many_default_sub_via_fk
     my @from_list;
 
     my $ph = Fey::Placeholder->new();
-    for my $pair ( $p{fk}->column_pairs() )
+    for my $pair ( @{ $p{fk}->column_pairs() } )
     {
         my ( $from, $to ) = @{ $pair };
 
@@ -743,6 +743,7 @@ sub make_immutable
 
 
 no Moose;
+
 __PACKAGE__->meta()->make_immutable();
 
 1;

@@ -5,7 +5,9 @@ use warnings;
 
 use Moose;
 
-extends 'MooseX::StrictConstructor::Meta::Method::Constructor';
+extends 'Moose::Meta::Method::Constructor';
+
+with 'MooseX::StrictConstructor::Role::Meta::Method::Constructor';
 
 # XXX - This is copied straight from Moose 0.36 because there's no
 # good way to override it (note the eval it does at the end).
@@ -95,7 +97,7 @@ sub initialize_body {
         $code = eval $source;
         confess "Could not eval the constructor :\n\n$source\n\nbecause :\n\n$@" if $@;
     }
-    $self->{'&!body'} = $code;
+    $self->{'body'} = $code;
 }
 
 sub _search_cache

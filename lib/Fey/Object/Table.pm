@@ -13,9 +13,11 @@ use Scalar::Util qw( blessed );
 use Fey::Exceptions qw( param_error );
 use Fey::ORM::Exceptions qw( no_such_row );
 
-use MooseX::StrictConstructor;
+use Moose;
 
-extends 'MooseX::Object::StrictConstructor';
+extends 'Moose::Object';
+
+with 'MooseX::StrictConstructor::Role::Object';
 
 
 sub new
@@ -66,7 +68,7 @@ sub _require_pk
     my $self = shift;
     my $p    = shift;
 
-    return if all { defined $p->{$_} } map { $_->name() } $self->Table()->primary_key();
+    return if all { defined $p->{$_} } map { $_->name() } @{ $self->Table()->primary_key() };
 
     my $package = ref $self;
     param_error "$package->new() requires that you pass the primary key if you set _from_query to true.";
@@ -98,7 +100,7 @@ sub _load_from_dbms
     my $self = shift;
     my $p    = shift;
 
-    for my $key ( $self->Table()->candidate_keys() )
+    for my $key ( @{ $self->Table()->candidate_keys() } )
     {
         my @names = map { $_->name() } @{ $key };
         next unless all { defined $p->{$_} } @names;
@@ -298,7 +300,7 @@ sub update
 
     $update->set( map { $table->column($_) => $self->_deflated_value( $_, $p{$_} ) } sort keys %p );
 
-    for my $col ( $table->primary_key() )
+    for my $col ( @{ $table->primary_key() } )
     {
         my $name = $col->name();
 
@@ -311,7 +313,8 @@ sub update
 
     my @attr = $self->_bind_attributes_for( $dbh,
                                             ( sort keys %p,
-                                              map { $_->name() } $table->primary_key(),
+                                              map { $_->name() }
+                                              @{ $table->primary_key() }
                                             ),
                                           );
 
@@ -344,7 +347,7 @@ sub delete
 
     $delete->from($table);
 
-    for my $col ( $table->primary_key() )
+    for my $col ( @{ $table->primary_key() } )
     {
         my $name = $col->name();
 
@@ -434,7 +437,7 @@ sub _pk_vals
 
     my @pk;
 
-    for my $col_name ( map { $_->name() } $self->Table()->primary_key() )
+    for my $col_name ( map { $_->name() } @{ $self->Table()->primary_key() } )
     {
         my $pred = 'has_' . $col_name;
 
@@ -450,7 +453,7 @@ sub _MakeSelectByPKSQL
 {
     my $class = shift;
 
-    return $class->_SelectSQLForKey( [ $class->Table->primary_key() ] );
+    return $class->_SelectSQLForKey( $class->Table->primary_key() );
 }
 
 sub _SelectSQLForKey

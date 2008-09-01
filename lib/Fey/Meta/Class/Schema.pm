@@ -11,7 +11,7 @@ use Moose;
 use MooseX::AttributeHelpers;
 use MooseX::ClassAttribute;
 
-extends 'MooseX::StrictConstructor::Meta::Class';
+extends 'Moose::Meta::Class';
 
 class_has '_SchemaClassMap' =>
     ( metaclass => 'Collection::Hash',
@@ -87,6 +87,7 @@ sub _associate_schema
 }
 
 no Moose;
+
 __PACKAGE__->meta()->make_immutable();
 
 1;
