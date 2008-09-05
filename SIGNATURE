@@ -14,10 +14,10 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 0e77c922e028f56b1908164ad34bc03c4e3bf0f8 Build.PL
-SHA1 419dddb322312402585299f728197e1910a96e3f Changes
+SHA1 a4b052dd575b491968060d119a2f5eaed67f856d Build.PL
+SHA1 7b413ea84b0ea48e0eb431e790c54a670cecac90 Changes
 SHA1 427cbeaf1b7495f92795831bc2586358fe303257 MANIFEST
-SHA1 95e17f88af96fdc6b532a5d1bb94da8fb1e08793 META.yml
+SHA1 c7490bcc5ad1c17a6b39b8635fb10eaa1a293124 META.yml
 SHA1 cd14ada78fb37a0d926edd86eddcdf7f939de582 Makefile.PL
 SHA1 28d263a3bc4bd44d1c76f0ffca2239e82e2d031d README
 SHA1 0534c59fe256279fda5f07e0e3e0c3cfc557b1b2 TODO
@@ -26,8 +26,8 @@ SHA1 3c7f043c7ed3f1a91757edae3693432e57386537 lib/Fey/Hash/ColumnsKey.pm
 SHA1 e57892148d034f3fbe5690df14f20830a1424833 lib/Fey/Meta/Attribute/FromSelect.pm
 SHA1 7e9a77ca35d337a063387378cf1a358ded3309b5 lib/Fey/Meta/Class/Schema.pm
 SHA1 aa1014e75217b1f578483bb1aaaab3c242e6a06d lib/Fey/Meta/Class/Table.pm
-SHA1 c2e9fbb5c26cf36881c46b3bbbdcf3b3db51c8df lib/Fey/Meta/Method/Constructor.pm
-SHA1 afda7db2d1ce53d4da7131d68dde31433962dfc6 lib/Fey/ORM.pm
+SHA1 9e2b4b149a2094dc00f29e069ddd92df5d2b0a8a lib/Fey/Meta/Method/Constructor.pm
+SHA1 4a52429a5f94339f1a1aa32a945c0dbb6ced5d82 lib/Fey/ORM.pm
 SHA1 d08c50526e9865a7669c8954cb1f6ae46abb0220 lib/Fey/ORM/Exceptions.pm
 SHA1 8a400b5277005d54bca16b396ed9c3dc87b2bf43 lib/Fey/ORM/Manual.pod
 SHA1 75172ffddc170f76a1ebeff5cf0eec29d3d79a6e lib/Fey/ORM/Manual/Intro.pod
@@ -57,7 +57,7 @@ SHA1 cec881e89926d320475f9de2b7fad02c2169f510 t/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFIvB+G3Or3ZzQuifMRAh0SAKC/04gqQnUfnmS837voq9KTP2RrTACdHNta
-EysGWeEfeZA07VKsWbGMB5Q=
-=lgud
+iD8DBQFIwU4l3Or3ZzQuifMRApZfAJ0QxEQS+ULBMSvdoyz53uR5VsfrCgCg7vKB
+m9lDmCrNXxQlY00oEvndW48=
+=upJO
 -----END PGP SIGNATURE-----
