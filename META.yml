@@ -1,6 +1,6 @@
 ---
 name: Fey-ORM
-version: 0.11
+version: 0.12
 author:
   - 'Dave Rolsky, <autarch@urth.org>'
 abstract: A Fey-based ORM
@@ -10,7 +10,7 @@ resources:
 requires:
   Exception::Class: 0
   Exporter: 0
-  Fey: 0.12
+  Fey: 0.15
   Fey::DBIManager: 0.07
   List::MoreUtils: 0
   Moose: 0.58
@@ -20,6 +20,7 @@ requires:
   Scalar::Util: 0
 build_requires:
   Fey::Test: 0.05
+  Test::Exception: 0
   Test::More: 0
 provides:
   Fey::Hash::ColumnsKey:
@@ -34,7 +35,7 @@ provides:
     file: lib/Fey/Meta/Method/Constructor.pm
   Fey::ORM:
     file: lib/Fey/ORM.pm
-    version: 0.11
+    version: 0.12
   Fey::ORM::Exceptions:
     file: lib/Fey/ORM/Exceptions.pm
   Fey::ORM::Schema:
@@ -49,7 +50,7 @@ provides:
     file: lib/Fey/Object/Schema.pm
   Fey::Object::Table:
     file: lib/Fey/Object/Table.pm
-generated_by: Module::Build version 0.2808
+generated_by: Module::Build version 0.3
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2
