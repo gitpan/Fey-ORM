@@ -69,12 +69,6 @@ has index =>
                   },
     );
 
-has _row =>
-    ( is      => 'ro',
-      isa     => 'HashRef',
-      default => sub { return {} },
-    );
-
 has 'attribute_map' =>
     ( is      => 'ro',
       isa     => 'HashRef[HashRef[Str]]',
@@ -145,7 +139,19 @@ sub _get_next_result
         my %attr = map { $map->{$class}{$_} => $row->[$_] } keys %{ $map->{$class} };
         $attr{_from_query} = 1;
 
-        # We eval since in an outer join the primary key may be undef
+        # FIXME - This eval is kind of a band-aid. It is possible
+        # (especially with DBD::Mock) for %attr to contain bogus data
+        # (wrong types). However, it's also possible for %attr to
+        # contain undefs for non-NULLable columns when iterator over
+        # the results of a select, especially outer joins.
+        #
+        # In the outer join case, we do want to ignore object
+        # construction errors, but otherwise we don't.
+        #
+        # Fortunately, bogus data is unlikely, unless the caller
+        # explicitly provides a bad attribute_map, or a valid
+        # attribute_map and a crazy query. It also can happen pretty
+        # easily with DBD::Mock.
         push @result, eval { $class->new( \%attr ) } || undef;
     }
 
@@ -156,13 +162,9 @@ sub _build__sth
 {
     my $self = shift;
 
-    my $row = $self->_row();
-
     my $sth = $self->dbh()->prepare( $self->select()->sql( $self->dbh() ) );
 
     $sth->execute( @{ $self->bind_params() } );
-
-    $sth->bind_columns( \( @{ $row }{ @{ $sth->{NAME_lc} } } ) );
 
     return $sth;
 }
@@ -282,7 +284,8 @@ Fey::Object::Iterator - Wraps a DBI statement handle to construct objects from t
   my $iter =
       Fey::Object::Iterator->new
           ( classes     => 'MyApp::User',
-            handle      => $sth,
+            select      => $select,
+            dbh         => $dbh,
             bind_params => \@bind,
           );
 
