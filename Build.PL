@@ -7,7 +7,8 @@ my $builder =
     Module::Build->new
         ( module_name          => 'Fey::ORM',
           license              => 'perl',
-          requires             => { 'Exception::Class'          => '0',
+          requires             => { 'Devel::GlobalDestruction'  => '0',
+                                    'Exception::Class'          => '0',
                                     'Exporter'                  => '0',
                                     'Fey'                       => '0.15',
                                     'Fey::DBIManager'           => '0.07',
@@ -26,6 +27,7 @@ my $builder =
           create_makefile_pl   => 'passthrough',
           create_readme        => 1,
           sign                 => 1,
+          add_to_cleanup       => [ 'Debian_CPANTS.txt' ],
         );
 
 $builder->create_build_script();

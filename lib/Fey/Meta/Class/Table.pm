@@ -14,6 +14,10 @@ use Fey::Object::Iterator;
 use Fey::Object::Iterator::Caching;
 use Fey::Meta::Attribute::FromSelect;
 use Fey::Meta::Class::Schema;
+use Fey::Meta::HasOne::ViaFK;
+use Fey::Meta::HasOne::ViaSelect;
+use Fey::Meta::HasMany::ViaFK;
+use Fey::Meta::HasMany::ViaSelect;
 use Fey::Meta::Method::Constructor;
 use List::MoreUtils qw( all );
 
@@ -87,6 +91,34 @@ has 'schema_class',
       lazy    => 1,
       default => sub { Fey::Meta::Class::Schema
                            ->ClassForSchema( $_[0]->table()->schema() ) },
+    );
+
+has '_has_ones' =>
+    ( metaclass => 'Collection::Hash',
+      is        => 'rw',
+      isa       => 'HashRef[Fey::Meta::HasOne]',
+      default   => sub { {} },
+      lazy      => 1,
+      provides  => { set    => '_add_has_one',
+                     values => 'has_ones',
+                     get    => '_has_one',
+                     exists => '_has_has_one',
+                     delete => '_remove_has_one',
+                   },
+    );
+
+has '_has_manies' =>
+    ( metaclass => 'Collection::Hash',
+      is        => 'rw',
+      isa       => 'HashRef[Fey::Meta::HasMany]',
+      default   => sub { {} },
+      lazy      => 1,
+      provides  => { set    => '_add_has_many',
+                     values => 'has_manies',
+                     get    => '_has_many',
+                     exists => '_has_has_many',
+                     delete => '_remove_has_many',
+                   },
     );
 
 has '_select_sql_cache',
@@ -337,382 +369,94 @@ sub _add_transform
     }
 }
 
-{
-    my $spec = { name        => SCALAR_TYPE( default => undef ),
-                 table       => TABLE_TYPE,
-                 cache       => BOOLEAN_TYPE( default => 1 ),
-                 fk          => FK_TYPE( default => undef ),
-                 select      => SELECT_TYPE( default => undef ),
-                 bind_params => CODEREF_TYPE( default => sub {} ),
-                 handles     => { default => undef },
-                 undef       => BOOLEAN_TYPE( default => undef ),
-               };
-
-    sub _add_has_one_relationship
-    {
-        my $self = shift;
-        my %p    = validate( @_, $spec );
-
-        param_error 'A table object passed to has_one() must have a schema'
-            unless $p{table}->has_schema();
-
-        param_error 'You must call has_table() before calling has_one().'
-            unless $self->_has_table();
-
-        $self->_make_has_one(%p);
-    }
-}
-
-sub _make_has_one
+sub add_has_one
 {
     my $self = shift;
     my %p    = @_;
 
-    my $name = $p{name} || lc $p{table}->name();
+    param_error 'You must call has_table() before calling has_one().'
+        unless $self->_has_table();
 
-    my $default_sub;
-    if ( $p{select} )
-    {
-        $default_sub = $self->_make_has_one_default_sub_via_sql(%p);
-    }
-    else
-    {
+    param_error 'You cannot pass both a select and fk parameter when creating a has-one relationship'
+        if $p{select} && $p{fk};
 
-        $p{fk} ||= $self->_find_one_fk( $p{table}, 'has_one' );
+    my $class =
+        $p{select} ? 'Fey::Meta::HasOne::ViaSelect' : 'Fey::Meta::HasOne::ViaFK';
 
-        $p{fk} = $self->_invert_fk_if_necessary( $p{fk}, $p{table} );
+    $p{foreign_table} = delete $p{table};
 
-        $default_sub = $self->_make_has_one_default_sub_via_fk(%p);
-    }
+    $p{is_cached}     = delete $p{cache}
+        if exists $p{cache};
+    $p{allows_undef}  = delete $p{undef}
+        if exists $p{undef};
 
-    if ( $p{cache} )
-    {
-        # If given a select SQL for the has_one relationship we assume
-        # it can always be undef, since we don't know the content of
-        # the SQL.
-        my $can_be_undef = $p{undef};
-
-        unless ( defined $can_be_undef )
-        {
-            $can_be_undef = $p{select} || grep { $_->is_nullable() } @{ $p{fk}->source_columns() };
-        }
-
-        # It'd be nice to set isa to the actual foreign class, but we may
-        # not be able to map a table to a class yet, since that depends on
-        # the related class being loaded. It doesn't really matter, since
-        # this accessor is read-only, so there's really no typing issue to
-        # deal with.
-        my $type = 'Fey::Object::Table';
-        $type = "Maybe[$type]" if $can_be_undef;
-
-        my %attr_p = ( is      => 'rw',
-                       isa     => $type,
-                       lazy    => 1,
-                       default => $default_sub,
-                       writer  => q{_set_} . $name,
-                       clearer => q{_clear_} . $name,
-                     );
-
-        $attr_p{handles} = $p{handles}
-            if $p{handles};
-
-        $self->add_attribute( $name, %attr_p );
-    }
-    else
-    {
-        $self->add_method( $name => $default_sub );
-    }
-}
-
-sub _find_one_fk
-{
-    my $self = shift;
-    my $to   = shift;
-    my $func = shift;
-
-    my $from = $self->table();
-
-    my @fk = $from->schema()->foreign_keys_between_tables( $from, $to );
-
-    return $fk[0] if @fk == 1;
-
-    if ( @fk == 0 )
-    {
-        param_error
-            'There are no foreign keys between the table for this class, '
-            . $from->name()
-            . " and the table you passed to $func(), "
-            . $to->name() . '.';
-    }
-    elsif ( @fk > 1 )
-    {
-        param_error
-            'There is more than one foreign key between the table for this class, '
-            . $from->name()
-            . " and the table you passed to $func(), "
-            . $to->name()
-            . '. You must specify one explicitly.';
-    }
-}
-
-# We may need to invert the meaning of source & target since source &
-# target for an FK object are sort of arbitrary. The source should be
-# "our" table, and the target the foreign table.
-sub _invert_fk_if_necessary
-{
-    my $self         = shift;
-    my $fk           = shift;
-    my $target_table = shift;
-    my $has_many     = shift;
-
-    # Self-referential keys are a special case, and that case differs
-    # for has_one vs has_many.
-    if ( $fk->is_self_referential() )
-    {
-        if ($has_many)
-        {
-            return $fk
-                unless $fk->target_table()->has_candidate_key( @{ $fk->target_columns() } );
-        }
-        else
-        {
-            # A self-referential key is a special case. If the target
-            # columns are _not_ a key, then we need to invert source &
-            # target so we do our select by a key. This doesn't
-            # address a pathological case where neither source nor
-            # target column sets make up a key. That shouldn't happen,
-            # though ;)
-            return $fk
-                if $fk->target_table()->has_candidate_key( @{ $fk->target_columns() } );
-        }
-    }
-    else
-    {
-        return $fk
-            if $fk->target_table()->name() eq $target_table->name();
-    }
-
-    return Fey::FK->new( source_columns => $fk->target_columns(),
-                         target_columns => $fk->source_columns(),
-                       );
-}
-
-sub _make_has_one_default_sub_via_sql
-{
-    my $self = shift;
-    my %p    = @_;
-
-    my $target_table = $p{table};
-
-    my $select = $p{select};
-    my $bind   = $p{bind_params};
-
-    # XXX - this is really similar to
-    # Fey::Object::Table->_get_column_values() and needs some serious
-    # cleanup.
-    return
-        sub { my $self = shift;
-
-              my $dbh = $self->_dbh($select);
-
-              my $sth = $dbh->prepare( $select->sql($dbh) );
-
-              $sth->execute( $self->$bind() );
-
-              my %col_values;
-              $sth->bind_columns( \( @col_values{ @{ $sth->{NAME} } } ) );
-
-              my $fetched = $sth->fetch();
-
-              $sth->finish();
-
-              return unless $fetched;
-
-              $self->meta()->ClassForTable($target_table)->new
-                  ( %col_values, _from_query => 1 );
-            };
-}
-
-sub _make_has_one_default_sub_via_fk
-{
-    my $self = shift;
-    my %p    = @_;
-
-    my $fk = $p{fk};
-
-    my %column_map;
-    for my $pair ( @{ $fk->column_pairs() } )
-    {
-        my ( $from, $to ) = @{ $pair };
-
-        $column_map{ $from->name() } = [ $to->name(), $to->is_nullable() ];
-    }
-
-    my $target_table = $p{table};
-
-    return
-        sub { my $self = shift;
-
-              my %new_p;
-
-              for my $from ( keys %column_map )
-              {
-                  my $target_name = $column_map{$from}[0];
-
-                  $new_p{$target_name} = $self->$from();
-
-                  return unless defined $new_p{$target_name} || $column_map{$from}[1];
-              }
-
-              return
-                  $self->meta()
-                       ->ClassForTable($target_table)
-                       ->new(%new_p);
-            };
-}
-
-{
-    my $spec = { name     => SCALAR_TYPE( default => undef ),
-                 table    => TABLE_TYPE,
-                 cache    => BOOLEAN_TYPE( default => 0 ),
-                 fk       => FK_TYPE( default => undef ),
-                 order_by => ARRAYREF_TYPE( default => undef ),
-                 select      => SELECT_TYPE( default => undef ),
-                 bind_params => CODEREF_TYPE( default => sub {} ),
-               };
-
-    sub _add_has_many_relationship
-    {
-        my $self = shift;
-        my %p    = validate( @_, $spec );
-
-        param_error 'A table object passed to has_many() must have a schema'
-            unless $p{table}->has_schema();
-
-        param_error 'You must call has_table() before calling has_many().'
-            unless $self->_has_table();
-
-        $self->_make_has_many(%p);
-    }
-}
-
-sub _make_has_many
-{
-    my $self = shift;
-    my %p    = @_;
-
-    my $name = $p{name} || lc $p{table}->name();
-
-    my $iterator_class = $p{cache} ? 'Fey::Object::Iterator::Caching' : 'Fey::Object::Iterator';
-
-    my $default_sub;
-    if ( $p{select} )
-    {
-        $default_sub = $self->_make_has_many_default_sub_via_sql( %p, iterator_class => $iterator_class );
-    }
-    else
-    {
-        $p{fk} ||= $self->_find_one_fk( $p{table}, 'has_many' );
-
-        $p{fk} = $self->_invert_fk_if_necessary( $p{fk}, $p{table}, 'has many' );
-
-        $default_sub = $self->_make_has_many_default_sub_via_fk( %p, iterator_class => $iterator_class );
-    }
-
-    if ( $p{cache} )
-    {
-        my $attr_name = q{_} . $name;
-
-        $self->add_attribute
-            ( $attr_name,
-              is      => 'rw',
-              isa     => $iterator_class,
-              lazy    => 1,
-              default => $default_sub,
-              writer  => q{_set_} . $name,
-              clearer => q{_clear_} . $name,
+    my $has_one =
+        $class->new
+            ( table => $self->table(),
+              %p,
             );
 
-        my $method = sub { my $iterator = $_[0]->$attr_name();
-                           $iterator->reset();
-                           return $iterator; };
+    $has_one->attach_to_class($self);
 
-        $self->add_method( $name => $method );
-
-    }
-    else
-    {
-        $self->add_method( $name => $default_sub );
-    }
+    $self->_add_has_one( $has_one->name() => $has_one );
 }
 
-sub _make_has_many_default_sub_via_sql
+sub remove_has_one
+{
+    my $self = shift;
+    my $name = shift;
+
+    return unless $self->_has_has_one($name);
+
+    my $has_one = $self->_has_one($name);
+
+    $has_one->detach_from_class();
+
+    $self->_remove_has_one( $has_one->name() );
+}
+
+sub add_has_many
 {
     my $self = shift;
     my %p    = @_;
 
-    my $target_table = $p{table};
+    param_error 'You must call has_table() before calling has_many().'
+        unless $self->_has_table();
 
-    my $select   = $p{select};
-    my $bind_sub = $p{bind_params};
+    param_error 'You cannot pass both a select and fk parameter when creating a has-many relationship'
+        if $p{select} && $p{fk};
 
-    my $iterator_class = $p{iterator_class};
+    my $class =
+        $p{select} ? 'Fey::Meta::HasMany::ViaSelect' : 'Fey::Meta::HasMany::ViaFK';
 
-    return
-        sub { my $self = shift;
+    $p{foreign_table} = delete $p{table};
 
-              my $class = $self->meta()->ClassForTable($target_table);
+    $p{is_cached}     = delete $p{cache}
+        if exists $p{cache};
 
-              my $dbh = $self->_dbh($select);
-
-              return
-                  $iterator_class->new( classes     => $class,
-                                        dbh         => $dbh,
-                                        select      => $select,
-                                        bind_params => [ $self->$bind_sub() ],
-                                      );
-            };
-
-}
-
-sub _make_has_many_default_sub_via_fk
-{
-    my $self = shift;
-    my %p    = @_;
-
-    my $target_table = $p{table};
-
-    my $select = $self->schema_class()->SQLFactoryClass()->new_select();
-    $select->select($target_table)
-           ->from($target_table);
-
-    my @from_list;
-
-    my $ph = Fey::Placeholder->new();
-    for my $pair ( @{ $p{fk}->column_pairs() } )
-    {
-        my ( $from, $to ) = @{ $pair };
-
-        $select->where( $to, '=', $ph );
-
-        push @from_list, $from->name();
-    }
-
-    $select->order_by( @{ $p{order_by} } )
-        if $p{order_by};
-
-    my $bind_params_sub =
-        sub { my $self = shift;
-
-              return map { $self->$_() } @from_list;
-            };
-
-    return
-        $self->_make_has_many_default_sub_via_sql
-            ( %p,
-              select      => $select,
-              bind_params => $bind_params_sub,
+    my $has_many =
+        $class->new
+            ( table => $self->table(),
+              %p,
             );
+
+    $has_many->attach_to_class($self);
+
+    $self->_add_has_many( $has_many->name() => $has_many );
+}
+
+sub remove_has_many
+{
+    my $self = shift;
+    my $name = shift;
+
+    return unless $self->_has_has_many($name);
+
+    my $has_many = $self->_has_many($name);
+
+    $has_many->detach_from_class();
+
+    $self->_remove_has_many( $has_many->name() );
 }
 
 sub _build__count_sql
@@ -783,6 +527,40 @@ with that class, if any.
 =head2 $meta->table()
 
 Returns the C<Fey::Table> for the metaclass's class.
+
+=head2 $meta->add_has_one(%options)
+
+Creates a new L<Fey::Meta::HasOne::ViaFK> or
+L<Fey::Meta::HasOne::ViaSelect> object and adds it to the
+metaclass. Internally, this will call C<attach_to_class()> on the
+C<HasOne> meta-object.
+
+=head2 $meta->has_ones()
+
+Returns a list of the C<Fey::Meta::HasOne> objects added to this
+metaclass.
+
+=head2 $meta->remove_has_one($name)
+
+Removes the named C<HasOne> meta-object. Internally, this will call
+C<detach_from_class()> on the C<HasOne> meta-object.
+
+=head2 $meta->add_has_many(%options)
+
+Creates a new L<Fey::Meta::HasMany::ViaFK> or
+L<Fey::Meta::HasMany::ViaSelect> object and adds it to the
+metaclass. Internally, this will call C<attach_to_class()> on the
+C<HasMany> meta-object.
+
+=head2 $meta->has_manies()
+
+Returns a list of the C<Fey::Meta::HasMany> objects added to this
+metaclass.
+
+=head2 $meta->remove_has_many($name)
+
+Removes the named C<HasMany> meta-object. Internally, this will call
+C<detach_from_class()> on the C<HasMany> meta-object.
 
 =head2 $meta->has_inflator($name)
 

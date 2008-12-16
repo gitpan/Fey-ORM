@@ -1,6 +1,6 @@
 ---
 name: Fey-ORM
-version: 0.13
+version: 0.14
 author:
   - 'Dave Rolsky, <autarch@urth.org>'
 abstract: A Fey-based ORM
@@ -8,6 +8,7 @@ license: perl
 resources:
   license: http://dev.perl.org/licenses/
 requires:
+  Devel::GlobalDestruction: 0
   Exception::Class: 0
   Exporter: 0
   Fey: 0.15
@@ -31,11 +32,25 @@ provides:
     file: lib/Fey/Meta/Class/Schema.pm
   Fey::Meta::Class::Table:
     file: lib/Fey/Meta/Class/Table.pm
+  Fey::Meta::FK:
+    file: lib/Fey/Meta/FK.pm
+  Fey::Meta::HasMany:
+    file: lib/Fey/Meta/HasMany.pm
+  Fey::Meta::HasMany::ViaFK:
+    file: lib/Fey/Meta/HasMany/ViaFK.pm
+  Fey::Meta::HasMany::ViaSelect:
+    file: lib/Fey/Meta/HasMany/ViaSelect.pm
+  Fey::Meta::HasOne:
+    file: lib/Fey/Meta/HasOne.pm
+  Fey::Meta::HasOne::ViaFK:
+    file: lib/Fey/Meta/HasOne/ViaFK.pm
+  Fey::Meta::HasOne::ViaSelect:
+    file: lib/Fey/Meta/HasOne/ViaSelect.pm
   Fey::Meta::Method::Constructor:
     file: lib/Fey/Meta/Method/Constructor.pm
   Fey::ORM:
     file: lib/Fey/ORM.pm
-    version: 0.13
+    version: 0.14
   Fey::ORM::Exceptions:
     file: lib/Fey/ORM/Exceptions.pm
   Fey::ORM::Schema:
