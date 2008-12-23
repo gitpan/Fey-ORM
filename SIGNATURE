@@ -15,9 +15,9 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 1c2c479515d1e96715082ef93d2bd8ec99055c90 Build.PL
-SHA1 686b0a1801df7137b4574fa6fe99e1901c2de2eb Changes
+SHA1 d683a0d63f94c3610b2cd9f1edbffa7ca7a549e4 Changes
 SHA1 ef9aba4b4a0d417a92abee032d3ad610eaccc9b4 MANIFEST
-SHA1 3d695fc29e1b0cd9062350805f3ed6cd3831a209 META.yml
+SHA1 ed559b57ae8e66cf7079ec4b9b5c571d409d4e3b META.yml
 SHA1 6f92f99db464ab415b16ffb13b2fbc67c69cab56 Makefile.PL
 SHA1 5436492d5e2af650e981486ee068817d6b79cc2b README
 SHA1 0534c59fe256279fda5f07e0e3e0c3cfc557b1b2 TODO
@@ -34,14 +34,14 @@ SHA1 fdd9028076c7c700c2d180912712c17f5c23c705 lib/Fey/Meta/HasOne.pm
 SHA1 64c7144a19805e47f91bd8bc7db5bd81dd9a319e lib/Fey/Meta/HasOne/ViaFK.pm
 SHA1 b2172e3b992d4bedd6ef93ceceb5986dcc23a51d lib/Fey/Meta/HasOne/ViaSelect.pm
 SHA1 d661fc91301aaa9b5c28b6d7f540776fb9f8c17f lib/Fey/Meta/Method/Constructor.pm
-SHA1 12e44180daf2ffed83b8a88aa8a54438e4987d59 lib/Fey/ORM.pm
+SHA1 31aa97375845813babc9359849822dc8f1201b54 lib/Fey/ORM.pm
 SHA1 d08c50526e9865a7669c8954cb1f6ae46abb0220 lib/Fey/ORM/Exceptions.pm
 SHA1 8a400b5277005d54bca16b396ed9c3dc87b2bf43 lib/Fey/ORM/Manual.pod
 SHA1 e5492a0e0970f1f668bc4597b8937e971b9d8e9c lib/Fey/ORM/Manual/Intro.pod
 SHA1 10c467cf1015280e10ac2ac93710c52c6ac279e8 lib/Fey/ORM/Schema.pm
 SHA1 072f2a62314f4cd5cf4a4c890bacea0a0b4a9223 lib/Fey/ORM/Table.pm
-SHA1 c5e2bebc3478a7243a9749dd9d1eee2a1690a693 lib/Fey/Object/Iterator.pm
-SHA1 a8780f9161581e4e6d538150a2570ccff01054de lib/Fey/Object/Iterator/Caching.pm
+SHA1 d087f17751c1182b3c8b3c2e5d629ede5627969e lib/Fey/Object/Iterator.pm
+SHA1 9a2973684f49d122877a7bb691faa48c5b6305ea lib/Fey/Object/Iterator/Caching.pm
 SHA1 21f7ffbb4ff04581e8ca40c23931d3156e73e9bb lib/Fey/Object/Schema.pm
 SHA1 c9f88791324d761f6de439f4cafdf27a873ab4bb lib/Fey/Object/Table.pm
 SHA1 6b65d9516ecd525f07657b49063dffa74b099991 t/Class/Schema.t
@@ -64,7 +64,7 @@ SHA1 d757328f50247ecdfce1ba097418cf7b426dc12e t/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAklP8HUACgkQ3Or3ZzQuifMXfACgu6muSU/MMcTwPZRpP5CmDgmY
-PS0Anj0ys8c+hIqaA9nUjOWMXStVg5WY
-=DdcB
+iEYEARECAAYFAklRFQgACgkQ3Or3ZzQuifNM7gCg2qrxMshWjUuhj5KAB4ZgJCCL
+JQAAn2hiGXST8lNOKjgxVonB3PjMqyxp
+=W+la
 -----END PGP SIGNATURE-----

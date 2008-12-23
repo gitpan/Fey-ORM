@@ -15,6 +15,7 @@ has _cached_results =>
       isa       => 'ArrayRef[ArrayRef]',
       lazy      => 1,
       default   => sub { [] },
+      init_arg  => undef,
       provides  => { push => '_cache_result',
                      get  => '_get_cached_result',
                    },
@@ -22,6 +23,12 @@ has _cached_results =>
       clearer   => '_clear_cached_results',
     );
 
+has '_sth_is_exhausted' =>
+    ( is       => 'rw',
+      isa      => 'Bool',
+      writer   => '_set_sth_is_exhausted',
+      init_arg => undef,
+    );
 
 sub next
 {
@@ -31,9 +38,18 @@ sub next
 
     unless ($result)
     {
+        # Some drivers (DBD::Pg, at least) will blow up if we try to
+        # call a ->fetch type method on an exhausted statement
+        # handle. DBD::SQLite can handle this, so it is not tested.
+        return if $self->_sth_is_exhausted();
+
         $result = $self->_get_next_result();
 
-        return unless $result;
+        unless ($result)
+        {
+            $self->_set_sth_is_exhausted(1);
+            return;
+        }
 
         $self->_cache_result($result);
     }
