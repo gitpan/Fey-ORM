@@ -15,9 +15,9 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 1c2c479515d1e96715082ef93d2bd8ec99055c90 Build.PL
-SHA1 eedc747de5ffe2fe2384adddbaff6e1878511beb Changes
+SHA1 58c87b04fc8cf2e96305f768f463ed97992d66e0 Changes
 SHA1 ef9aba4b4a0d417a92abee032d3ad610eaccc9b4 MANIFEST
-SHA1 60c69447f2616dbe0e4904be1febab9a21d22023 META.yml
+SHA1 e941561ec66227dc3268532aed9591e436ce3a42 META.yml
 SHA1 f44a610f611cc4333f9a9b52873bc5a35fb7ffb3 Makefile.PL
 SHA1 5436492d5e2af650e981486ee068817d6b79cc2b README
 SHA1 0534c59fe256279fda5f07e0e3e0c3cfc557b1b2 TODO
@@ -34,14 +34,14 @@ SHA1 fdd9028076c7c700c2d180912712c17f5c23c705 lib/Fey/Meta/HasOne.pm
 SHA1 64c7144a19805e47f91bd8bc7db5bd81dd9a319e lib/Fey/Meta/HasOne/ViaFK.pm
 SHA1 b2172e3b992d4bedd6ef93ceceb5986dcc23a51d lib/Fey/Meta/HasOne/ViaSelect.pm
 SHA1 d661fc91301aaa9b5c28b6d7f540776fb9f8c17f lib/Fey/Meta/Method/Constructor.pm
-SHA1 e5e9e9760d9e3628fb82a6defa9086bfc7c18dd0 lib/Fey/ORM.pm
+SHA1 5333c24ffa126e08f1d417a14bbb19182efc5ffc lib/Fey/ORM.pm
 SHA1 d08c50526e9865a7669c8954cb1f6ae46abb0220 lib/Fey/ORM/Exceptions.pm
 SHA1 8a400b5277005d54bca16b396ed9c3dc87b2bf43 lib/Fey/ORM/Manual.pod
 SHA1 e5492a0e0970f1f668bc4597b8937e971b9d8e9c lib/Fey/ORM/Manual/Intro.pod
 SHA1 10c467cf1015280e10ac2ac93710c52c6ac279e8 lib/Fey/ORM/Schema.pm
 SHA1 072f2a62314f4cd5cf4a4c890bacea0a0b4a9223 lib/Fey/ORM/Table.pm
-SHA1 d087f17751c1182b3c8b3c2e5d629ede5627969e lib/Fey/Object/Iterator.pm
-SHA1 fc10eca96a6d7b7ae7f04331c62868a53ffab7d8 lib/Fey/Object/Iterator/Caching.pm
+SHA1 154a58d4e6a1dfd5784d2d67472b480ee7976853 lib/Fey/Object/Iterator.pm
+SHA1 a71a1b99751c8261853cd0a3eeafa322318ecce5 lib/Fey/Object/Iterator/Caching.pm
 SHA1 21f7ffbb4ff04581e8ca40c23931d3156e73e9bb lib/Fey/Object/Schema.pm
 SHA1 c9f88791324d761f6de439f4cafdf27a873ab4bb lib/Fey/Object/Table.pm
 SHA1 6b65d9516ecd525f07657b49063dffa74b099991 t/Class/Schema.t
@@ -52,7 +52,7 @@ SHA1 90178e52a845bdcb16eafbe8382fe2086a5f4c40 t/Object/Iterator.t
 SHA1 3f145f2b1278b3906fce19857248c54025d1c798 t/Object/Iterator/Caching.t
 SHA1 da4afea09936af504a5aa4096b2d4d3a734d59a8 t/Object/Schema.t
 SHA1 77695f0cd964c427fc55dceeaa2a7d24717032ec t/Object/Table-cache.t
-SHA1 125212ffd8d8cf73949fc88bf87941301f22ef41 t/Object/Table-has_many.t
+SHA1 ebf859810d89c0f05547345b851279235b52a150 t/Object/Table-has_many.t
 SHA1 ba237b7d9ae4a4bade317e071cc9881bd862d80e t/Object/Table-has_one.t
 SHA1 58c7fb14d57d07e947481303b53827b5347a331b t/Object/Table-select-attr.t
 SHA1 eb3e260d2a3e3a2ec4d02914eeba3a64e8906ae6 t/Object/Table.t
@@ -64,7 +64,7 @@ SHA1 d757328f50247ecdfce1ba097418cf7b426dc12e t/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAklSZyMACgkQ3Or3ZzQuifP10ACgxpMsqiscT2NR0aIO66U0trHr
-EwsAnjv007wJXUpOxqkutztExWzRgcal
-=rX2H
+iEYEARECAAYFAklSgOMACgkQ3Or3ZzQuifMC+wCg0uiYSKTamwXMJ/eRYhyqRlnf
+AysAoKkqQuTLTgev3ISjRU36oWcDxoSn
+=/xqu
 -----END PGP SIGNATURE-----
