@@ -5,6 +5,7 @@ use warnings;
 
 use Moose;
 use MooseX::AttributeHelpers;
+use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
 
 extends 'Fey::Object::Iterator';
@@ -28,7 +29,6 @@ has _cached_results =>
 has '_sth_is_exhausted' =>
     ( is       => 'rw',
       isa      => 'Bool',
-      writer   => '_set_sth_is_exhausted',
       init_arg => undef,
     );
 
@@ -168,7 +168,7 @@ See L<Fey::ORM> for details.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2006-2008 Dave Rolsky, All Rights Reserved.
+Copyright 2006-2009 Dave Rolsky, All Rights Reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. The full text of the license

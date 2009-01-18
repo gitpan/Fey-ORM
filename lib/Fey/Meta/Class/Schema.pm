@@ -10,12 +10,13 @@ use Fey::DBIManager;
 use Moose;
 use MooseX::AttributeHelpers;
 use MooseX::ClassAttribute;
+use MooseX::SemiAffordanceAccessor;
 
 extends 'Moose::Meta::Class';
 
 class_has '_SchemaClassMap' =>
     ( metaclass => 'Collection::Hash',
-      is        => 'rw',
+      is        => 'ro',
       isa       => 'HashRef[Fey::Schema]',
       default   => sub { {} },
       lazy      => 1,
@@ -35,7 +36,6 @@ has 'schema' =>
 has 'dbi_manager' =>
     ( is        => 'rw',
       isa       => 'Fey::DBIManager',
-      writer    => 'set_dbi_manager',
       lazy      => 1,
       default   => sub { Fey::DBIManager->new() },
     );
@@ -43,7 +43,6 @@ has 'dbi_manager' =>
 has 'sql_factory_class' =>
     ( is        => 'rw',
       isa       => 'ClassName',
-      writer    => 'set_sql_factory_class',
       lazy      => 1,
       default   => 'Fey::SQL',
     );
@@ -140,7 +139,7 @@ See L<Fey::ORM> for details.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2006-2008 Dave Rolsky, All Rights Reserved.
+Copyright 2006-2009 Dave Rolsky, All Rights Reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. The full text of the license

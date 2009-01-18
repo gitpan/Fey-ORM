@@ -1,3 +1,16 @@
+0.19   2009-01-18
+
+- Added attribute metaclasses for attributes created based on columns
+  (Fey::Meta::Attribute::FromColumn), and attributes based on an
+  inflated column value (Fey::Meta::Attribute::FromInflator).
+
+- When a column attribute with an inflator was written, the inflated
+  value would stay the same, rather than reflecting the new raw value.
+
+- Added Fey::ORM::Policy, which lets you set policies for column
+  transforms and foreign key method naming.
+
+
 0.18   2008-12-24
 
 - The handling of caching iterators in 0.17 was still broken. It

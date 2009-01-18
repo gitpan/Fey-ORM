@@ -79,6 +79,10 @@ sub _make_default_from_select
 no Moose;
 no Moose::Util::TypeConstraints;
 
+# The parent class's constructor is not a Moose::Object-based
+# constructor, so we don't want to inline one that is.
+__PACKAGE__->meta()->make_immutable( inline_constructor => 0 );
+
 package # hide from PAUSE
     Moose::Meta::Attribute::Custom::FromSelect;
 sub register_implementation { 'Fey::Meta::Attribute::FromSelect' }
@@ -140,7 +144,7 @@ C<Moose::Meta::Attribute>:
 
 =head2 $attr->select()
 
-Returns the C<Fey::SQL::Select> object associated with this object.
+Returns the C<Fey::SQL::Select> object associated with this attribute.
 
 =head2 $attr->bind_params()
 
@@ -164,7 +168,7 @@ See L<Fey::ORM> for details.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2006-2008 Dave Rolsky, All Rights Reserved.
+Copyright 2006-2009 Dave Rolsky, All Rights Reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. The full text of the license

@@ -1,7 +1,8 @@
 Build.PL
 Changes
-eg/Vendor.pm
 lib/Fey/Hash/ColumnsKey.pm
+lib/Fey/Meta/Attribute/FromColumn.pm
+lib/Fey/Meta/Attribute/FromInflator.pm
 lib/Fey/Meta/Attribute/FromSelect.pm
 lib/Fey/Meta/Class/Schema.pm
 lib/Fey/Meta/Class/Table.pm
@@ -15,18 +16,21 @@ lib/Fey/Meta/HasOne/ViaSelect.pm
 lib/Fey/Meta/Method/Constructor.pm
 lib/Fey/Object/Iterator.pm
 lib/Fey/Object/Iterator/Caching.pm
+lib/Fey/Object/Policy.pm
 lib/Fey/Object/Schema.pm
 lib/Fey/Object/Table.pm
 lib/Fey/ORM.pm
 lib/Fey/ORM/Exceptions.pm
 lib/Fey/ORM/Manual.pod
 lib/Fey/ORM/Manual/Intro.pod
+lib/Fey/ORM/Policy.pm
 lib/Fey/ORM/Schema.pm
 lib/Fey/ORM/Table.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
 README
+t/Class/Policy.t
 t/Class/Schema.t
 t/Class/Table-has_many.t
 t/Class/Table-has_one.t

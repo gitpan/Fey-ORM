@@ -29,6 +29,12 @@ has name =>
       lazy_build => 1,
     );
 
+has namer =>
+    ( is       => 'ro',
+      isa      => 'CodeRef',
+      required => 1,
+    );
+
 has table =>
     ( is       => 'ro',
       isa      => 'Fey.ORM.Type.TableWithSchema',
@@ -52,7 +58,7 @@ sub _build_name
 {
     my $self = shift;
 
-    return lc $self->foreign_table()->name();
+    return $self->namer()->( $self->foreign_table(), $self );
 }
 
 sub _find_one_fk_between_tables
@@ -185,7 +191,7 @@ See L<Fey::ORM> for details.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2006-2008 Dave Rolsky, All Rights Reserved.
+Copyright 2006-2009 Dave Rolsky, All Rights Reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. The full text of the license

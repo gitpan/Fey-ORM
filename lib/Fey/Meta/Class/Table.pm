@@ -12,6 +12,9 @@ use Fey::Validate qw( validate SCALAR_TYPE ARRAYREF_TYPE BOOLEAN_TYPE
 use Fey::Hash::ColumnsKey;
 use Fey::Object::Iterator;
 use Fey::Object::Iterator::Caching;
+use Fey::Object::Policy;
+use Fey::Meta::Attribute::FromInflator;
+use Fey::Meta::Attribute::FromColumn;
 use Fey::Meta::Attribute::FromSelect;
 use Fey::Meta::Class::Schema;
 use Fey::Meta::HasOne::ViaFK;
@@ -24,12 +27,13 @@ use List::MoreUtils qw( all );
 use Moose qw( extends with has );
 use MooseX::AttributeHelpers;
 use MooseX::ClassAttribute;
+use MooseX::SemiAffordanceAccessor;
 
 extends 'Moose::Meta::Class';
 
 class_has '_ClassToTableMap' =>
     ( metaclass => 'Collection::Hash',
-      is        => 'rw',
+      is        => 'ro',
       isa       => 'HashRef[Fey::Table]',
       default   => sub { {} },
       lazy      => 1,
@@ -44,7 +48,6 @@ has '_object_cache_is_enabled' =>
       isa     => 'Bool',
       lazy    => 1,
       default => 0,
-      writer  => '_set_object_cache_is_enabled',
     );
 
 has '_object_cache' =>
@@ -64,7 +67,7 @@ has 'table' =>
 
 has 'inflators' =>
     ( metaclass => 'Collection::Hash',
-      is        => 'rw',
+      is        => 'ro',
       isa       => 'HashRef[CodeRef]',
       default   => sub { {} },
       lazy      => 1,
@@ -75,7 +78,7 @@ has 'inflators' =>
 
 has 'deflators' =>
     ( metaclass => 'Collection::Hash',
-      is        => 'rw',
+      is        => 'ro',
       isa       => 'HashRef[CodeRef]',
       default   => sub { {} },
       lazy      => 1,
@@ -85,7 +88,7 @@ has 'deflators' =>
                    },
     );
 
-has 'schema_class',
+has 'schema_class' =>
     ( is      => 'ro',
       isa     => 'ClassName',
       lazy    => 1,
@@ -93,9 +96,15 @@ has 'schema_class',
                            ->ClassForSchema( $_[0]->table()->schema() ) },
     );
 
+has 'policy' =>
+    ( is      => 'rw',
+      isa     => 'Fey::Object::Policy',
+      default => sub { Fey::Object::Policy->new() },
+    );
+
 has '_has_ones' =>
     ( metaclass => 'Collection::Hash',
-      is        => 'rw',
+      is        => 'ro',
       isa       => 'HashRef[Fey::Meta::HasOne]',
       default   => sub { {} },
       lazy      => 1,
@@ -109,7 +118,7 @@ has '_has_ones' =>
 
 has '_has_manies' =>
     ( metaclass => 'Collection::Hash',
-      is        => 'rw',
+      is        => 'ro',
       isa       => 'HashRef[Fey::Meta::HasMany]',
       default   => sub { {} },
       lazy      => 1,
@@ -121,21 +130,21 @@ has '_has_manies' =>
                    },
     );
 
-has '_select_sql_cache',
+has '_select_sql_cache' =>
     ( is      => 'ro',
       isa     => 'Fey::Hash::ColumnsKey',
       lazy    => 1,
       default => sub { Fey::Hash::ColumnsKey->new() },
     );
 
-has '_select_by_pk_sql',
+has '_select_by_pk_sql' =>
     ( is        => 'ro',
       isa       => 'Fey::SQL::Select',
       lazy      => 1,
       default   => sub { return $_[0]->name()->_MakeSelectByPKSQL() },
     );
 
-has '_count_sql',
+has '_count_sql' =>
     ( is         => 'ro',
       isa        => 'Fey::SQL::Select',
       lazy_build => 1,
@@ -253,17 +262,23 @@ sub _make_column_attributes
 
         next if $self->has_method($name);
 
-        my %attr_p = ( is        => 'rw',
-                       writer    => q{_set_} . $name,
+        my %attr_p = ( metaclass => 'Fey::Meta::Attribute::FromColumn',
+                       is        => 'rw',
+                       isa       => $self->_type_for_column($column),
                        lazy      => 1,
-                       default => sub { $_[0]->_get_column_value($name) },
+                       default   => sub { $_[0]->_get_column_value($name) },
+                       column    => $column,
+                       writer    => q{_set_} . $name,
+                       clearer   => q{_clear_} . $name,
+                       predicate => q{has_} . $name,
                      );
 
-        $attr_p{isa}       = $self->_type_for_column($column);
-        $attr_p{clearer}   = q{_clear_} . $name;
-        $attr_p{predicate} = q{has_} . $name;
-
         $self->add_attribute( $name, %attr_p );
+
+        if ( my $transform = $self->policy()->transform_for_column($column) )
+        {
+            $self->_add_transform( $name, %{ $transform } );
+        }
     }
 }
 
@@ -306,59 +321,8 @@ sub _add_transform
     param_error "The column $name does not exist as an attribute"
         unless $attr;
 
-    if ( my $inflate_sub = $p{inflate} )
-    {
-        my $raw_reader = $name . q{_raw};
-
-        param_error "Cannot provide more than one inflator for a column ($name)"
-            if $self->has_method($raw_reader);
-
-        $self->add_method( $raw_reader => $attr->get_read_method_ref() );
-
-        my $cache_name      = q{_inflated_} . $name;
-        my $cache_set       = q{_set_inflated_} . $name;
-        my $cache_predicate = q{_has} . $cache_name;
-        my $cache_clear     = q{_clear_} . $cache_name;
-
-        $self->add_attribute( $cache_name,
-                              is        => 'rw',
-                              writer    => $cache_set,
-                              predicate => $cache_predicate,
-                              clearer   => $cache_clear,
-                              init_arg  => undef,
-                            );
-
-        my $inflator =
-            sub { my $orig = shift;
-                  my $self = shift;
-
-                  return $self->$cache_name()
-                      if $self->$cache_predicate();
-
-                  my $val = $self->$orig();
-
-                  my $inflated = $self->$inflate_sub($val);
-
-                  $self->$cache_set($inflated);
-
-                  return $inflated;
-                };
-
-        $self->add_around_method_modifier( $name => $inflator );
-
-        my $clear_inflator =
-            sub { my $orig = shift;
-                  my $self = shift;
-
-                  $self->$cache_clear();
-
-                  $self->$orig();
-                };
-
-        $self->add_around_method_modifier( $attr->clearer(), $clear_inflator );
-
-        $self->_add_inflator( $name => $inflate_sub );
-    }
+    $self->_add_inflator_to_attribute( $name, $attr, $p{inflate} )
+        if $p{inflate};
 
     if ( $p{deflate} )
     {
@@ -367,6 +331,60 @@ sub _add_transform
 
         $self->_add_deflator( $name => $p{deflate} );
     }
+}
+
+sub _add_inflator_to_attribute
+{
+    my $self     = shift;
+    my $name     = shift;
+    my $attr     = shift;
+    my $inflator = shift;
+
+    param_error "Cannot provide more than one inflator for a column ($name)"
+        if $attr->isa('Fey::Meta::Attribute::FromInflator');
+
+    $self->remove_attribute($name);
+
+    my $raw_name = $name . q{_raw};
+
+    # XXX - should the private writer invoke the deflator?
+    my $raw_attr = $attr->clone( name    => $raw_name,
+                                 reader  => $raw_name,
+                               );
+
+    $self->add_attribute($raw_attr);
+
+    my $inflated_predicate = q{_has_inflated_} . $name;
+    my $inflated_clear     = q{_clear_inflated_} . $name;
+
+    my $default = sub { my $self = shift;
+
+                        return $self->$inflator( $self->$raw_name() );
+                      };
+
+    $self->add_attribute
+        ( $name,
+          metaclass     => 'Fey::Meta::Attribute::FromInflator',
+          is            => 'ro',
+          lazy          => 1,
+          default       => $default,
+          predicate     => $inflated_predicate,
+          clearer       => $inflated_clear,
+          init_arg      => undef,
+          raw_attribute => $raw_attr,
+          inflator      => $inflator,
+        );
+
+    my $clear_inflated =
+        sub { my $self = shift;
+
+              $self->$inflated_clear();
+            };
+
+    $self->add_after_method_modifier( $raw_attr->clearer(), $clear_inflated );
+    $self->add_after_method_modifier( $raw_attr->writer(), $clear_inflated );
+
+    $self->_add_inflator( $name => $inflator );
 }
 
 sub add_has_one
@@ -393,6 +411,7 @@ sub add_has_one
     my $has_one =
         $class->new
             ( table => $self->table(),
+              namer => $self->policy()->has_one_namer(),
               %p,
             );
 
@@ -437,6 +456,7 @@ sub add_has_many
     my $has_many =
         $class->new
             ( table => $self->table(),
+              namer => $self->policy()->has_many_namer(),
               %p,
             );
 
@@ -587,7 +607,7 @@ See L<Fey::ORM> for details.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2006-2008 Dave Rolsky, All Rights Reserved.
+Copyright 2006-2009 Dave Rolsky, All Rights Reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. The full text of the license

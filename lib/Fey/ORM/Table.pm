@@ -3,6 +3,7 @@ package Fey::ORM::Table;
 use strict;
 use warnings;
 
+use Class::MOP;
 use Fey::Meta::Class::Table;
 use Fey::Object::Table;
 use Fey::Validate qw( validate_pos TABLE_TYPE );
@@ -10,7 +11,7 @@ use Moose ();
 use Moose::Exporter;
 
 Moose::Exporter->setup_import_methods
-    ( with_caller => [qw( has_table has_one has_many transform )],
+    ( with_caller => [qw( has_table has_policy has_one has_many transform )],
       as_is       => [qw( inflate deflate )],
       also        => 'Moose'
     );
@@ -36,6 +37,21 @@ sub init_meta
 
         $caller->meta()->_associate_table($table);
     }
+}
+
+sub has_policy
+{
+    my $caller = shift;
+    my $policy = shift;
+
+    unless ( ref $policy )
+    {
+        Class::MOP::load_class($policy);
+
+        $policy = $policy->Policy();
+    }
+
+    $caller->meta()->set_policy($policy);
 }
 
 sub transform
@@ -168,6 +184,13 @@ predicate.
 These column-named attributes do not have a public setter method. If
 you want to change the value of these attributes, you need to use the
 C<update()> method.
+
+=head2 has_policy($policy_class)
+
+=head2 has_policy($policy_object)
+
+This allows you to associate a policy with your class. See
+L<Fey::ORM::Policy> for details on how policies work.
 
 =head2 has_one($table)
 
@@ -334,7 +357,7 @@ See L<Fey::ORM> for details.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2006-2008 Dave Rolsky, All Rights Reserved.
+Copyright 2006-2009 Dave Rolsky, All Rights Reserved.
 
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. The full text of the license
