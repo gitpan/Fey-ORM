@@ -1,3 +1,9 @@
+0.20   2009-02-06
+
+- Use MooseX::Params::Validate instead of the no-longer-in-Fey
+  Fey::Validate.
+
+
 0.19   2009-01-18
 
 - Added attribute metaclasses for attributes created based on columns

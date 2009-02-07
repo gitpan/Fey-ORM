@@ -19,7 +19,7 @@ SYNOPSIS
       has_many 'messages' =>
           ( table =>  $schema->table('Messages') );
 
-    "MyApp::Model::Schema" might look like this:
+    `MyApp::Model::Schema' might look like this:
 
       package MyApp::Model::Schema;
 
@@ -50,14 +50,14 @@ SYNOPSIS
       $user->update( username => 'bob' );
 
 DESCRIPTION
-    "Fey::ORM" builds on top of other Fey project libraries to create an ORM
+    `Fey::ORM' builds on top of other Fey project libraries to create an ORM
     focused on easy SQL generation. This is an ORM for people who are
     comfortable with SQL and want to be able to use it with their objects,
     rather than people who like OO and don't want to think about the DBMS.
 
-    "Fey::ORM" also draws inspiration from "Moose" and tries to provide as
+    `Fey::ORM' also draws inspiration from `Moose' and tries to provide as
     much functionality as it can via a simple declarative interface. Of
-    course, it uses "Moose" under the hood for its implementation.
+    course, it uses `Moose' under the hood for its implementation.
 
 EARLY VERSION WARNING
     This is still very new software, and APIs may change in future releases
@@ -76,10 +76,10 @@ AUTHOR
     Dave Rolsky, <autarch@urth.org>
 
 BUGS
-    Please report any bugs or feature requests to "bug-fey-orm@rt.cpan.org",
-    or through the web interface at <http://rt.cpan.org>. I will be
-    notified, and then you'll automatically be notified of progress on your
-    bug as I make changes.
+    Please report any bugs or feature requests to `bug-fey-orm@rt.cpan.org',
+    or through the web interface at http://rt.cpan.org. I will be notified,
+    and then you'll automatically be notified of progress on your bug as I
+    make changes.
 
 COPYRIGHT & LICENSE
     Copyright 2006-2009 Dave Rolsky, All Rights Reserved.
