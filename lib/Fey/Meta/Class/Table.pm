@@ -5,8 +5,6 @@ use warnings;
 
 use Fey::Exceptions qw( param_error );
 use Fey::Hash::ColumnsKey;
-use Fey::Object::Iterator;
-use Fey::Object::Iterator::Caching;
 use Fey::Object::Policy;
 use Fey::Meta::Attribute::FromInflator;
 use Fey::Meta::Attribute::FromColumn;
@@ -316,7 +314,7 @@ sub _add_transform
     param_error "The column $name does not exist as an attribute"
         unless $attr;
 
-    $self->_add_inflator_to_attribute( $name, $attr, $p{inflate} )
+    $self->_add_inflator_to_attribute( $name, $attr, $p{inflate}, $p{handles} )
         if $p{inflate};
 
     if ( $p{deflate} )
@@ -334,6 +332,7 @@ sub _add_inflator_to_attribute
     my $name     = shift;
     my $attr     = shift;
     my $inflator = shift;
+    my $handles  = shift;
 
     param_error "Cannot provide more than one inflator for a column ($name)"
         if $attr->isa('Fey::Meta::Attribute::FromInflator');
@@ -357,6 +356,8 @@ sub _add_inflator_to_attribute
                         return $self->$inflator( $self->$raw_name() );
                       };
 
+    my %handles = $handles ? ( handles => $handles ) : ();
+
     $self->add_attribute
         ( $name,
           metaclass     => 'Fey::Meta::Attribute::FromInflator',
@@ -368,6 +369,7 @@ sub _add_inflator_to_attribute
           init_arg      => undef,
           raw_attribute => $raw_attr,
           inflator      => $inflator,
+          %handles,
         );
 
     my $clear_inflated =
@@ -531,17 +533,17 @@ This class provides the following methods:
 
 =head2 Fey::Meta::Class::Table->ClassForTable( $table1, $table2 )
 
-Given one or more C<Fey::Table> objects, this method returns the name
+Given one or more L<Fey::Table> objects, this method returns the name
 of the class which "has" that table, if any.
 
 =head2 Fey::Meta::Class::Table->TableForClass($class)
 
-Given a class, this method returns the C<Fey::Table> object associated
+Given a class, this method returns the L<Fey::Table> object associated
 with that class, if any.
 
 =head2 $meta->table()
 
-Returns the C<Fey::Table> for the metaclass's class.
+Returns the L<Fey::Table> for the metaclass's class.
 
 =head2 $meta->add_has_one(%options)
 
@@ -552,7 +554,7 @@ C<HasOne> meta-object.
 
 =head2 $meta->has_ones()
 
-Returns a list of the C<Fey::Meta::HasOne> objects added to this
+Returns a list of the L<Fey::Meta::HasOne> objects added to this
 metaclass.
 
 =head2 $meta->remove_has_one($name)
@@ -569,7 +571,7 @@ C<HasMany> meta-object.
 
 =head2 $meta->has_manies()
 
-Returns a list of the C<Fey::Meta::HasMany> objects added to this
+Returns a list of the L<Fey::Meta::HasMany> objects added to this
 metaclass.
 
 =head2 $meta->remove_has_many($name)

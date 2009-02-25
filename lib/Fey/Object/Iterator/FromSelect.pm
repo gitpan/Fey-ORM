@@ -1,35 +1,17 @@
-package Fey::Object::Iterator;
+package Fey::Object::Iterator::FromSelect;
 
 use strict;
 use warnings;
 
 use Fey::Exceptions qw( param_error );
-use List::MoreUtils qw( any pairwise );
 
 use Devel::GlobalDestruction;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::AttributeHelpers;
 use MooseX::StrictConstructor;
-use Moose::Util::TypeConstraints;
 
-subtype 'ArrayRefOfClasses'
-    => as 'ArrayRef',
-    => where { return 0 unless @{$_};
-               return 0 if any { ! $_->isa('Fey::Object::Table') } @{ $_ };
-               return 1;
-             }
-    => message { 'Must be an array reference of Fey::Object::Table subclasses' };
-
-coerce 'ArrayRefOfClasses'
-    => from 'ClassName'
-    => via { return [ $_ ] };
-
-has classes =>
-    ( is     => 'ro',
-      isa    => 'ArrayRefOfClasses',
-      coerce => 1,
-    );
+with 'Fey::ORM::Role::Iterator';
 
 has dbh =>
     ( is       => 'ro',
@@ -58,17 +40,6 @@ has _sth =>
       predicate  => '_has_sth',
       clearer    => '_clear_sth',
       init_arg   => undef,
-    );
-
-has index =>
-    ( metaclass => 'Counter',
-      is       => 'ro',
-      isa      => 'Int',
-      default  => 0,
-      init_arg => undef,
-      provides => { 'inc'   => '_inc_index',
-                    'reset' => '_reset_index',
-                  },
     );
 
 has 'attribute_map' =>
@@ -110,19 +81,6 @@ sub _validate_attribute_map
         die "Cannot include a class in attribute_map ($class) unless it also in classes"
             unless $valid_classes{$class};
     }
-}
-
-sub next
-{
-    my $self = shift;
-
-    my $result = $self->_get_next_result();
-
-    return unless $result;
-
-    $self->_inc_index();
-
-    return wantarray ? @{ $result } : $result->[0];
 }
 
 sub _get_next_result
@@ -199,45 +157,6 @@ sub _build__merged_attribute_map
     }
 
     return \%map;
-}
-
-sub all
-{
-    my $self = shift;
-
-    my @result;
-    while ( my @r = $self->next() )
-    {
-        push @result, @r == 1 ? @r : \@r;
-    }
-
-    return @result;
-}
-
-sub next_as_hash
-{
-    my $self = shift;
-
-    my @result = $self->next();
-
-    return unless @result;
-
-    return
-        pairwise { $a->Table()->name() => $b }
-        @{ $self->classes() }, @result;
-}
-
-sub all_as_hashes
-{
-    my $self = shift;
-
-    my @result;
-    while ( my %r = $self->next_as_hash() )
-    {
-        push @result, \%r;
-    }
-
-    return @result;
 }
 
 sub reset
@@ -337,7 +256,7 @@ A connected DBI handle
 
 =item * select
 
-This should be a C<Fey::SQL::Select> object representing the C<SELECT>
+This should be a L<Fey::SQL::Select> object representing the C<SELECT>
 statement that this iterator will iterator over.
 
 =item * bind_params
@@ -377,11 +296,18 @@ is called.
 
 If the statement handle is exhausted, this method returns false.
 
-=head2 $iterator->all()
+=head2 $iterator->remaining()
 
 This returns all of the I<remaining> sets of objects. If the iterator
 is for a single class, it returns a list of objects of that class. If
 it is for multiple objects, it returns a list of array references.
+
+=head2 $iterator->all()
+
+This returns all of the sets of objects. If necessary, it will call
+C<< $iterator->reset() >> first. If the iterator is for a single
+class, it returns a list of objects of that class. If it is for
+multiple objects, it returns a list of array references.
 
 =head2 $iterator->next_as_hash()
 
@@ -390,10 +316,17 @@ the object's associated table.
 
 If the statement handle is exhausted, this method returns false.
 
-=head2 $iterator->all_as_hashes()
+=head2 $iterator->remaining_as_hashes()
 
 This returns all of the I<remaining> sets of objects as a list of hash
 references. Each hash ref is keyed on the table name of the associated
+object's class.
+
+=head2 $iterator->all_as_hashes()
+
+This returns all of the sets of objects as a list of hash
+references. If necessary, it will call C<< $iterator->reset() >>
+first. Each hash ref is keyed on the table name of the associated
 object's class.
 
 =head2 $iterator->reset()
@@ -406,7 +339,7 @@ different objects after a reset.
 
 =head2 $iterator->DEMOLISH()
 
-This method will call C<< $sth->finish() >> on its C<DBI> statment
+This method will call C<< $sth->finish() >> on its C<DBI> statement
 handle if necessary.
 
 =head1 ATTRIBUTE MAPPING
@@ -479,6 +412,10 @@ query.
 
 Explicit mappings to classes not listed in the "classes" attribute
 cause an error at object construction time.
+
+=head1 ROLES
+
+This class does the L<Fey::ORM::Role::Iterator> role.
 
 =head1 AUTHOR
 

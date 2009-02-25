@@ -50,12 +50,12 @@ SYNOPSIS
       $user->update( username => 'bob' );
 
 DESCRIPTION
-    `Fey::ORM' builds on top of other Fey project libraries to create an ORM
+    Fey::ORM builds on top of other Fey project libraries to create an ORM
     focused on easy SQL generation. This is an ORM for people who are
     comfortable with SQL and want to be able to use it with their objects,
     rather than people who like OO and don't want to think about the DBMS.
 
-    `Fey::ORM' also draws inspiration from `Moose' and tries to provide as
+    Fey::ORM also draws inspiration from `Moose' and tries to provide as
     much functionality as it can via a simple declarative interface. Of
     course, it uses `Moose' under the hood for its implementation.
 

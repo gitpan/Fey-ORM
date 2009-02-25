@@ -14,8 +14,9 @@ lib/Fey/Meta/HasOne.pm
 lib/Fey/Meta/HasOne/ViaFK.pm
 lib/Fey/Meta/HasOne/ViaSelect.pm
 lib/Fey/Meta/Method/Constructor.pm
-lib/Fey/Object/Iterator.pm
-lib/Fey/Object/Iterator/Caching.pm
+lib/Fey/Object/Iterator/FromArray.pm
+lib/Fey/Object/Iterator/FromSelect.pm
+lib/Fey/Object/Iterator/FromSelect/Caching.pm
 lib/Fey/Object/Policy.pm
 lib/Fey/Object/Schema.pm
 lib/Fey/Object/Table.pm
@@ -24,6 +25,7 @@ lib/Fey/ORM/Exceptions.pm
 lib/Fey/ORM/Manual.pod
 lib/Fey/ORM/Manual/Intro.pod
 lib/Fey/ORM/Policy.pm
+lib/Fey/ORM/Role/Iterator.pm
 lib/Fey/ORM/Schema.pm
 lib/Fey/ORM/Table.pm
 Makefile.PL
@@ -35,18 +37,19 @@ t/Class/Schema.t
 t/Class/Table-has_many.t
 t/Class/Table-has_one.t
 t/Class/Table.t
-t/kwalitee.t
 t/lib/Fey/ORM/Test.pm
 t/lib/Fey/ORM/Test/Iterator.pm
-t/Object/Iterator.t
-t/Object/Iterator/Caching.t
+t/Object/Iterator/FromArray.t
+t/Object/Iterator/FromSelect.t
+t/Object/Iterator/FromSelect/Caching.t
 t/Object/Schema.t
 t/Object/Table-cache.t
 t/Object/Table-has_many.t
 t/Object/Table-has_one.t
 t/Object/Table-select-attr.t
 t/Object/Table.t
-t/pod-coverage.t
-t/pod.t
 TODO
+xt/kwalitee.t
+xt/pod-coverage.t
+xt/pod.t
 SIGNATURE    Added here by Module::Build

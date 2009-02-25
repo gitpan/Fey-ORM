@@ -3,7 +3,7 @@ use warnings;
 
 use Test::More;
 
-use Fey::Object::Iterator::Caching;
+use Fey::Object::Iterator::FromSelect::Caching;
 
 use lib 't/lib';
 
@@ -11,10 +11,10 @@ use Fey::ORM::Test::Iterator;
 use Fey::Test;
 
 
-plan tests => 45;
+plan tests => 47;
 
 
-Fey::ORM::Test::Iterator::run_shared_tests('Fey::Object::Iterator::Caching');
+Fey::ORM::Test::Iterator::run_shared_tests('Fey::Object::Iterator::FromSelect::Caching');
 
 my $dbh = Fey::Test::SQLite->dbh();
 my $schema = Fey::ORM::Test->schema();
@@ -25,17 +25,19 @@ my $schema = Fey::ORM::Test->schema();
                       ->from( $schema->table('User') )
                       ->order_by( $schema->table('User')->column('user_id') );
 
-    my $iterator = Fey::Object::Iterator::Caching->new( classes => 'User',
-                                                        dbh     => $dbh,
-                                                        select  => $sql,
-                                                      );
+    my $iterator =
+        Fey::Object::Iterator::FromSelect::Caching->new
+            ( classes => 'User',
+              dbh     => $dbh,
+              select  => $sql,
+            );
 
     # Just empty the iterator
     while ( $iterator->next() ) { }
 
     # This means we can only get results from the cache.
     no warnings 'redefine';
-    local *Fey::Object::Iterator::_get_next_result = sub {};
+    local *Fey::Object::Iterator::FromSelect::_get_next_result = sub {};
 
     $iterator->reset();
 

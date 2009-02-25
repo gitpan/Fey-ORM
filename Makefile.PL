@@ -11,7 +11,7 @@ WriteMakefile
                            'Fey::DBIManager' => '0.07',
                            'Fey::Test' => '0.05',
                            'List::MoreUtils' => '0',
-                           'Moose' => '0.63',
+                           'Moose' => '0.71_01',
                            'MooseX::AttributeHelpers' => '0.13',
                            'MooseX::ClassAttribute' => '0',
                            'MooseX::SemiAffordanceAccessor' => '0',

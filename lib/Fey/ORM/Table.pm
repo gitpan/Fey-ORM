@@ -13,7 +13,7 @@ use MooseX::Params::Validate qw( pos_validated_list );
 
 Moose::Exporter->setup_import_methods
     ( with_caller => [qw( has_table has_policy has_one has_many transform )],
-      as_is       => [qw( inflate deflate )],
+      as_is       => [qw( inflate deflate handles )],
       also        => 'Moose'
     );
 
@@ -82,6 +82,11 @@ sub inflate (&)
 sub deflate (&)
 {
     return { deflate => $_[0] };
+}
+
+sub handles ($)
+{
+    return { handles => $_[0] };
 }
 
 sub has_one
@@ -153,7 +158,7 @@ This package exports the following functions:
 
 =head2 has_table($table)
 
-Given a C<Fey::Table> object, this method associates that table with
+Given a L<Fey::Table> object, this method associates that table with
 the calling class.
 
 Calling C<has_table()> will make your class a subclass of
@@ -193,7 +198,7 @@ class's table and another table. The method it creates returns an
 object of the foreign table's class, or undef or none exists.
 
 With the single-argument form, you can simply pass a single
-C<Fey::Table> object. This works when there is a single foreign key
+L<Fey::Table> object. This works when there is a single foreign key
 between the calling class's table and the table passed to
 C<has_one()>.
 
@@ -231,7 +236,7 @@ attribute.
 This is an alternative form of C<has_one()> that lets you declare a
 relationship to another table via an arbitrary SELECT statement.
 
-In this form, you provide a C<Fey::SQL::Select> object to define the
+In this form, you provide a L<Fey::SQL::Select> object to define the
 SQL used to fetch the foreign row. You can provide a C<bind_params>
 parameter as a code reference, which will be called as a method on
 your object. It is expected to return one or more bind parameters. The
@@ -250,11 +255,11 @@ you need to make sure it has placeholders.
 
 The C<has_many()> function declares a relationship between the calling
 class's table and another table, just like C<has_one()>. The method it
-creates returns a C<Fey::Object::Iterator> of the foreign table's
-objects.
+creates returns a L<Fey::Object::Iterator::FromSelect> of the foreign
+table's objects.
 
 With the single-argument form, you can simply pass a single
-C<Fey::Table> object. This works when there is a single foreign key
+L<Fey::Table> object. This works when there is a single foreign key
 between the calling class's table and the table passed to
 C<has_many()>.
 
@@ -272,7 +277,7 @@ key between the two tables. Finally, you can turn on caching by
 setting C<cache> to a true value.
 
 When caching is enabled, the iterator returned is of the
-C<Fey::Object::Iterator::Caching> class.
+L<Fey::Object::Iterator::FromSelect::Caching> class.
 
 Also, a private clearer method is created when caching is enabled, of
 the form C<< $object->_clear_$name() >>.
@@ -334,10 +339,24 @@ once:
 These are sugar functions that accept a single coderef. They mostly
 exist to prevent you from having to write this:
 
+  # this is not valid code!
   transform 'creation_date' =>
       ( inflator => sub { ... },
         deflator => sub { ... },
       );
+
+=head2 handles ...
+
+This sugar function lets you add delegation to an inflated
+attribute. It accepts anything that Moose accepts for an attribute's
+C<handles> parameter.
+
+  transform 'creation_date'
+      => inflate { ... }
+      => handles { creation_ymd     => 'ymd',
+                   creation_iso8601 => 'iso8601',
+                 }
+      => deflate { ... };
 
 =head1 AUTHOR
 

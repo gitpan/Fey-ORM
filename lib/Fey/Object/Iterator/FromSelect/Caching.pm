@@ -1,4 +1,4 @@
-package Fey::Object::Iterator::Caching;
+package Fey::Object::Iterator::FromSelect::Caching;
 
 use strict;
 use warnings;
@@ -8,7 +8,7 @@ use MooseX::AttributeHelpers;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
 
-extends 'Fey::Object::Iterator';
+extends 'Fey::Object::Iterator::FromSelect';
 
 has _cached_results =>
     ( metaclass => 'Collection::Array',
@@ -32,7 +32,7 @@ has '_sth_is_exhausted' =>
       init_arg => undef,
     );
 
-sub next
+sub _get_next_result
 {
     my $self = shift;
 
@@ -45,7 +45,7 @@ sub next
         # handle. DBD::SQLite can handle this, so it is not tested.
         return if $self->_sth_is_exhausted();
 
-        $result = $self->_get_next_result();
+        $result = $self->SUPER::_get_next_result();
 
         unless ($result)
         {
@@ -56,9 +56,7 @@ sub next
         $self->_cache_result($result);
     }
 
-    $self->_inc_index();
-
-    return wantarray ? @{ $result } : $result->[0];
+    return $result;
 }
 
 sub reset
@@ -130,26 +128,20 @@ Fey::Object::Iterator::Caching - A caching subclass of Fey::Object::Iterator
 =head1 DESCRIPTION
 
 This class implements a caching subclass of
-C<Fey::Objcet::Iterator>. This means that it caches objects it creates
-internally. When C<< $iterator->reset() >> is called it will re-use
-those objects before fetching more data from the DBMS.
+L<Fey::Object::Iterator::FromSelect>. This means that it caches
+objects it creates internally. When C<< $iterator->reset() >> is
+called it will re-use those objects before fetching more data from the
+DBMS.
 
 =head1 METHODS
 
 This class provides the following methods:
 
-=head2 $iterator->next()
-
-This returns the next set of objects. If it has a cached set of
-objects for the appropriate index, it returns them instead of fetching
-more data from the DBMS. Otherwise it is identical to calling
-C<next()> on a C<Fey::Object::Iterator> object.
-
 =head2 $iterator->reset()
 
 Resets the iterator so that the next call to C<< $iterator->next() >>
 returns the first objects. Internally, this I<does not> reset the
-C<DBI> statement handle, it simply makes the iterator use cached
+L<DBI> statement handle, it simply makes the iterator use cached
 objects.
 
 =head2 $iterator->clone()
@@ -157,6 +149,10 @@ objects.
 Clones the iterator while sharing its cached data with the original
 object. This is really intended for internal use, so I<use at your own
 risk>.
+
+=head1 ROLES
+
+This class does the L<Fey::ORM::Role::Iterator> role.
 
 =head1 AUTHOR
 
