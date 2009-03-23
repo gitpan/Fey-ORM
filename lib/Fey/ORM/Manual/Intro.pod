@@ -74,7 +74,6 @@ object along the way.
 
   package Forum::Model::Schema;
 
-  use Fey::DBIManager;
   use Fey::DBIManager::Source;
   use Fey::Loader;
   use Fey::ORM::Schema;
@@ -409,7 +408,7 @@ power of the core Fey SQL generation tools with your classes:
   package Forum::Model::Message;
 
   use DateTime;
-  use Fey::Object::Iterator;
+  use Fey::Object::Iterator::FromSelect;
 
   sub RecentMessages
   {
@@ -431,7 +430,7 @@ power of the core Fey SQL generation tools with your classes:
       my $sth = $dbh->prepare( $select->sql($dbh) );
 
       return
-          Fey::Object::Iterator->new
+          Fey::Object::Iterator::FromSelect->new
               ( classes     => [ $class->meta()->ClassForTable( $message_t, $user_t ) ],
                 handle      => $sth,
                 bind_params => [ $select->bind_params() ],
