@@ -15,9 +15,9 @@ not run its Makefile.PL or Build.PL.
 Hash: SHA1
 
 SHA1 7190656efbe52982a61054ded41f99a112df2e05 Build.PL
-SHA1 0340aaf7b12e5bbfba801242a93da0736b0a8a28 Changes
+SHA1 dabc60c71d805e9897d8b3358c6f023658af4cd4 Changes
 SHA1 adcfbbff1596736184bb04d4568556c488dc6c12 MANIFEST
-SHA1 ee01a9a1106b35fe72a217203d3b8ba5cc790819 META.yml
+SHA1 9e6b616210ec7306b65b32240a5c6b2ad3b80bec META.yml
 SHA1 b9cece6b8be5e799caa79ef2ed04163cf64bca26 Makefile.PL
 SHA1 ebb7b194b07eb9098400e3a054f43d2de94faf15 README
 SHA1 a98b9e1c97a73dbe9d5a71b97c49b62a0273b8c1 TODO
@@ -35,7 +35,7 @@ SHA1 c46ccd3931e4a875dbe737ec83d744ccb927cfc5 lib/Fey/Meta/HasOne.pm
 SHA1 e11f65dca45a4e8cf26b850e835a0402b35a69a0 lib/Fey/Meta/HasOne/ViaFK.pm
 SHA1 e70a60fa261370b288c1b7b079fc31b4bc5f36fa lib/Fey/Meta/HasOne/ViaSelect.pm
 SHA1 2bf62f264b2d2a69886057049189777aa51a67b1 lib/Fey/Meta/Method/Constructor.pm
-SHA1 7f6a7f519f4b2d9598329f067faf12b2be3df854 lib/Fey/ORM.pm
+SHA1 e0e6c016f86db8a359ec6469c3f296f9c1bfd5dd lib/Fey/ORM.pm
 SHA1 1e600df99629df291ac3a166008fb0315257fa3d lib/Fey/ORM/Exceptions.pm
 SHA1 8284dc39a9935ea083fd128f05e4c5f8956ab870 lib/Fey/ORM/Manual.pod
 SHA1 5cc6b07753ad40dfa5a4ceeee2590978d7c9fa7b lib/Fey/ORM/Manual/Intro.pod
@@ -48,7 +48,7 @@ SHA1 76b3b9eb9343069c7fa6f02e3a1c80c0cf85587c lib/Fey/Object/Iterator/FromSelect
 SHA1 870a8d32c1e304c831ebefcc18bf46ea966afeff lib/Fey/Object/Iterator/FromSelect/Caching.pm
 SHA1 aad6b983793e695c5620ae046b2bf813fdc15fae lib/Fey/Object/Policy.pm
 SHA1 a0bebcae1e1a36321b75fea6cfe5efb2d2b0eea2 lib/Fey/Object/Schema.pm
-SHA1 e10444bc75c8d066c49e9887a8e789f7e7c8c6bd lib/Fey/Object/Table.pm
+SHA1 7203da549838f384516e39e7bb666058835743f9 lib/Fey/Object/Table.pm
 SHA1 8591ec00a4e382c9d135f8fe43bfb61105bc8cee t/Class/Policy.t
 SHA1 6b65d9516ecd525f07657b49063dffa74b099991 t/Class/Schema.t
 SHA1 ed103675db6fe7b0ebe333a7cce61b55f2447935 t/Class/Table-has_many.t
@@ -71,7 +71,7 @@ SHA1 35f57e058d553904c44f3507f0f2341555c56e0b xt/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAknbfFIACgkQ3Or3ZzQuifPb1ACeL9cZnk9Uwz0H3aA0x0fRL15E
-7iMAoLDM3EnT1hjoxtiwVjq7qlwIJBfI
-=kO+i
+iEYEARECAAYFAkns4ZMACgkQ3Or3ZzQuifPn9wCffdSOAdNZOGwGpfyfNSvczIKw
+/GoAn00dOBy6sjcAu/PEQuP6ur/ksPN9
+=qtBj
 -----END PGP SIGNATURE-----
