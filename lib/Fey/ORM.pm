@@ -3,9 +3,9 @@ package Fey::ORM;
 use strict;
 use warnings;
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
-use Moose 0.74 ();
+use Moose 0.82 ();
 
 
 1;
@@ -51,7 +51,7 @@ C<MyApp::Model::Schema> might look like this:
 
   my $schema = Fey::Loader->new( dbh => $source->dbh() )->make_schema();
 
-  has_schema $Schema;
+  has_schema $schema;
 
   __PACKAGE__->DBIManager()->add_source($source);
 
