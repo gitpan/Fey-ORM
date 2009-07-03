@@ -491,13 +491,11 @@ sub _build__count_sql
     return $select;
 }
 
-sub make_immutable
-{
-    my $self = shift;
-
-    $self->SUPER::make_immutable
-      ( constructor_class => 'Fey::Meta::Method::Constructor',
-      );
+sub make_immutable {
+    shift->SUPER::make_immutable
+        ( @_,
+          constructor_class => 'Fey::Meta::Method::Constructor',
+        );
 }
 
 

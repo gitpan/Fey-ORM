@@ -1,6 +1,6 @@
 ---
 name: Fey-ORM
-version: 0.25
+version: 0.26
 author:
   - 'Dave Rolsky, <autarch@urth.org>'
 abstract: A Fey-based ORM
@@ -16,7 +16,7 @@ requires:
   Fey: 0.15
   Fey::DBIManager: 0.07
   List::MoreUtils: 0
-  Moose: 0.82
+  Moose: 0.86
   MooseX::AttributeHelpers: 0.13
   MooseX::ClassAttribute: 0.08
   MooseX::SemiAffordanceAccessor: 0
@@ -58,7 +58,7 @@ provides:
     file: lib/Fey/Meta/Method/Constructor.pm
   Fey::ORM:
     file: lib/Fey/ORM.pm
-    version: 0.25
+    version: 0.26
   Fey::ORM::Exceptions:
     file: lib/Fey/ORM/Exceptions.pm
   Fey::ORM::Policy:
@@ -81,7 +81,7 @@ provides:
     file: lib/Fey/Object/Schema.pm
   Fey::Object::Table:
     file: lib/Fey/Object/Table.pm
-generated_by: Module::Build version 0.32
+generated_by: Module::Build version 0.280801
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2
