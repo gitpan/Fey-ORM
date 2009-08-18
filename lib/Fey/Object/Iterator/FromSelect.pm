@@ -21,7 +21,7 @@ has dbh =>
 
 has select =>
     ( is       => 'ro',
-      isa      => 'Fey::SQL::Select',
+      does     => 'Fey::Role::SQL::ReturnsData',
       required => 1,
     );
 
@@ -202,14 +202,14 @@ __END__
 
 =head1 NAME
 
-Fey::Object::Iterator - Wraps a DBI statement handle to construct objects from the results
+Fey::Object::Iterator::FromSelect - Wraps a DBI statement handle to construct objects from the results
 
 =head1 SYNOPSIS
 
-  use Fey::Object::Iterator;
+  use Fey::Object::Iterator::FromSelect;
 
   my $iter =
-      Fey::Object::Iterator->new
+      Fey::Object::Iterator::FromSelect->new
           ( classes     => 'MyApp::User',
             select      => $select,
             dbh         => $dbh,
@@ -236,7 +236,7 @@ the data returned by the statement handle.
 
 This class provides the following methods:
 
-=head2 Fey::Object::Iterator->new(...)
+=head2 Fey::Object::Iterator::FromSelect->new(...)
 
 This method constructs a new iterator. It accepts the following
 parameters:
@@ -256,8 +256,9 @@ A connected DBI handle
 
 =item * select
 
-This should be a L<Fey::SQL::Select> object representing the C<SELECT>
-statement that this iterator will iterator over.
+This can be any object which does the L<Fey::Role::SQL::ReturnsData>
+role. Usually this will be a L<Fey::SQL::Select> object. This object should be
+a query which returns the data that this iterator will iterate over.
 
 =item * bind_params
 
@@ -368,7 +369,7 @@ In more exotic cases, you can specify an explicit mapping. The mapping
 maps a C<SELECT> clause element to a specify class's attribute. The
 map would look something like this:
 
-  Fey::Object::Iterator->new
+  Fey::Object::Iterator::FromSelect->new
       ( classes       => [ 'User', 'Message' ],
         dbh           => $dbh,
         select        => $select,
@@ -398,7 +399,7 @@ C<Message> table. Assuming our C<User> class has a C<message_count>
 attribute, we'd like to create a list of C<User> objects from this
 query.
 
-  Fey::Object::Iterator->new
+  Fey::Object::Iterator::FromSelect->new
       ( classes       => [ 'User', 'Message' ],
         dbh           => $dbh,
         select        => $select,
