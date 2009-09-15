@@ -3,6 +3,8 @@ package Fey::Meta::HasOne;
 use strict;
 use warnings;
 
+our $VERSION = '0.28';
+
 use Fey::Exceptions qw( param_error );
 
 use Moose;
@@ -12,23 +14,26 @@ extends 'Fey::Meta::FK';
 
 
 has associated_attribute =>
-    ( is         => 'rw',
-      isa        => 'Maybe[Moose::Meta::Attribute]',
-      init_arg   => undef,
-      lazy_build => 1,
+    ( is       => 'rw',
+      isa      => 'Maybe[Moose::Meta::Attribute]',
+      init_arg => undef,
+      lazy     => 1,
+      builder  => '_build_associated_attribute',
     );
 
 has associated_method =>
-    ( is         => 'rw',
-      isa        => 'Maybe[Moose::Meta::Method]',
-      init_arg   => undef,
-      lazy_build => 1,
+    ( is       => 'rw',
+      isa      => 'Maybe[Moose::Meta::Method]',
+      init_arg => undef,
+      lazy     => 1,
+      builder  => '_build_associated_method',
     );
 
 has allows_undef =>
-    ( is         => 'ro',
-      isa        => 'Bool',
-      lazy_build => 1,
+    ( is      => 'ro',
+      isa     => 'Bool',
+      lazy    => 1,
+      builder => '_build_allows_undef',
     );
 
 has handles =>

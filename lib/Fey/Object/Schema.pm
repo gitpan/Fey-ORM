@@ -3,13 +3,12 @@ package Fey::Object::Schema;
 use strict;
 use warnings;
 
+our $VERSION = '0.28';
+
 use Fey::Meta::Class::Table;
 
 use Moose;
-
-extends 'Moose::Object';
-
-with 'MooseX::StrictConstructor::Role::Object';
+use MooseX::StrictConstructor;
 
 
 sub EnableObjectCaches
@@ -130,6 +129,10 @@ sub SetSQLFactoryClass
 
     $class->meta()->set_sql_factory_class(@_);
 }
+
+no Moose;
+
+__PACKAGE__->meta()->make_immutable( inline_constructor => 0 );
 
 1;
 

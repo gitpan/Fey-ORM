@@ -3,8 +3,9 @@ package Fey::Object::Iterator::FromArray;
 use strict;
 use warnings;
 
+our $VERSION = '0.28';
+
 use Moose;
-use MooseX::AttributeHelpers;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
 use Moose::Util::TypeConstraints;

@@ -51,5 +51,7 @@ t/Object/Table.t
 TODO
 xt/kwalitee.t
 xt/pod-coverage.t
+xt/pod-spell.t
 xt/pod.t
+xt/versions-match.t
 SIGNATURE    Added here by Module::Build

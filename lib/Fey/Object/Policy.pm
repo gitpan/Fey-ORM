@@ -3,21 +3,22 @@ package Fey::Object::Policy;
 use strict;
 use warnings;
 
+our $VERSION = '0.28';
+
 use List::Util qw( first );
 use Moose;
-use MooseX::AttributeHelpers;
 use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
 
 has '_transforms' =>
-    ( metaclass => 'Collection::Array',
-      is        => 'ro',
-      isa       => 'ArrayRef[HashRef]',
-      default   => sub { [] },
-      init_arg  => undef,
-      provides  => { push     => 'add_transform',
-                     elements => 'transforms',
-                   },
+    ( traits   => [ 'Array' ],
+      is       => 'ro',
+      isa      => 'ArrayRef[HashRef]',
+      default  => sub { [] },
+      init_arg => undef,
+      handles  => { add_transform => 'push',
+                    transforms    => 'elements',
+                  },
     );
 
 has 'has_one_namer' =>
@@ -69,7 +70,7 @@ L<Fey::ORM> works.
 
 =head1 METHODS
 
-This class accepts the following nethods:
+This class accepts the following methods:
 
 =head2 $policy->add_transform( matching => sub { ... }, inflate => sub { ... }, deflate => sub { ... } )
 

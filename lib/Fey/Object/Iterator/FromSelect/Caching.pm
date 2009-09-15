@@ -3,27 +3,28 @@ package Fey::Object::Iterator::FromSelect::Caching;
 use strict;
 use warnings;
 
+our $VERSION = '0.28';
+
 use Moose;
-use MooseX::AttributeHelpers;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
 
 extends 'Fey::Object::Iterator::FromSelect';
 
 has _cached_results =>
-    ( metaclass => 'Collection::Array',
-      is        => 'ro',
-      isa       => 'ArrayRef[ArrayRef]',
-      lazy      => 1,
-      default   => sub { [] },
-      init_arg  => undef,
-      provides  => { push => '_cache_result',
-                     get  => '_get_cached_result',
-                   },
+    ( traits   => [ 'Array' ],
+      is       => 'ro',
+      isa      => 'ArrayRef[ArrayRef]',
+      lazy     => 1,
+      default  => sub { [] },
+      init_arg => undef,
+      handles  => { _cache_result      => 'push',
+                    _get_cached_result => 'get',
+                  },
       # for cloning
-      writer    => '_set_cached_results',
+      writer   => '_set_cached_results',
       # for testability
-      clearer   => '_clear_cached_results',
+      clearer  => '_clear_cached_results',
     );
 
 has '_sth_is_exhausted' =>

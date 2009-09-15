@@ -3,6 +3,8 @@ package Fey::Meta::HasMany;
 use strict;
 use warnings;
 
+our $VERSION = '0.28';
+
 use Fey::Exceptions qw( param_error );
 use Fey::Object::Iterator::FromSelect;
 use Fey::Object::Iterator::FromSelect::Caching;
@@ -14,10 +16,11 @@ extends 'Fey::Meta::FK';
 
 
 has associated_method =>
-    ( is         => 'rw',
-      isa        => 'Moose::Meta::Method',
-      init_arg   => undef,
-      lazy_build => 1,
+    ( is       => 'rw',
+      isa      => 'Moose::Meta::Method',
+      init_arg => undef,
+      lazy     => 1,
+      builder  => '_build_associated_method',
     );
 
 subtype 'Fey.ORM.Type.ClassDoesIterator'
@@ -26,9 +29,10 @@ subtype 'Fey.ORM.Type.ClassDoesIterator'
     => message { "$_[0] does not do the Fey::ORM::Role::Iterator role" };
 
 has 'iterator_class' =>
-    ( is         => 'ro',
-      isa        => 'Fey.ORM.Type.ClassDoesIterator',
-      lazy_build => 1,
+    ( is      => 'ro',
+      isa     => 'Fey.ORM.Type.ClassDoesIterator',
+      lazy    => 1,
+      builder => '_build_iterator_class',
     );
 
 

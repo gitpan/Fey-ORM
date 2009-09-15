@@ -3,9 +3,10 @@ package Fey::ORM::Role::Iterator;
 use strict;
 use warnings;
 
+our $VERSION = '0.28';
+
 use List::MoreUtils qw( pairwise );
 use Moose::Role;
-use MooseX::AttributeHelpers;
 use Moose::Util::TypeConstraints;
 
 requires qw( _get_next_result reset );
@@ -32,13 +33,13 @@ has classes =>
     );
 
 has index =>
-    ( metaclass => 'Counter',
+    ( traits   => [ 'Counter' ],
       is       => 'ro',
       isa      => 'Int',
       default  => 0,
       init_arg => undef,
-      provides => { 'inc'   => '_inc_index',
-                    'reset' => '_reset_index',
+      handles  => { _inc_index   => 'inc',
+                    _reset_index => 'reset',
                   },
     );
 
