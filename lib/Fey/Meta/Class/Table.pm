@@ -3,7 +3,7 @@ package Fey::Meta::Class::Table;
 use strict;
 use warnings;
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 
 use Fey::Exceptions qw( param_error );
 use Fey::Hash::ColumnsKey;
@@ -17,7 +17,7 @@ use Fey::Meta::HasOne::ViaSelect;
 use Fey::Meta::HasMany::ViaFK;
 use Fey::Meta::HasMany::ViaSelect;
 use Fey::Meta::Method::Constructor;
-use List::MoreUtils qw( all );
+use List::AllUtils qw( all );
 
 use Moose qw( extends with has );
 use MooseX::ClassAttribute;

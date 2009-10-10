@@ -3,9 +3,9 @@ package Fey::Meta::HasMany::ViaFK;
 use strict;
 use warnings;
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 
-use List::MoreUtils qw( any );
+use List::AllUtils qw( any );
 
 use Moose;
 use MooseX::StrictConstructor;

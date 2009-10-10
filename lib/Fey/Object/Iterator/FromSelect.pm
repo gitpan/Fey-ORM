@@ -3,7 +3,7 @@ package Fey::Object::Iterator::FromSelect;
 use strict;
 use warnings;
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 
 use Fey::Exceptions qw( param_error );
 
@@ -106,7 +106,7 @@ sub _get_next_result
         # FIXME - This eval is kind of a band-aid. It is possible
         # (especially with DBD::Mock) for %attr to contain bogus data
         # (wrong types). However, it's also possible for %attr to
-        # contain undefs for non-NULLable columns when iterator over
+        # contain undefs for non-NULLable columns when iterating over
         # the results of a select, especially outer joins.
         #
         # In the outer join case, we do want to ignore object
@@ -253,6 +253,10 @@ names. These should be classes associated with the tables from which
 data is being C<SELECT>ed. The iterator will return an object of each
 class in order when C<< $iterator->next() >> is called.
 
+This can be any class, not just a class which uses
+L<Fey::ORM::Table>. However, the iterator methods below which return hashes
+only work when all the classes have a C<Table()> method.
+
 =item * dbh
 
 A connected DBI handle
@@ -320,11 +324,17 @@ the object's associated table.
 
 If the statement handle is exhausted, this method returns false.
 
+This method will throw an exception unless all of the iterator's classes have
+a C<Table()> method.
+
 =head2 $iterator->remaining_as_hashes()
 
 This returns all of the I<remaining> sets of objects as a list of hash
 references. Each hash ref is keyed on the table name of the associated
 object's class.
+
+This method will throw an exception unless all of the iterator's classes have
+a C<Table()> method.
 
 =head2 $iterator->all_as_hashes()
 
@@ -332,6 +342,9 @@ This returns all of the sets of objects as a list of hash
 references. If necessary, it will call C<< $iterator->reset() >>
 first. Each hash ref is keyed on the table name of the associated
 object's class.
+
+This method will throw an exception unless all of the iterator's classes have
+a C<Table()> method.
 
 =head2 $iterator->reset()
 

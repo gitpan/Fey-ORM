@@ -3,13 +3,13 @@ package Fey::Object::Table;
 use strict;
 use warnings;
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 
 use Fey::Literal::Function;
 use Fey::Placeholder;
 use Fey::SQL;
 use Fey::Table;
-use List::MoreUtils qw( all );
+use List::AllUtils qw( all );
 use Scalar::Util qw( blessed );
 use Try::Tiny;
 
@@ -508,7 +508,7 @@ sub pk_values_hash
           @{ $self->Table()->primary_key() }
         );
 
-    return map { $_ => $self->_deflated_value($_) } @cols;
+    return map { $cols[$_] => $vals[$_] } 0..$#vals;
 }
 
 sub pk_values_list
