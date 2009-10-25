@@ -7,7 +7,7 @@ WriteMakefile
           'PREREQ_PM' => {
                            'Devel::GlobalDestruction' => '0',
                            'Exception::Class' => '0',
-                           'Fey' => '0.15',
+                           'Fey' => '0.34',
                            'Fey::DBIManager' => '0.07',
                            'Fey::Test' => '0.05',
                            'List::AllUtils' => '0',

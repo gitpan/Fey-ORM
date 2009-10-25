@@ -3,7 +3,7 @@ package Fey::Object::Iterator::FromSelect;
 use strict;
 use warnings;
 
-our $VERSION = '0.29';
+our $VERSION = '0.30';
 
 use Fey::Exceptions qw( param_error );
 
@@ -50,13 +50,21 @@ has 'attribute_map' =>
       default => sub { return {} },
     );
 
-has _merged_attribute_map =>
+has _class_attributes_by_position =>
     ( is       => 'ro',
       isa      => 'HashRef[HashRef[Str]]',
       init_arg => undef,
       lazy     => 1,
-      builder  => '_build_merged_attribute_map',
+      builder  => '_build_class_attributes_by_position',
     );
+
+has raw_row =>
+    ( is       => 'rw',
+      isa      => 'Maybe[ArrayRef]',
+      init_arg => undef,
+      writer   => '_set_raw_row',
+    );
+
 
 no Moose;
 __PACKAGE__->meta()->make_immutable();
@@ -92,10 +100,13 @@ sub _get_next_result
 
     my $sth = $self->_sth();
 
-    my $row = $sth->fetchrow_arrayref()
-        or return;
+    my $row = $sth->fetchrow_arrayref();
 
-    my $map = $self->_merged_attribute_map();
+    $self->_set_raw_row($row);
+
+    return unless $row;
+
+    my $map = $self->_class_attributes_by_position();
 
     my @result;
     for my $class ( @{ $self->classes() } )
@@ -133,23 +144,26 @@ sub _build_sth
     return $sth;
 }
 
-sub _build_merged_attribute_map
+sub _has_explicit_attribute_map
 {
     my $self = shift;
 
-    my %map;
+    return keys %{ $self->attribute_map() };
+}
+
+sub _build_class_attributes_by_position
+{
+    my $self = shift;
+
+    return $self->_remap_explicit_attribute_map()
+        if $self->_has_explicit_attribute_map;
 
     my $x = 0;
+    my %map;
 
     for my $s ( $self->select()->select_clause_elements() )
     {
-        if ( my $attr = $self->attribute_map()->{$x} )
-        {
-            my $class = $attr->{class};
-
-            $map{$class}{$x} = $attr->{attribute};
-        }
-        elsif ( $s->can('table') )
+        if ( $s->can('table') )
         {
             my $class = Fey::Meta::Class::Table->ClassForTable( $s->table() );
 
@@ -157,6 +171,21 @@ sub _build_merged_attribute_map
         }
 
         $x++;
+    }
+
+    return \%map;
+}
+
+sub _remap_explicit_attribute_map
+{
+    my $self = shift;
+
+    my $explicit_map = $self->attribute_map();
+
+    my %map;
+    for my $pos ( keys %{ $explicit_map } )
+    {
+        $map{ $explicit_map->{$pos}{class} }{$pos} = $explicit_map->{$pos}{attribute};
     }
 
     return \%map;
@@ -354,6 +383,12 @@ handle will be executed again. It's possible that data will have
 changed in the DBMS since then, meaning that the iterator will return
 different objects after a reset.
 
+=head2 $iterator->raw_row()
+
+Returns an array reference containing the I<raw> data returned by the query on
+the most recent call to C<< $iterator->next() >>. Once the iterator is
+exhausted, this method returns C<undef>.
+
 =head2 $iterator->DEMOLISH()
 
 This method will call C<< $sth->finish() >> on its C<DBI> statement
@@ -389,12 +424,16 @@ map would look something like this:
       ( classes       => [ 'User', 'Message' ],
         dbh           => $dbh,
         select        => $select,
-        attribute_map => { 1 => { class     => 'User',
+        attribute_map => { 0 => { class     => 'User',
+                                  attribute => 'user_id',
+                                },
+                           1 => { class     => 'User',
                                   attribute => 'username',
                                 },
                            3 => { class     => 'Message',
-                                  attribute => 'size',
+                                  attribute => 'message_id',
                                 },
+                         },
       );
 
 The keys in the mapping are positions in the list of C<SELECT> clause
