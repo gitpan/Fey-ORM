@@ -2,21 +2,19 @@ package Fey::Meta::Attribute::FromColumn;
 
 use strict;
 use warnings;
+use namespace::autoclean;
 
-our $VERSION = '0.30';
+our $VERSION = '0.31';
 
 use Moose;
 
 extends 'Moose::Meta::Attribute';
 
-
-has 'column' =>
-    ( is       => 'ro',
-      isa      => 'Fey::Column',
-      required => 1,
-    );
-
-no Moose;
+has 'column' => (
+    is       => 'ro',
+    isa      => 'Fey::Column',
+    required => 1,
+);
 
 # The parent class's constructor is not a Moose::Object-based
 # constructor, so we don't want to inline one that is.
