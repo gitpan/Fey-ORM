@@ -14,6 +14,8 @@ lib/Fey/Meta/HasOne.pm
 lib/Fey/Meta/HasOne/ViaFK.pm
 lib/Fey/Meta/HasOne/ViaSelect.pm
 lib/Fey/Meta/Method/Constructor.pm
+lib/Fey/Meta/Method/FromSelect.pm
+lib/Fey/Meta/Role/FromSelect.pm
 lib/Fey/Object/Iterator/FromArray.pm
 lib/Fey/Object/Iterator/FromSelect.pm
 lib/Fey/Object/Iterator/FromSelect/Caching.pm
@@ -46,6 +48,7 @@ t/Object/Schema.t
 t/Object/Table-cache.t
 t/Object/Table-has_many.t
 t/Object/Table-has_one.t
+t/Object/Table-query-method.t
 t/Object/Table-select-attr.t
 t/Object/Table.t
 TODO

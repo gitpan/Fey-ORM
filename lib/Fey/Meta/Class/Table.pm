@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use namespace::autoclean;
 
-our $VERSION = '0.31';
+our $VERSION = '0.32';
 
 use Fey::Exceptions qw( param_error );
 use Fey::Hash::ColumnsKey;
@@ -18,6 +18,7 @@ use Fey::Meta::HasOne::ViaSelect;
 use Fey::Meta::HasMany::ViaFK;
 use Fey::Meta::HasMany::ViaSelect;
 use Fey::Meta::Method::Constructor;
+use Fey::Meta::Method::FromSelect;
 use List::AllUtils qw( all );
 
 use Moose qw( extends with has );
@@ -493,6 +494,19 @@ sub _build_count_sql {
     return $select;
 }
 
+sub add_query_method {
+    my $self = shift;
+
+    my $method = Fey::Meta::Method::FromSelect->new(
+        package_name => $self->name(),
+        @_,
+    );
+
+    $self->add_method( $method->name() => $method );
+
+    return;
+}
+
 sub make_immutable {
     shift->SUPER::make_immutable(
         @_,
@@ -585,6 +599,12 @@ defined for the named column.
 
 Returns a boolean indicating whether or not there is an inflator
 defined for the named column.
+
+=head2 $meta->add_query_method(%options)
+
+Adds a new L<Fey::Meta::Method::FromSelect> method to the class. The
+C<%options> passed to this method will be passed to the
+L<Fey::Meta::Method::FromSelect> constructor.
 
 =head2 $meta->make_immutable()
 

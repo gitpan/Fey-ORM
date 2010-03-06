@@ -17,82 +17,88 @@ name: Fey-ORM
 provides:
   Fey::Hash::ColumnsKey:
     file: lib/Fey/Hash/ColumnsKey.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::Attribute::FromColumn:
     file: lib/Fey/Meta/Attribute/FromColumn.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::Attribute::FromInflator:
     file: lib/Fey/Meta/Attribute/FromInflator.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::Attribute::FromSelect:
     file: lib/Fey/Meta/Attribute/FromSelect.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::Class::Schema:
     file: lib/Fey/Meta/Class/Schema.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::Class::Table:
     file: lib/Fey/Meta/Class/Table.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::FK:
     file: lib/Fey/Meta/FK.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::HasMany:
     file: lib/Fey/Meta/HasMany.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::HasMany::ViaFK:
     file: lib/Fey/Meta/HasMany/ViaFK.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::HasMany::ViaSelect:
     file: lib/Fey/Meta/HasMany/ViaSelect.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::HasOne:
     file: lib/Fey/Meta/HasOne.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::HasOne::ViaFK:
     file: lib/Fey/Meta/HasOne/ViaFK.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::HasOne::ViaSelect:
     file: lib/Fey/Meta/HasOne/ViaSelect.pm
-    version: 0.31
+    version: 0.32
   Fey::Meta::Method::Constructor:
     file: lib/Fey/Meta/Method/Constructor.pm
-    version: 0.31
+    version: 0.32
+  Fey::Meta::Method::FromSelect:
+    file: lib/Fey/Meta/Method/FromSelect.pm
+    version: 0.32
+  Fey::Meta::Role::FromSelect:
+    file: lib/Fey/Meta/Role/FromSelect.pm
+    version: 0.32
   Fey::ORM:
     file: lib/Fey/ORM.pm
-    version: 0.31
+    version: 0.32
   Fey::ORM::Exceptions:
     file: lib/Fey/ORM/Exceptions.pm
-    version: 0.31
+    version: 0.32
   Fey::ORM::Policy:
     file: lib/Fey/ORM/Policy.pm
-    version: 0.31
+    version: 0.32
   Fey::ORM::Role::Iterator:
     file: lib/Fey/ORM/Role/Iterator.pm
-    version: 0.31
+    version: 0.32
   Fey::ORM::Schema:
     file: lib/Fey/ORM/Schema.pm
-    version: 0.31
+    version: 0.32
   Fey::ORM::Table:
     file: lib/Fey/ORM/Table.pm
-    version: 0.31
+    version: 0.32
   Fey::Object::Iterator::FromArray:
     file: lib/Fey/Object/Iterator/FromArray.pm
-    version: 0.31
+    version: 0.32
   Fey::Object::Iterator::FromSelect:
     file: lib/Fey/Object/Iterator/FromSelect.pm
-    version: 0.31
+    version: 0.32
   Fey::Object::Iterator::FromSelect::Caching:
     file: lib/Fey/Object/Iterator/FromSelect/Caching.pm
-    version: 0.31
+    version: 0.32
   Fey::Object::Policy:
     file: lib/Fey/Object/Policy.pm
-    version: 0.31
+    version: 0.32
   Fey::Object::Schema:
     file: lib/Fey/Object/Schema.pm
-    version: 0.31
+    version: 0.32
   Fey::Object::Table:
     file: lib/Fey/Object/Table.pm
-    version: 0.31
+    version: 0.32
 requires:
   Devel::GlobalDestruction: 0
   Exception::Class: 0
@@ -111,4 +117,4 @@ resources:
   homepage: http://www.fey-project.org/
   license: http://dev.perl.org/licenses/
   repository: http://hg.urth.org/hg/Fey-ORM
-version: 0.31
+version: 0.32
