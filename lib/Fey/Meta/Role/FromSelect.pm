@@ -1,10 +1,11 @@
 package Fey::Meta::Role::FromSelect;
+BEGIN {
+  $Fey::Meta::Role::FromSelect::VERSION = '0.33';
+}
 
 use strict;
 use warnings;
 use namespace::autoclean;
-
-our $VERSION = '0.32';
 
 use Moose::Role;
 use Moose::Util::TypeConstraints;
@@ -113,3 +114,28 @@ sub _make_default_from_select_without_type {
 }
 
 1;
+
+__END__
+=pod
+
+=head1 NAME
+
+Fey::Meta::Role::FromSelect
+
+=head1 VERSION
+
+version 0.33
+
+=head1 AUTHOR
+
+  Dave Rolsky <autarch@urth.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2010 by Dave Rolsky.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+

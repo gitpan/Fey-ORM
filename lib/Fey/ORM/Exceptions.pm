@@ -1,9 +1,10 @@
 package Fey::ORM::Exceptions;
+BEGIN {
+  $Fey::ORM::Exceptions::VERSION = '0.33';
+}
 
 use strict;
 use warnings;
-
-our $VERSION = '0.32';
 
 use Fey::Exceptions;
 
@@ -28,11 +29,19 @@ use Sub::Exporter -setup =>
 
 1;
 
-__END__
+# ABSTRACT: Defines exceptions used for Fey::ORM
+
+
+
+=pod
 
 =head1 NAME
 
 Fey::ORM::Exceptions - Defines exceptions used for Fey::ORM
+
+=head1 VERSION
+
+version 0.33
 
 =head1 SYNOPSIS
 
@@ -57,17 +66,17 @@ Cannot find a row in a given table matching the given values
 
 =head1 AUTHOR
 
-Dave Rolsky, <autarch@urth.org>
+  Dave Rolsky <autarch@urth.org>
 
-=head1 BUGS
+=head1 COPYRIGHT AND LICENSE
 
-See L<Fey> for details on how to report bugs.
+This software is copyright (c) 2010 by Dave Rolsky.
 
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2006-2009 Dave Rolsky, All Rights Reserved.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
+
+
+__END__
+

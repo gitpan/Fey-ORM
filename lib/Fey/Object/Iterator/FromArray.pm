@@ -1,10 +1,11 @@
 package Fey::Object::Iterator::FromArray;
+BEGIN {
+  $Fey::Object::Iterator::FromArray::VERSION = '0.33';
+}
 
 use strict;
 use warnings;
 use namespace::autoclean;
-
-our $VERSION = '0.32';
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
@@ -48,33 +49,38 @@ __PACKAGE__->meta()->make_immutable();
 
 1;
 
-__END__
+# ABSTRACT: An iterator which iterates over an array of objects
+
+
+
+=pod
 
 =head1 NAME
 
 Fey::Object::Iterator::FromArray - An iterator which iterates over an array of objects
 
+=head1 VERSION
+
+version 0.33
+
 =head1 SYNOPSIS
 
   use Fey::Object::Iterator::FromArray;
 
-  my $iter =
-      Fey::Object::Iterator::Caching->new
-          ( classes => 'MyApp::User',
-            objects => \@users,
-          );
+  my $iter = Fey::Object::Iterator::Caching->new(
+      classes => 'MyApp::User',
+      objects => \@users,
+  );
 
-  my $iter2 =
-      Fey::Object::Iterator::Caching->new
-          ( classes => [ 'MyApp::User', 'MyApp::Group' ],
-            objects => [ [ $user1, $group1 ], [ $user2, $group1 ] ],
-          );
+  my $iter2 = Fey::Object::Iterator::Caching->new(
+      classes => [ 'MyApp::User', 'MyApp::Group' ],
+      objects => [ [ $user1, $group1 ], [ $user2, $group1 ] ],
+  );
 
-  print $iter->index(); # 0
+  print $iter->index();    # 0
 
-  while ( my $user = $iter->next() )
-  {
-      print $iter->index(); # 1, 2, 3, ...
+  while ( my $user = $iter->next() ) {
+      print $iter->index();    # 1, 2, 3, ...
       print $user->username();
   }
 
@@ -116,18 +122,17 @@ This class does the L<Fey::ORM::Role::Iterator> role.
 
 =head1 AUTHOR
 
-Dave Rolsky, <autarch@urth.org>
+  Dave Rolsky <autarch@urth.org>
 
-=head1 BUGS
+=head1 COPYRIGHT AND LICENSE
 
-See L<Fey::ORM> for details.
+This software is copyright (c) 2010 by Dave Rolsky.
 
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2009 Dave Rolsky, All Rights Reserved.
-
-This program is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself. The full text of the license
-can be found in the LICENSE file included with this module.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
+
+
+__END__
+

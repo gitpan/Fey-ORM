@@ -1,10 +1,11 @@
 package Fey::Meta::Class::Table;
+BEGIN {
+  $Fey::Meta::Class::Table::VERSION = '0.33';
+}
 
 use strict;
 use warnings;
 use namespace::autoclean;
-
-our $VERSION = '0.32';
 
 use Fey::Exceptions qw( param_error );
 use Fey::Hash::ColumnsKey;
@@ -518,11 +519,19 @@ __PACKAGE__->meta()->make_immutable();
 
 1;
 
-__END__
+# ABSTRACT: A metaclass for table classes
+
+
+
+=pod
 
 =head1 NAME
 
 Fey::Meta::Class::Table - A metaclass for table classes
+
+=head1 VERSION
+
+version 0.33
 
 =head1 SYNOPSIS
 
@@ -613,18 +622,17 @@ order to do its own optimizations for immutability.
 
 =head1 AUTHOR
 
-Dave Rolsky, <autarch@urth.org>
+  Dave Rolsky <autarch@urth.org>
 
-=head1 BUGS
+=head1 COPYRIGHT AND LICENSE
 
-See L<Fey::ORM> for details.
+This software is copyright (c) 2010 by Dave Rolsky.
 
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2006-2009 Dave Rolsky, All Rights Reserved.
-
-This program is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself. The full text of the license
-can be found in the LICENSE file included with this module.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
+
+
+__END__
+
