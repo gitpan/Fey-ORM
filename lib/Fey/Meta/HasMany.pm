@@ -1,6 +1,6 @@
 package Fey::Meta::HasMany;
 BEGIN {
-  $Fey::Meta::HasMany::VERSION = '0.33';
+  $Fey::Meta::HasMany::VERSION = '0.34';
 }
 
 use strict;
@@ -135,7 +135,7 @@ Fey::Meta::HasMany - A parent for has-many metaclasses
 
 =head1 VERSION
 
-version 0.33
+version 0.34
 
 =head1 DESCRIPTION
 

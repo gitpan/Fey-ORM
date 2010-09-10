@@ -1,6 +1,6 @@
 package Fey::Meta::Class::Table;
 BEGIN {
-  $Fey::Meta::Class::Table::VERSION = '0.33';
+  $Fey::Meta::Class::Table::VERSION = '0.34';
 }
 
 use strict;
@@ -138,6 +138,15 @@ has '_select_sql_cache' => (
     isa     => 'Fey::Hash::ColumnsKey',
     lazy    => 1,
     default => sub { Fey::Hash::ColumnsKey->new() },
+);
+
+has '_sql_string_cache' => (
+    is      => 'ro',
+    isa     => 'HashRef[HashRef]',
+    lazy    => 1,
+    default => sub {
+        { {} }
+    },
 );
 
 has '_select_by_pk_sql' => (
@@ -531,7 +540,7 @@ Fey::Meta::Class::Table - A metaclass for table classes
 
 =head1 VERSION
 
-version 0.33
+version 0.34
 
 =head1 SYNOPSIS
 

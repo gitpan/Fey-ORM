@@ -37,7 +37,7 @@ my %WriteMakefileArgs = (
     'Sub::Exporter' => '0',
     'namespace::autoclean' => '0'
   },
-  'VERSION' => '0.33',
+  'VERSION' => '0.34',
   'test' => {
     'TESTS' => 't/*.t t/Class/*.t t/Object/*.t t/Object/Iterator/*.t t/Object/Iterator/FromSelect/*.t'
   }

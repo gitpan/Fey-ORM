@@ -4,11 +4,13 @@
       "Dave Rolsky <autarch@urth.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.101550",
-   "license" : "perl_5",
+   "generated_by" : "Dist::Zilla version 4.102340, CPAN::Meta::Converter version 2.101670",
+   "license" : [
+      "perl_5"
+   ],
    "meta-spec" : {
-      "url" : "http://github.com/dagolden/cpan-meta/",
-      "version" : 2
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
    },
    "name" : "Fey-ORM",
    "prereqs" : {
@@ -19,24 +21,24 @@
       },
       "runtime" : {
          "requires" : {
-            "Devel::GlobalDestruction" : "0",
-            "Exception::Class" : "0",
+            "Devel::GlobalDestruction" : 0,
+            "Exception::Class" : 0,
             "Fey" : "0.34",
             "Fey::DBIManager" : "0.07",
-            "List::AllUtils" : "0",
+            "List::AllUtils" : 0,
             "Moose" : "0.98",
             "MooseX::ClassAttribute" : "0.13",
-            "MooseX::SemiAffordanceAccessor" : "0",
+            "MooseX::SemiAffordanceAccessor" : 0,
             "MooseX::StrictConstructor" : "0.08",
-            "Scalar::Util" : "0",
-            "Sub::Exporter" : "0",
-            "namespace::autoclean" : "0"
+            "Scalar::Util" : 0,
+            "Sub::Exporter" : 0,
+            "namespace::autoclean" : 0
          }
       },
       "test" : {
          "requires" : {
             "Fey::Test" : "0.05",
-            "Test::Exception" : "0",
+            "Test::Exception" : 0,
             "Test::More" : "0.88"
          }
       }
@@ -53,6 +55,6 @@
          "web" : "http://hg.urth.org/hg/Fey-ORM"
       }
    },
-   "version" : "0.33"
+   "version" : "0.34"
 }
 

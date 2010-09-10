@@ -1,6 +1,6 @@
 package Fey::Object::Table;
 BEGIN {
-  $Fey::Object::Table::VERSION = '0.33';
+  $Fey::Object::Table::VERSION = '0.34';
 }
 
 use strict;
@@ -162,6 +162,96 @@ sub _load_from_key {
     no_such_row $error;
 }
 
+# Based on discussions on #moose, this could be done more elegantly
+# with a custom instance metaclass that lazily initializes a batch of
+# attributes at once.
+sub _get_column_values {
+    my $self   = shift;
+    my $select = shift;
+    my $bind   = shift;
+
+    my $dbh = $self->_dbh($select);
+
+    my $sth = $dbh->prepare( $self->_sql_string( $select, $dbh ) );
+
+    $sth->execute( @{$bind} );
+
+    my %col_values;
+    $sth->bind_columns( \( @col_values{ @{ $sth->{NAME} } } ) );
+
+    my $fetched = $sth->fetch();
+
+    $sth->finish();
+
+    return unless $fetched;
+
+    $self->_set_column_values_from_hashref( \%col_values );
+
+    return \%col_values;
+}
+
+sub _set_column_values_from_hashref {
+    my $self   = shift;
+    my $values = shift;
+
+    for my $col ( keys %{$values} ) {
+        my $set = q{_set_} . $col;
+
+        $self->$set( $values->{$col} );
+    }
+}
+
+sub _get_column_value {
+    my $self = shift;
+
+    my $col_values = $self->_get_column_values(
+        $self->meta()->_select_by_pk_sql(),
+        [ $self->pk_values_list() ],
+    );
+
+    my $name = shift;
+
+    return $col_values->{$name};
+}
+
+sub pk_values_list {
+    my $self = shift;
+
+    my @cols = ( map { $_->name() } @{ $self->Table()->primary_key() } );
+
+    return map { $self->_deflated_value($_) } @cols;
+}
+
+sub _MakeSelectByPKSQL {
+    my $class = shift;
+
+    return $class->_SelectSQLForKey( $class->Table->primary_key() );
+}
+
+sub _SelectSQLForKey {
+    my $class = shift;
+    my $key   = shift;
+
+    my $cache = $class->meta()->_select_sql_cache();
+
+    my $select = $cache->get($key);
+
+    return $select if $select;
+
+    my $table = $class->Table();
+
+    my @select = $table->columns();
+
+    $select = $class->SchemaClass()->SQLFactoryClass()->new_select();
+    $select->select( sort { $a->name() cmp $b->name() } @select );
+    $select->from($table);
+    $select->where( $_, '=', Fey::Placeholder->new() ) for @{$key};
+
+    $cache->store( $key => $select );
+
+    return $select;
+}
+
 sub insert {
     my $class = shift;
     my %p     = @_;
@@ -177,7 +267,7 @@ sub insert_many {
 
     my $dbh = $class->_dbh($insert);
 
-    my $sth = $dbh->prepare( $insert->sql($dbh) );
+    my $sth = $dbh->prepare( $class->_sql_string( $insert, $dbh ) );
 
     my @auto_inc_columns = (
         grep { !exists $rows[0]->{$_} }
@@ -365,7 +455,7 @@ sub update {
 
     my $dbh = $self->_dbh($update);
 
-    my $sth = $dbh->prepare( $update->sql($dbh) );
+    my $sth = $dbh->prepare( $self->_sql_string( $update, $dbh ) );
 
     my @attr = $self->_bind_attributes_for(
         $dbh,
@@ -408,61 +498,13 @@ sub delete {
 
     my $dbh = $self->_dbh($delete);
 
-    $dbh->do( $delete->sql($dbh), {}, $delete->bind_params() );
-
-    return;
-}
-
-sub _get_column_value {
-    my $self = shift;
-
-    my $col_values = $self->_get_column_values(
-        $self->meta()->_select_by_pk_sql(),
-        [ $self->pk_values_list() ],
+    $dbh->do(
+        $self->_sql_string( $delete, $dbh ),
+        {},
+        $delete->bind_params()
     );
 
-    my $name = shift;
-
-    return $col_values->{$name};
-}
-
-# Based on discussions on #moose, this could be done more elegantly
-# with a custom instance metaclass that lazily initializes a batch of
-# attributes at once.
-sub _get_column_values {
-    my $self   = shift;
-    my $select = shift;
-    my $bind   = shift;
-
-    my $dbh = $self->_dbh($select);
-
-    my $sth = $dbh->prepare( $select->sql($dbh) );
-
-    $sth->execute( @{$bind} );
-
-    my %col_values;
-    $sth->bind_columns( \( @col_values{ @{ $sth->{NAME} } } ) );
-
-    my $fetched = $sth->fetch();
-
-    $sth->finish();
-
-    return unless $fetched;
-
-    $self->_set_column_values_from_hashref( \%col_values );
-
-    return \%col_values;
-}
-
-sub _set_column_values_from_hashref {
-    my $self   = shift;
-    my $values = shift;
-
-    for my $col ( keys %{$values} ) {
-        my $set = q{_set_} . $col;
-
-        $self->$set( $values->{$col} );
-    }
+    return;
 }
 
 sub _dbh {
@@ -488,44 +530,6 @@ sub pk_values_hash {
     return map { $cols[$_] => $vals[$_] } 0 .. $#vals;
 }
 
-sub pk_values_list {
-    my $self = shift;
-
-    my @cols = ( map { $_->name() } @{ $self->Table()->primary_key() } );
-
-    return map { $self->_deflated_value($_) } @cols;
-}
-
-sub _MakeSelectByPKSQL {
-    my $class = shift;
-
-    return $class->_SelectSQLForKey( $class->Table->primary_key() );
-}
-
-sub _SelectSQLForKey {
-    my $class = shift;
-    my $key   = shift;
-
-    my $cache = $class->meta()->_select_sql_cache();
-
-    my $select = $cache->get($key);
-
-    return $select if $select;
-
-    my $table = $class->Table();
-
-    my @select = $table->columns();
-
-    $select = $class->SchemaClass()->SQLFactoryClass()->new_select();
-    $select->select( sort { $a->name() cmp $b->name() } @select );
-    $select->from($table);
-    $select->where( $_, '=', Fey::Placeholder->new() ) for @{$key};
-
-    $cache->store( $key => $select );
-
-    return $select;
-}
-
 sub Count {
     my $class = shift;
 
@@ -533,7 +537,7 @@ sub Count {
 
     my $dbh = $class->_dbh($select);
 
-    my $row = $dbh->selectcol_arrayref( $select->sql($dbh) );
+    my $row = $dbh->selectcol_arrayref( $class->_sql_string( $select, $dbh ) );
 
     return $row->[0];
 }
@@ -548,6 +552,16 @@ sub SchemaClass {
     my $class = shift;
 
     return $class->meta()->schema_class();
+}
+
+sub _sql_string {
+    my $self = shift;
+    my $sql  = shift;
+    my $dbh  = shift;
+
+    my $cache = $self->meta()->_sql_string_cache();
+
+    return $cache->{$sql}{$dbh} ||= $sql->sql($dbh);
 }
 
 __PACKAGE__->meta()->make_immutable( inline_constructor => 0 );
@@ -566,7 +580,7 @@ Fey::Object::Table - Base class for table-based objects
 
 =head1 VERSION
 
-version 0.33
+version 0.34
 
 =head1 SYNOPSIS
 
