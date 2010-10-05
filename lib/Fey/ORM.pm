@@ -1,12 +1,12 @@
 package Fey::ORM;
 BEGIN {
-  $Fey::ORM::VERSION = '0.34';
+  $Fey::ORM::VERSION = '0.35';
 }
 
 use strict;
 use warnings;
 
-use Moose 0.98 ();
+use Moose 1.15 ();
 
 1;
 
@@ -22,7 +22,7 @@ Fey::ORM - A Fey-based ORM (If you like SQL, you might like Fey::ORM)
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 SYNOPSIS
 
@@ -107,7 +107,7 @@ automatically be notified of progress on your bug as I make changes.
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 

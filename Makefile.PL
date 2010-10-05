@@ -29,15 +29,15 @@ my %WriteMakefileArgs = (
     'Fey' => '0.34',
     'Fey::DBIManager' => '0.07',
     'List::AllUtils' => '0',
-    'Moose' => '0.98',
-    'MooseX::ClassAttribute' => '0.13',
+    'Moose' => '1.15',
+    'MooseX::ClassAttribute' => '0.17',
     'MooseX::SemiAffordanceAccessor' => '0',
     'MooseX::StrictConstructor' => '0.08',
     'Scalar::Util' => '0',
     'Sub::Exporter' => '0',
     'namespace::autoclean' => '0'
   },
-  'VERSION' => '0.34',
+  'VERSION' => '0.35',
   'test' => {
     'TESTS' => 't/*.t t/Class/*.t t/Object/*.t t/Object/Iterator/*.t t/Object/Iterator/FromSelect/*.t'
   }

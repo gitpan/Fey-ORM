@@ -1,6 +1,6 @@
 package Fey::Meta::Method::Constructor;
 BEGIN {
-  $Fey::Meta::Method::Constructor::VERSION = '0.34';
+  $Fey::Meta::Method::Constructor::VERSION = '0.35';
 }
 
 use strict;
@@ -55,7 +55,7 @@ sub _initialize_body {
     $source
         .= "\n"
         . '$instance = '
-        . $self->_meta_instance->inline_create_instance('$class');
+        . $self->associated_metaclass()->inline_create_instance('$class');
     $source .= ";\n";
 
     $source .= $self->_generate_params( '$params', '$class' );
@@ -147,11 +147,11 @@ Fey::Meta::Method::Constructor
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 

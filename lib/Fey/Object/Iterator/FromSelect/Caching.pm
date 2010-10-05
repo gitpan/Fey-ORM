@@ -1,6 +1,6 @@
 package Fey::Object::Iterator::FromSelect::Caching;
 BEGIN {
-  $Fey::Object::Iterator::FromSelect::Caching::VERSION = '0.34';
+  $Fey::Object::Iterator::FromSelect::Caching::VERSION = '0.35';
 }
 
 use strict;
@@ -107,7 +107,7 @@ Fey::Object::Iterator::FromSelect::Caching - A caching subclass of Fey::Object::
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 SYNOPSIS
 
@@ -161,7 +161,7 @@ This class does the L<Fey::ORM::Role::Iterator> role.
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 

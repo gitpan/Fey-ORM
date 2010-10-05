@@ -1,6 +1,6 @@
 package Fey::Object::Iterator::FromArray;
 BEGIN {
-  $Fey::Object::Iterator::FromArray::VERSION = '0.34';
+  $Fey::Object::Iterator::FromArray::VERSION = '0.35';
 }
 
 use strict;
@@ -61,7 +61,7 @@ Fey::Object::Iterator::FromArray - An iterator which iterates over an array of o
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 SYNOPSIS
 
@@ -122,7 +122,7 @@ This class does the L<Fey::ORM::Role::Iterator> role.
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 

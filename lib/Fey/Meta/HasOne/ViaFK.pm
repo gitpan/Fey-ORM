@@ -1,6 +1,6 @@
 package Fey::Meta::HasOne::ViaFK;
 BEGIN {
-  $Fey::Meta::HasOne::ViaFK::VERSION = '0.34';
+  $Fey::Meta::HasOne::ViaFK::VERSION = '0.35';
 }
 
 use strict;
@@ -80,7 +80,7 @@ Fey::Meta::HasOne::ViaFK - A parent for has-one metaclasses based on a L<Fey::FK
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 DESCRIPTION
 
@@ -118,7 +118,7 @@ default.
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -14,7 +14,7 @@ Fey::ORM::Manual - Introduction to Fey::ORM
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 DESCRIPTION
 
@@ -556,7 +556,7 @@ the cache clearing in its constructor, or in a plugin of some sort.
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 

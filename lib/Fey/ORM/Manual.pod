@@ -14,7 +14,7 @@ Fey::ORM::Manual - Fey::ORM Manual Index
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 DESCRIPTION
 
@@ -40,7 +40,7 @@ This is a list of module POD you should read:
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 

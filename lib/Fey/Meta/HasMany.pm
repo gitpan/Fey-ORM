@@ -1,6 +1,6 @@
 package Fey::Meta::HasMany;
 BEGIN {
-  $Fey::Meta::HasMany::VERSION = '0.34';
+  $Fey::Meta::HasMany::VERSION = '0.35';
 }
 
 use strict;
@@ -135,7 +135,7 @@ Fey::Meta::HasMany - A parent for has-many metaclasses
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 DESCRIPTION
 
@@ -210,7 +210,7 @@ and unsets the C<associated_class>.
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 

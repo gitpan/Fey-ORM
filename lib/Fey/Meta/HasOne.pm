@@ -1,6 +1,6 @@
 package Fey::Meta::HasOne;
 BEGIN {
-  $Fey::Meta::HasOne::VERSION = '0.34';
+  $Fey::Meta::HasOne::VERSION = '0.35';
 }
 
 use strict;
@@ -135,7 +135,7 @@ Fey::Meta::HasOne - A parent for has-one metaclasses
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 DESCRIPTION
 
@@ -225,7 +225,7 @@ method it made, and unsets the C<associated_class>.
 
 =head1 AUTHOR
 
-  Dave Rolsky <autarch@urth.org>
+Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 
