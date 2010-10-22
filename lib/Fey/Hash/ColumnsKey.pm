@@ -1,6 +1,6 @@
 package Fey::Hash::ColumnsKey;
 BEGIN {
-  $Fey::Hash::ColumnsKey::VERSION = '0.35';
+  $Fey::Hash::ColumnsKey::VERSION = '0.36';
 }
 
 use strict;
@@ -45,7 +45,7 @@ Fey::Hash::ColumnsKey - A hash where the keys are sets of Fey::Column objects
 
 =head1 VERSION
 
-version 0.35
+version 0.36
 
 =head1 SYNOPSIS
 

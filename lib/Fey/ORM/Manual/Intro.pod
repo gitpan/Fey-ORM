@@ -1,20 +1,8 @@
-package Fey::ORM::Manual;
-
-1;
-
-# ABSTRACT: Introduction to Fey::ORM
-
-
-
 =pod
 
 =head1 NAME
 
-Fey::ORM::Manual - Introduction to Fey::ORM
-
-=head1 VERSION
-
-version 0.35
+Fey::ORM::Manual::Intro - Introduction to Fey::ORM
 
 =head1 DESCRIPTION
 
@@ -554,19 +542,4 @@ inherit from that class:
 You could also provide your own C<Catalyst::Request> subclass and do
 the cache clearing in its constructor, or in a plugin of some sort.
 
-=head1 AUTHOR
-
-Dave Rolsky <autarch@urth.org>
-
-=head1 COPYRIGHT AND LICENSE
-
-This software is copyright (c) 2010 by Dave Rolsky.
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
-
 =cut
-
-
-__END__
-

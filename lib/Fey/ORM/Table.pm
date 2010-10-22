@@ -1,6 +1,6 @@
 package Fey::ORM::Table;
 BEGIN {
-  $Fey::ORM::Table::VERSION = '0.35';
+  $Fey::ORM::Table::VERSION = '0.36';
 }
 
 use strict;
@@ -139,7 +139,7 @@ Fey::ORM::Table - Provides sugar for table-based classes
 
 =head1 VERSION
 
-version 0.35
+version 0.36
 
 =head1 SYNOPSIS
 

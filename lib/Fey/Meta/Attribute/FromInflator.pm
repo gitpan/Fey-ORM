@@ -1,6 +1,6 @@
 package Fey::Meta::Attribute::FromInflator;
 BEGIN {
-  $Fey::Meta::Attribute::FromInflator::VERSION = '0.35';
+  $Fey::Meta::Attribute::FromInflator::VERSION = '0.36';
 }
 
 use strict;
@@ -45,7 +45,7 @@ Fey::Meta::Attribute::FromInflator - An attribute metaclass for attributes with 
 
 =head1 VERSION
 
-version 0.35
+version 0.36
 
 =head1 SYNOPSIS
 

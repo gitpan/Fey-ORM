@@ -1,20 +1,8 @@
-package Fey::ORM::Manual;
-
-1;
-
-# ABSTRACT: Fey::ORM Manual Index
-
-
-
 =pod
 
 =head1 NAME
 
 Fey::ORM::Manual - Fey::ORM Manual Index
-
-=head1 VERSION
-
-version 0.35
 
 =head1 DESCRIPTION
 
@@ -38,21 +26,6 @@ This is a list of module POD you should read:
 
 =head2 L<Fey::Object::Schema>
 
-=head1 AUTHOR
-
-Dave Rolsky <autarch@urth.org>
-
-=head1 COPYRIGHT AND LICENSE
-
-This software is copyright (c) 2010 by Dave Rolsky.
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
-
 =cut
-
-
-__END__
-
 
 

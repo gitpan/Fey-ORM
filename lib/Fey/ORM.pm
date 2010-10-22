@@ -1,6 +1,6 @@
 package Fey::ORM;
 BEGIN {
-  $Fey::ORM::VERSION = '0.35';
+  $Fey::ORM::VERSION = '0.36';
 }
 
 use strict;
@@ -22,7 +22,7 @@ Fey::ORM - A Fey-based ORM (If you like SQL, you might like Fey::ORM)
 
 =head1 VERSION
 
-version 0.35
+version 0.36
 
 =head1 SYNOPSIS
 

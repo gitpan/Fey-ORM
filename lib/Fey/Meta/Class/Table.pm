@@ -1,6 +1,6 @@
 package Fey::Meta::Class::Table;
 BEGIN {
-  $Fey::Meta::Class::Table::VERSION = '0.35';
+  $Fey::Meta::Class::Table::VERSION = '0.36';
 }
 
 use strict;
@@ -540,7 +540,7 @@ Fey::Meta::Class::Table - A metaclass for table classes
 
 =head1 VERSION
 
-version 0.35
+version 0.36
 
 =head1 SYNOPSIS
 
