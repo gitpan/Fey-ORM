@@ -1,6 +1,6 @@
 package Fey::Object::Table;
 BEGIN {
-  $Fey::Object::Table::VERSION = '0.36';
+  $Fey::Object::Table::VERSION = '0.37';
 }
 
 use strict;
@@ -12,6 +12,7 @@ use Fey::Placeholder;
 use Fey::SQL;
 use Fey::Table;
 use List::AllUtils qw( all );
+use Object::ID qw( object_id );
 use Scalar::Util qw( blessed );
 use Try::Tiny;
 
@@ -561,7 +562,7 @@ sub _sql_string {
 
     my $cache = $self->meta()->_sql_string_cache();
 
-    return $cache->{$sql}{$dbh} ||= $sql->sql($dbh);
+    return $cache->{ object_id($sql) . object_id($dbh) } ||= $sql->sql($dbh);
 }
 
 __PACKAGE__->meta()->make_immutable( inline_constructor => 0 );
@@ -580,7 +581,7 @@ Fey::Object::Table - Base class for table-based objects
 
 =head1 VERSION
 
-version 0.36
+version 0.37
 
 =head1 SYNOPSIS
 

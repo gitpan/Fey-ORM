@@ -1,6 +1,6 @@
 package Fey::Meta::Attribute::FromSelect;
 BEGIN {
-  $Fey::Meta::Attribute::FromSelect::VERSION = '0.36';
+  $Fey::Meta::Attribute::FromSelect::VERSION = '0.37';
 }
 
 use strict;
@@ -49,9 +49,6 @@ __PACKAGE__->meta()->make_immutable( inline_constructor => 0 );
 
 package    # hide from PAUSE
     Moose::Meta::Attribute::Custom::FromSelect;
-BEGIN {
-  $Moose::Meta::Attribute::Custom::FromSelect::VERSION = '0.36';
-}
 sub register_implementation {'Fey::Meta::Attribute::FromSelect'}
 
 1;
@@ -68,7 +65,7 @@ Fey::Meta::Attribute::FromSelect - An attribute metaclass for SELECT-based attri
 
 =head1 VERSION
 
-version 0.36
+version 0.37
 
 =head1 SYNOPSIS
 

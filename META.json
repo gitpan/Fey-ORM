@@ -4,7 +4,7 @@
       "Dave Rolsky <autarch@urth.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.102342, CPAN::Meta::Converter version 2.101670",
+   "generated_by" : "Dist::Zilla version 4.102345, CPAN::Meta::Converter version 2.101670",
    "license" : [
       "perl_5"
    ],
@@ -30,6 +30,7 @@
             "MooseX::ClassAttribute" : "0.17",
             "MooseX::SemiAffordanceAccessor" : 0,
             "MooseX::StrictConstructor" : "0.08",
+            "Object::ID" : 0,
             "Scalar::Util" : 0,
             "Sub::Exporter" : 0,
             "namespace::autoclean" : 0
@@ -55,6 +56,6 @@
          "web" : "http://hg.urth.org/hg/Fey-ORM"
       }
    },
-   "version" : "0.36"
+   "version" : "0.37"
 }
 

@@ -1,6 +1,6 @@
 package Fey::Meta::Method::Constructor;
 BEGIN {
-  $Fey::Meta::Method::Constructor::VERSION = '0.36';
+  $Fey::Meta::Method::Constructor::VERSION = '0.37';
 }
 
 use strict;

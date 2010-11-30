@@ -1,6 +1,6 @@
 package Fey::Meta::Attribute::FromColumn;
 BEGIN {
-  $Fey::Meta::Attribute::FromColumn::VERSION = '0.36';
+  $Fey::Meta::Attribute::FromColumn::VERSION = '0.37';
 }
 
 use strict;
@@ -35,7 +35,7 @@ Fey::Meta::Attribute::FromColumn - An attribute metaclass for column-based attri
 
 =head1 VERSION
 
-version 0.36
+version 0.37
 
 =head1 SYNOPSIS
 

@@ -33,11 +33,12 @@ my %WriteMakefileArgs = (
     'MooseX::ClassAttribute' => '0.17',
     'MooseX::SemiAffordanceAccessor' => '0',
     'MooseX::StrictConstructor' => '0.08',
+    'Object::ID' => '0',
     'Scalar::Util' => '0',
     'Sub::Exporter' => '0',
     'namespace::autoclean' => '0'
   },
-  'VERSION' => '0.36',
+  'VERSION' => '0.37',
   'test' => {
     'TESTS' => 't/*.t t/Class/*.t t/Object/*.t t/Object/Iterator/*.t t/Object/Iterator/FromSelect/*.t'
   }

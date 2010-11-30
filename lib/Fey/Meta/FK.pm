@@ -1,6 +1,6 @@
 package Fey::Meta::FK;
 BEGIN {
-  $Fey::Meta::FK::VERSION = '0.36';
+  $Fey::Meta::FK::VERSION = '0.37';
 }
 
 use strict;
@@ -153,7 +153,7 @@ Fey::Meta::FK - A parent for foreign key-based metaclasses
 
 =head1 VERSION
 
-version 0.36
+version 0.37
 
 =head1 DESCRIPTION
 
