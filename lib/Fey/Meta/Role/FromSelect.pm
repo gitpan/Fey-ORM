@@ -1,6 +1,6 @@
 package Fey::Meta::Role::FromSelect;
 BEGIN {
-  $Fey::Meta::Role::FromSelect::VERSION = '0.37';
+  $Fey::Meta::Role::FromSelect::VERSION = '0.38';
 }
 
 use strict;

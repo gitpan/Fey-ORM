@@ -1,6 +1,6 @@
 package Fey::Object::Table;
 BEGIN {
-  $Fey::Object::Table::VERSION = '0.37';
+  $Fey::Object::Table::VERSION = '0.38';
 }
 
 use strict;
@@ -285,10 +285,13 @@ sub insert_many {
     for my $key ( sort keys %{ $rows[0] } ) {
         my $val = $rows[0]{$key};
 
-        if (   defined $val
+        if (
+               defined $val
             && blessed $val
             && $val->can('does')
-            && $val->does('Fey::Role::IsLiteral') ) {
+            && (   $val->does('Fey::Role::IsLiteral')
+                || $val->does('Fey::Role::SQL::ReturnsData') )
+            ) {
             push @literal_row_keys, $key;
             push @ref_row_keys,     $key;
         }
@@ -420,15 +423,19 @@ sub _insert_for_data {
 
     my @vals = (
         map {
-            $_ => ( defined $data->{$_}
+            $_ => (
+                defined $data->{$_}
                     && blessed $data->{$_}
                     && $data->{$_}->can('does')
-                    && $data->{$_}->does('Fey::Role::IsLiteral')
+                    && ( $data->{$_}->does('Fey::Role::IsLiteral')
+                    || $data->{$_}->does('Fey::Role::SQL::ReturnsData') )
                 ? $data->{$_}
-                : $ph )
+                : $ph
+                )
             }
             sort keys %{$data}
     );
+
     $insert->values(@vals);
 
     return $insert;
@@ -581,7 +588,7 @@ Fey::Object::Table - Base class for table-based objects
 
 =head1 VERSION
 
-version 0.37
+version 0.38
 
 =head1 SYNOPSIS
 
@@ -797,7 +804,7 @@ Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Dave Rolsky.
+This software is copyright (c) 2011 by Dave Rolsky.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

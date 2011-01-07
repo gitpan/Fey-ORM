@@ -1,6 +1,6 @@
 package Fey::Meta::HasMany;
 BEGIN {
-  $Fey::Meta::HasMany::VERSION = '0.37';
+  $Fey::Meta::HasMany::VERSION = '0.38';
 }
 
 use strict;
@@ -135,7 +135,7 @@ Fey::Meta::HasMany - A parent for has-many metaclasses
 
 =head1 VERSION
 
-version 0.37
+version 0.38
 
 =head1 DESCRIPTION
 
@@ -214,7 +214,7 @@ Dave Rolsky <autarch@urth.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Dave Rolsky.
+This software is copyright (c) 2011 by Dave Rolsky.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

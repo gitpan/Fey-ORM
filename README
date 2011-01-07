@@ -1,11 +1,11 @@
 
 
 This archive contains the distribution Fey-ORM,
-version 0.37:
+version 0.38:
 
   A Fey-based ORM (If you like SQL, you might like Fey::ORM)
 
-This software is copyright (c) 2010 by Dave Rolsky.
+This software is copyright (c) 2011 by Dave Rolsky.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

@@ -26,7 +26,7 @@ my %WriteMakefileArgs = (
   'PREREQ_PM' => {
     'Devel::GlobalDestruction' => '0',
     'Exception::Class' => '0',
-    'Fey' => '0.34',
+    'Fey' => '0.39',
     'Fey::DBIManager' => '0.07',
     'List::AllUtils' => '0',
     'Moose' => '1.15',
@@ -38,7 +38,7 @@ my %WriteMakefileArgs = (
     'Sub::Exporter' => '0',
     'namespace::autoclean' => '0'
   },
-  'VERSION' => '0.37',
+  'VERSION' => '0.38',
   'test' => {
     'TESTS' => 't/*.t t/Class/*.t t/Object/*.t t/Object/Iterator/*.t t/Object/Iterator/FromSelect/*.t'
   }
