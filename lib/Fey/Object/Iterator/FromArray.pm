@@ -1,33 +1,23 @@
 package Fey::Object::Iterator::FromArray;
 BEGIN {
-  $Fey::Object::Iterator::FromArray::VERSION = '0.38';
+  $Fey::Object::Iterator::FromArray::VERSION = '0.39';
 }
 
 use strict;
 use warnings;
 use namespace::autoclean;
 
+use Fey::ORM::Types qw( IterableArrayRef );
+
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 use MooseX::StrictConstructor;
-use Moose::Util::TypeConstraints;
 
 with 'Fey::ORM::Role::Iterator';
 
-my $iterable_arrayref
-    = subtype as 'ArrayRef[ArrayRef[Object|Undef]]' => message {
-    'You must provide an array reference of which each '
-        . ' element is in turn an array reference. The inner '
-        . ' references should contain objects or undef.';
-    };
-
-coerce $iterable_arrayref => from 'ArrayRef[Object|Undef]', => via {
-    [ map { [$_] } @{$_} ];
-};
-
 has '_objects' => (
     is       => 'ro',
-    isa      => $iterable_arrayref,
+    isa      => IterableArrayRef,
     coerce   => 1,
     required => 1,
     init_arg => 'objects',
@@ -61,18 +51,18 @@ Fey::Object::Iterator::FromArray - An iterator which iterates over an array of o
 
 =head1 VERSION
 
-version 0.38
+version 0.39
 
 =head1 SYNOPSIS
 
   use Fey::Object::Iterator::FromArray;
 
-  my $iter = Fey::Object::Iterator::Caching->new(
+  my $iter = Fey::Object::Iterator::FromArray->new(
       classes => 'MyApp::User',
       objects => \@users,
   );
 
-  my $iter2 = Fey::Object::Iterator::Caching->new(
+  my $iter2 = Fey::Object::Iterator::FromArray->new(
       classes => [ 'MyApp::User', 'MyApp::Group' ],
       objects => [ [ $user1, $group1 ], [ $user2, $group1 ] ],
   );

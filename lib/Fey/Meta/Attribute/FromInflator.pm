@@ -1,11 +1,13 @@
 package Fey::Meta::Attribute::FromInflator;
 BEGIN {
-  $Fey::Meta::Attribute::FromInflator::VERSION = '0.38';
+  $Fey::Meta::Attribute::FromInflator::VERSION = '0.39';
 }
 
 use strict;
 use warnings;
 use namespace::autoclean;
+
+use Fey::ORM::Types qw( CodeRef );
 
 use Moose;
 
@@ -13,7 +15,7 @@ extends 'Moose::Meta::Attribute';
 
 has 'inflator' => (
     is       => 'ro',
-    isa      => 'CodeRef',
+    isa      => CodeRef,
     required => 1,
 );
 
@@ -45,7 +47,7 @@ Fey::Meta::Attribute::FromInflator - An attribute metaclass for attributes with 
 
 =head1 VERSION
 
-version 0.38
+version 0.39
 
 =head1 SYNOPSIS
 

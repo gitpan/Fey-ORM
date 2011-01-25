@@ -1,37 +1,25 @@
 package Fey::Meta::HasMany::ViaFK;
 BEGIN {
-  $Fey::Meta::HasMany::ViaFK::VERSION = '0.38';
+  $Fey::Meta::HasMany::ViaFK::VERSION = '0.39';
 }
 
 use strict;
 use warnings;
 use namespace::autoclean;
 
+use Fey::ORM::Types qw( ArrayRef );
 use List::AllUtils qw( any );
 
 use Moose;
 use MooseX::StrictConstructor;
 
-extends 'Fey::Meta::HasMany';
-
-has 'fk' => (
-    is      => 'ro',
-    isa     => 'Fey::FK',
-    lazy    => 1,
-    builder => '_build_fk',
-);
+with 'Fey::Meta::Role::Relationship::HasMany',
+    'Fey::Meta::Role::Relationship::ViaFK';
 
 has 'order_by' => (
     is  => 'ro',
-    isa => 'ArrayRef',
+    isa => ArrayRef,
 );
-
-sub _build_fk {
-    my $self = shift;
-
-    $self->_find_one_fk_between_tables( $self->table(),
-        $self->foreign_table(), 1 );
-}
 
 sub _make_iterator_maker {
     my $self = shift;
@@ -82,7 +70,7 @@ Fey::Meta::HasMany::ViaFK - A parent for has-one metaclasses based on a L<Fey::F
 
 =head1 VERSION
 
-version 0.38
+version 0.39
 
 =head1 DESCRIPTION
 

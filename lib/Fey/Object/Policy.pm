@@ -1,13 +1,15 @@
 package Fey::Object::Policy;
 BEGIN {
-  $Fey::Object::Policy::VERSION = '0.38';
+  $Fey::Object::Policy::VERSION = '0.39';
 }
 
 use strict;
 use warnings;
 use namespace::autoclean;
 
+use Fey::ORM::Types qw( ArrayRef CodeRef HashRef );
 use List::Util qw( first );
+
 use Moose;
 use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
@@ -15,7 +17,7 @@ use MooseX::SemiAffordanceAccessor;
 has '_transforms' => (
     traits   => ['Array'],
     is       => 'ro',
-    isa      => 'ArrayRef[HashRef]',
+    isa      => ArrayRef[HashRef],
     default  => sub { [] },
     init_arg => undef,
     handles  => {
@@ -26,14 +28,14 @@ has '_transforms' => (
 
 has 'has_one_namer' => (
     is       => 'rw',
-    isa      => 'CodeRef',
+    isa      => CodeRef,
     default  => \&_dumb_namer,
     required => 1,
 );
 
 has 'has_many_namer' => (
     is       => 'rw',
-    isa      => 'CodeRef',
+    isa      => CodeRef,
     default  => \&_dumb_namer,
     required => 1,
 );
@@ -65,7 +67,7 @@ Fey::Object::Policy - An object representing a specific policy
 
 =head1 VERSION
 
-version 0.38
+version 0.39
 
 =head1 DESCRIPTION
 

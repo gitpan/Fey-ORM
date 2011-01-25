@@ -1,16 +1,18 @@
 package Fey::Meta::HasOne::ViaSelect;
 BEGIN {
-  $Fey::Meta::HasOne::ViaSelect::VERSION = '0.38';
+  $Fey::Meta::HasOne::ViaSelect::VERSION = '0.39';
 }
 
 use strict;
 use warnings;
 use namespace::autoclean;
 
+use Fey::ORM::Types qw( CodeRef );
+
 use Moose;
 use MooseX::StrictConstructor;
 
-extends 'Fey::Meta::HasOne';
+with 'Fey::Meta::Role::Relationship::HasOne';
 
 has 'select' => (
     is       => 'ro',
@@ -20,7 +22,7 @@ has 'select' => (
 
 has 'bind_params' => (
     is  => 'ro',
-    isa => 'CodeRef',
+    isa => CodeRef,
 );
 
 # Since we don't know the content of the SQL, we just assume it can
@@ -79,7 +81,7 @@ Fey::Meta::HasOne::ViaSelect - A parent for has-one metaclasses based on a query
 
 =head1 VERSION
 
-version 0.38
+version 0.39
 
 =head1 DESCRIPTION
 

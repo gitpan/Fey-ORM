@@ -1,11 +1,13 @@
 package Fey::Object::Iterator::FromSelect::Caching;
 BEGIN {
-  $Fey::Object::Iterator::FromSelect::Caching::VERSION = '0.38';
+  $Fey::Object::Iterator::FromSelect::Caching::VERSION = '0.39';
 }
 
 use strict;
 use warnings;
 use namespace::autoclean;
+
+use Fey::ORM::Types qw( ArrayRef Bool );
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
@@ -16,7 +18,7 @@ extends 'Fey::Object::Iterator::FromSelect';
 has _cached_results => (
     traits   => ['Array'],
     is       => 'ro',
-    isa      => 'ArrayRef[ArrayRef]',
+    isa      => ArrayRef[ArrayRef],
     lazy     => 1,
     default  => sub { [] },
     init_arg => undef,
@@ -34,7 +36,7 @@ has _cached_results => (
 
 has '_sth_is_exhausted' => (
     is       => 'rw',
-    isa      => 'Bool',
+    isa      => Bool,
     init_arg => undef,
 );
 
@@ -107,7 +109,7 @@ Fey::Object::Iterator::FromSelect::Caching - A caching subclass of Fey::Object::
 
 =head1 VERSION
 
-version 0.38
+version 0.39
 
 =head1 SYNOPSIS
 

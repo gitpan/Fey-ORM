@@ -1,16 +1,18 @@
 package Fey::Meta::HasMany::ViaSelect;
 BEGIN {
-  $Fey::Meta::HasMany::ViaSelect::VERSION = '0.38';
+  $Fey::Meta::HasMany::ViaSelect::VERSION = '0.39';
 }
 
 use strict;
 use warnings;
 use namespace::autoclean;
 
+use Fey::ORM::Types qw( CodeRef );
+
 use Moose;
 use MooseX::StrictConstructor;
 
-extends 'Fey::Meta::HasMany';
+with 'Fey::Meta::Role::Relationship::HasMany';
 
 has 'select' => (
     is       => 'ro',
@@ -20,7 +22,7 @@ has 'select' => (
 
 has 'bind_params' => (
     is  => 'ro',
-    isa => 'CodeRef',
+    isa => CodeRef,
 );
 
 sub _make_iterator_maker {
@@ -48,7 +50,7 @@ Fey::Meta::HasMany::ViaSelect - A parent for has-one metaclasses based on a quer
 
 =head1 VERSION
 
-version 0.38
+version 0.39
 
 =head1 DESCRIPTION
 

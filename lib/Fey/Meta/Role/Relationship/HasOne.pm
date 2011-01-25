@@ -1,6 +1,6 @@
-package Fey::Meta::HasOne;
+package Fey::Meta::Role::Relationship::HasOne;
 BEGIN {
-  $Fey::Meta::HasOne::VERSION = '0.38';
+  $Fey::Meta::Role::Relationship::HasOne::VERSION = '0.39';
 }
 
 use strict;
@@ -8,15 +8,15 @@ use warnings;
 use namespace::autoclean;
 
 use Fey::Exceptions qw( param_error );
+use Fey::ORM::Types qw( Any Bool Maybe );
 
-use Moose;
-use MooseX::StrictConstructor;
+use Moose::Role;
 
-extends 'Fey::Meta::FK';
+with 'Fey::Meta::Role::Relationship';
 
 has associated_attribute => (
     is       => 'rw',
-    isa      => 'Maybe[Moose::Meta::Attribute]',
+    isa      => Maybe['Moose::Meta::Attribute'],
     init_arg => undef,
     lazy     => 1,
     builder  => '_build_associated_attribute',
@@ -24,7 +24,7 @@ has associated_attribute => (
 
 has associated_method => (
     is       => 'rw',
-    isa      => 'Maybe[Moose::Meta::Method]',
+    isa      => Maybe['Moose::Meta::Method'],
     init_arg => undef,
     lazy     => 1,
     builder  => '_build_associated_method',
@@ -32,7 +32,7 @@ has associated_method => (
 
 has allows_undef => (
     is      => 'ro',
-    isa     => 'Bool',
+    isa     => Bool,
     lazy    => 1,
     builder => '_build_allows_undef',
 );
@@ -41,7 +41,7 @@ has handles => (
     is => 'ro',
 
     # just gets passed on for attribute creation
-    isa => 'Any',
+    isa => Any,
 );
 
 sub _build_associated_attribute {
@@ -119,11 +119,9 @@ sub detach_from_class {
     $self->_clear_associated_class();
 }
 
-__PACKAGE__->meta()->make_immutable();
-
 1;
 
-# ABSTRACT: A parent for has-one metaclasses
+# ABSTRACT: A role for has-one metaclasses
 
 
 
@@ -131,29 +129,27 @@ __PACKAGE__->meta()->make_immutable();
 
 =head1 NAME
 
-Fey::Meta::HasOne - A parent for has-one metaclasses
+Fey::Meta::Role::Relationship::HasOne - A role for has-one metaclasses
 
 =head1 VERSION
 
-version 0.38
+version 0.39
 
 =head1 DESCRIPTION
 
-This class exists to provide a common parent for the two has-one
-metaclasses, L<Fey::Meta::HasOne::ViaFK> and
-L<Fey::Meta::HasOne::ViaSelect>.
+This role provides functionality for the two has-one metaclasses,
+L<Fey::Meta::HasOne::ViaFK> and L<Fey::Meta::HasOne::ViaSelect>.
 
 =head1 CONSTRUCTOR OPTIONS
 
-This class accepts the following constructor options:
+This role adds the following constructor options:
 
 =over 4
 
 =item * handles
 
-This will simply be passed on when an attribute for this has-one
-relationship is created. Note that this is ignore if C<is_cached> is
-false.
+This will simply be passed on when an attribute for this has-one relationship
+is created. Note that this is ignored if C<is_cached> is false.
 
 =item * allows_undef
 
@@ -168,7 +164,7 @@ Defaults to true for this class.
 
 =head1 METHODS
 
-This provides the following methods:
+This role provides the following methods:
 
 =head2 $ho->name()
 

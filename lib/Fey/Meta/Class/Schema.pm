@@ -1,6 +1,6 @@
 package Fey::Meta::Class::Schema;
 BEGIN {
-  $Fey::Meta::Class::Schema::VERSION = '0.38';
+  $Fey::Meta::Class::Schema::VERSION = '0.39';
 }
 
 use strict;
@@ -9,6 +9,7 @@ use namespace::autoclean;
 
 use Fey::DBIManager;
 use Fey::Exceptions qw( param_error );
+use Fey::ORM::Types qw( ClassName HashRef );
 
 use Moose;
 use MooseX::ClassAttribute;
@@ -20,7 +21,7 @@ extends 'Moose::Meta::Class';
 class_has '_SchemaClassMap' => (
     traits  => ['Hash'],
     is      => 'ro',
-    isa     => 'HashRef[Fey::Schema]',
+    isa     => HashRef['Fey::Schema'],
     default => sub { {} },
     lazy    => 1,
     handles => {
@@ -46,7 +47,7 @@ has 'dbi_manager' => (
 
 has 'sql_factory_class' => (
     is      => 'rw',
-    isa     => 'ClassName',
+    isa     => ClassName,
     lazy    => 1,
     default => 'Fey::SQL',
 );
@@ -98,7 +99,7 @@ Fey::Meta::Class::Schema - A metaclass for schema classes
 
 =head1 VERSION
 
-version 0.38
+version 0.39
 
 =head1 SYNOPSIS
 

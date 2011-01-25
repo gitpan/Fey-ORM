@@ -1,6 +1,6 @@
 package Fey::Meta::HasOne::ViaFK;
 BEGIN {
-  $Fey::Meta::HasOne::ViaFK::VERSION = '0.38';
+  $Fey::Meta::HasOne::ViaFK::VERSION = '0.39';
 }
 
 use strict;
@@ -14,19 +14,8 @@ use MooseX::StrictConstructor;
 
 extends 'Fey::Meta::HasOne';
 
-has 'fk' => (
-    is      => 'ro',
-    isa     => 'Fey::FK',
-    lazy    => 1,
-    builder => '_build_fk',
-);
-
-sub _build_fk {
-    my $self = shift;
-
-    $self->_find_one_fk_between_tables( $self->table(),
-        $self->foreign_table(), 0 );
-}
+with 'Fey::Meta::Role::Relationship::HasOne',
+    'Fey::Meta::Role::Relationship::ViaFK';
 
 sub _build_allows_undef {
     my $self = shift;
@@ -80,7 +69,7 @@ Fey::Meta::HasOne::ViaFK - A parent for has-one metaclasses based on a L<Fey::FK
 
 =head1 VERSION
 
-version 0.38
+version 0.39
 
 =head1 DESCRIPTION
 

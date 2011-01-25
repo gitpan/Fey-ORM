@@ -14,46 +14,49 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 74baac0d981d954e2e832c65fe918d6005e382ee Changes
+SHA1 6a14d764d3fbf83ccf8b2686c8504f5bc3eefe97 Changes
 SHA1 499c7b91f3386606102d72a7c65f7ab02a9d663e INSTALL
 SHA1 7974929966a7a90b797c51ef4f3ed8ef9b18574d LICENSE
-SHA1 fcabf92e0f09088fa071963183512cf81e264c57 MANIFEST
-SHA1 d806033dce1675028ea2365bd58557e165f3cc1c META.json
-SHA1 89ff502aaa0791c62e499ebdfa7ac47b26683c56 META.yml
-SHA1 6aebfd52158e9ae55424a744ea64907b63ea47ad Makefile.PL
-SHA1 aa3ba9ce9571f258f2c81e1df68a167dc6c77ea4 README
+SHA1 064a0e38819f9457cb65b633f1f960f940fdb034 MANIFEST
+SHA1 0a423b0b842da3ccafe9629f25033ea9eb994db6 META.json
+SHA1 b7649e4464c2f9648e8014d752b4b5d376267f63 META.yml
+SHA1 49be2081a0678bca9e0f05889f50e70fa877a816 Makefile.PL
+SHA1 f80ae6d1edf70eebcf4d3a0f1ab4e2bcd0ef3415 README
 SHA1 a98b9e1c97a73dbe9d5a71b97c49b62a0273b8c1 TODO
-SHA1 733ea8e29081a978e5c6860dccc4b103480cd48d dist.ini
-SHA1 bf8b345e8c7fa793ccaf878a82e5c3cb1e4226b0 lib/Fey/Hash/ColumnsKey.pm
-SHA1 e72025b5095f60e0ad44ed11109cc04bdb3f2e32 lib/Fey/Meta/Attribute/FromColumn.pm
-SHA1 a07260cf1f28e62f2039e2a662f932c96500e022 lib/Fey/Meta/Attribute/FromInflator.pm
-SHA1 95f27bddd848e4dce56d98301556502004361b5c lib/Fey/Meta/Attribute/FromSelect.pm
-SHA1 977abeac317270406c18fc553f8fd736bd373987 lib/Fey/Meta/Class/Schema.pm
-SHA1 05528b340c7e0f77911024b1ea0ceb74aa3894e4 lib/Fey/Meta/Class/Table.pm
-SHA1 54884939da0977be16963769960bddb4587796e7 lib/Fey/Meta/FK.pm
-SHA1 c2a35c4b79a3bd0da9fc86b4b28daa5a57ce6e12 lib/Fey/Meta/HasMany.pm
-SHA1 2c5343f5171ab0bba30da8b1df0e08abf15309fa lib/Fey/Meta/HasMany/ViaFK.pm
-SHA1 93a3b1e8fc7bbd1bc9386e7fcea904e22af9b5a1 lib/Fey/Meta/HasMany/ViaSelect.pm
-SHA1 8c406dfeba3dd791de74949a49392d8c1aaeed0e lib/Fey/Meta/HasOne.pm
-SHA1 ef157d8b33fda2b2f72d01b314e6955671702aed lib/Fey/Meta/HasOne/ViaFK.pm
-SHA1 b34cb385783d4c10ee609fd8fa23324abf3499c3 lib/Fey/Meta/HasOne/ViaSelect.pm
-SHA1 ad383764d9af414846266c2ce70d529da9185622 lib/Fey/Meta/Method/Constructor.pm
-SHA1 2f98a03f4b045f5b276ae71c7da96ae9bdc07aa2 lib/Fey/Meta/Method/FromSelect.pm
-SHA1 c49fa4edf2fe30860a7476280de832da492053b1 lib/Fey/Meta/Role/FromSelect.pm
-SHA1 84fa5ad6e0360d71290004f9a1ff9a3240726af8 lib/Fey/ORM.pm
-SHA1 e74862e1508deacbc1900d2b7b8f67c1da3609ee lib/Fey/ORM/Exceptions.pm
+SHA1 e718949d600b7b28b3fb1e4667b84c8215e3545e dist.ini
+SHA1 10e99f805e824307f3189530de3418d74be08c51 lib/Fey/Hash/ColumnsKey.pm
+SHA1 a1d8d739d04251608870b079c6f6eb2c21501206 lib/Fey/Meta/Attribute/FromColumn.pm
+SHA1 d3fe23d349b9d8aabd2516e1669230f93f207e9e lib/Fey/Meta/Attribute/FromInflator.pm
+SHA1 24f51b259dd5a4ee8d4bbbc022efc62a19940e46 lib/Fey/Meta/Attribute/FromSelect.pm
+SHA1 94dc6a5a6b759dc7b8492331fd737f168f42683e lib/Fey/Meta/Class/Schema.pm
+SHA1 f9786a2e74a9f3328a0ce313d356a79c069dcff5 lib/Fey/Meta/Class/Table.pm
+SHA1 27aa97190286c0b82e7ea4913b27a3fc2b760f4a lib/Fey/Meta/HasMany/ViaFK.pm
+SHA1 f1be217f03b016fc806e2864b5bc9d3fd50d77a2 lib/Fey/Meta/HasMany/ViaSelect.pm
+SHA1 ad6630b72efe6edc08dc19a1e0d0e80c2aec5d96 lib/Fey/Meta/HasOne/ViaFK.pm
+SHA1 8e33d0f71c6a9fbfd3fc57b83388d3b88eb638c9 lib/Fey/Meta/HasOne/ViaSelect.pm
+SHA1 22aa17e2fcb977cc84bdf3a8cf06339a9bf09b8b lib/Fey/Meta/Method/Constructor.pm
+SHA1 1616dd4fd4260fd4395ec91c33b0f5c3dde5fb1e lib/Fey/Meta/Method/FromSelect.pm
+SHA1 793bb548e241d932e0c933987cd1a9cb401fe23d lib/Fey/Meta/Role/FromSelect.pm
+SHA1 bf7ec2c7b8cd12fc7bc3f4f7fd1fcbbea08c398f lib/Fey/Meta/Role/Relationship.pm
+SHA1 32fdf8c0b06ccd52f9d31eb2f14d05b98211bc2a lib/Fey/Meta/Role/Relationship/HasMany.pm
+SHA1 bc5812a086b089f5158b32197716bd20af59d839 lib/Fey/Meta/Role/Relationship/HasOne.pm
+SHA1 747911a785e481fd03bc6c8306809ac12863d71c lib/Fey/Meta/Role/Relationship/ViaFK.pm
+SHA1 7a659fa98eae77dcb08451c79b3e2b219bd738ee lib/Fey/ORM.pm
+SHA1 f506b989d44ef826625818f3218558b810d96dc5 lib/Fey/ORM/Exceptions.pm
 SHA1 eba98b46c00986d37113b18259e71cd560a8724c lib/Fey/ORM/Manual.pod
 SHA1 fd9bd70dd07d0317e93b4d2b0f12c66b21dc72fc lib/Fey/ORM/Manual/Intro.pod
-SHA1 7bdcd6939df3e5c89439c5e3f28c5cba3f1bb9bd lib/Fey/ORM/Policy.pm
-SHA1 46d38df638fed17eb515e690f8ba106b95c7f08a lib/Fey/ORM/Role/Iterator.pm
-SHA1 aba9975d78bcf2f0eb9175f47a09a072ca9b2bf0 lib/Fey/ORM/Schema.pm
-SHA1 3f9c959f70ab2f798b675f897cfd1e47cd3160db lib/Fey/ORM/Table.pm
-SHA1 ca351379545d5c425631bacffe335b2ee93430ea lib/Fey/Object/Iterator/FromArray.pm
-SHA1 714328d37de9b206153bfe0f061689dc2efa43ef lib/Fey/Object/Iterator/FromSelect.pm
-SHA1 22a7e86e658c066ea85abfebe8773c9620c29ff9 lib/Fey/Object/Iterator/FromSelect/Caching.pm
-SHA1 a31c384fdec1c3711e870294c6af2e19dcd4a1e6 lib/Fey/Object/Policy.pm
-SHA1 b83c1aaabc4310b5d28d9576429787253dd0337a lib/Fey/Object/Schema.pm
-SHA1 e1bce808c7847a4e433c9e86472fa0f6aa3325dd lib/Fey/Object/Table.pm
+SHA1 78f8caf03595322de32e2fb6af810346f32a6fc7 lib/Fey/ORM/Policy.pm
+SHA1 4f85a1beb6637954e17517dabf093a5a1dbad773 lib/Fey/ORM/Role/Iterator.pm
+SHA1 331c11943bf5da21597d57cbcefe6f25ec9d5086 lib/Fey/ORM/Schema.pm
+SHA1 8e9fc4c1827d054060275ccc2010d697120c4ec5 lib/Fey/ORM/Table.pm
+SHA1 368002e8129c53c6749dc41d067a225d05328872 lib/Fey/ORM/Types.pm
+SHA1 1dbf9dd8b00b4794a35c8f238842df21472cde20 lib/Fey/ORM/Types/Internal.pm
+SHA1 c857192222a91245155387905c72f10c163f3ed0 lib/Fey/Object/Iterator/FromArray.pm
+SHA1 67300c6fe8a58dcdf645564ba4c2acc96aed5b48 lib/Fey/Object/Iterator/FromSelect.pm
+SHA1 1580932889c3f59bdf51a216bfeb23e3c1bcfc7d lib/Fey/Object/Iterator/FromSelect/Caching.pm
+SHA1 445bf0582b405d39c975fb60858075c332882186 lib/Fey/Object/Policy.pm
+SHA1 4c86b303eeb58eaa7c1cda3375745c0378736baa lib/Fey/Object/Schema.pm
+SHA1 aa16ff5aca44c37d6fb5fffc09f6626f708896a2 lib/Fey/Object/Table.pm
 SHA1 c0ab7f77aef992e61de52fea20c33954d73549b3 perltidyrc
 SHA1 01b8f568b64547ef4c56632202d6ab31baab89b5 t/Class/Policy.t
 SHA1 8574c524e2a0c0bc2844d78cb0b595706318b342 t/Class/Schema.t
@@ -65,8 +68,8 @@ SHA1 ba3d246b3d8c86952389f97038359a303d431b55 t/Object/Iterator/FromSelect.t
 SHA1 3fbeb3c913231930aa8e1489f705712b335bf8c6 t/Object/Iterator/FromSelect/Caching.t
 SHA1 f4538afefa77c66037b6d22911cfea3ce7531d55 t/Object/Schema.t
 SHA1 0c63a20fe4b265d96b340182f81aafd3dff2e568 t/Object/Table-cache.t
-SHA1 69490d3ebdfaede30a0adcfbb25562d4d06c1732 t/Object/Table-has_many.t
-SHA1 62ca750839d39814939fe05be756fe1cd0a37380 t/Object/Table-has_one.t
+SHA1 5c809c1e3254edc25160d06bf989576e5fa16dc8 t/Object/Table-has_many.t
+SHA1 5107d6fa4c1585b934a686d999dc12da54edcef7 t/Object/Table-has_one.t
 SHA1 ad18ef5f692935b821b41693d07ecc0f5d3ef3c8 t/Object/Table-query-method.t
 SHA1 8f45b2c17648d7a9e0f9da963601ec8bbacc87dd t/Object/Table-select-attr.t
 SHA1 f9deb912467d0d93baf079d047293773e35d9371 t/Object/Table.t
@@ -81,7 +84,7 @@ SHA1 35f57e058d553904c44f3507f0f2341555c56e0b xt/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (GNU/Linux)
 
-iEYEARECAAYFAk0nUyIACgkQIgMCsV8qvRKzkwCfX23imf2FX5Zss1DR3PFXlWMR
-bx0AnRG2DFgdJ+MPDIAAhYla0OCqbxT9
-=OmHm
+iEYEARECAAYFAk0/FFMACgkQIgMCsV8qvRLO9QCZAZnlo6/rtjnLPCdx8V5daxCG
++5cAnjhTin03MlpmwB51IFSrraxDrp5u
+=qfCK
 -----END PGP SIGNATURE-----
