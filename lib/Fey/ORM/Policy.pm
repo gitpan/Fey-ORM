@@ -1,6 +1,6 @@
 package Fey::ORM::Policy;
 BEGIN {
-  $Fey::ORM::Policy::VERSION = '0.39';
+  $Fey::ORM::Policy::VERSION = '0.40';
 }
 
 use strict;
@@ -87,7 +87,7 @@ Fey::ORM::Policy - Declarative policies for Fey::ORM using classes
 
 =head1 VERSION
 
-version 0.39
+version 0.40
 
 =head1 SYNOPSIS
 

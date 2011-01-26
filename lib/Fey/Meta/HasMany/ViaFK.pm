@@ -1,6 +1,6 @@
 package Fey::Meta::HasMany::ViaFK;
 BEGIN {
-  $Fey::Meta::HasMany::ViaFK::VERSION = '0.39';
+  $Fey::Meta::HasMany::ViaFK::VERSION = '0.40';
 }
 
 use strict;
@@ -70,7 +70,7 @@ Fey::Meta::HasMany::ViaFK - A parent for has-one metaclasses based on a L<Fey::F
 
 =head1 VERSION
 
-version 0.39
+version 0.40
 
 =head1 DESCRIPTION
 
