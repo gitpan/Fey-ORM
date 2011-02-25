@@ -1,6 +1,6 @@
 package Fey::Meta::Method::FromSelect;
 BEGIN {
-  $Fey::Meta::Method::FromSelect::VERSION = '0.40';
+  $Fey::Meta::Method::FromSelect::VERSION = '0.41';
 }
 
 use strict;
@@ -65,7 +65,7 @@ Fey::Meta::Method::FromSelect - A method metaclass for SELECT-based methods
 
 =head1 VERSION
 
-version 0.40
+version 0.41
 
 =head1 SYNOPSIS
 

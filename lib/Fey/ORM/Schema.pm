@@ -1,6 +1,6 @@
 package Fey::ORM::Schema;
 BEGIN {
-  $Fey::ORM::Schema::VERSION = '0.40';
+  $Fey::ORM::Schema::VERSION = '0.41';
 }
 
 use strict;
@@ -10,7 +10,7 @@ use namespace::autoclean;
 use Fey::Meta::Class::Schema;
 use Fey::Object::Schema;
 
-use Moose 0.98 ();
+use Moose 1.15 ();
 use Moose::Exporter;
 use MooseX::Params::Validate qw( pos_validated_list );
 
@@ -52,7 +52,7 @@ Fey::ORM::Schema - Provides sugar for schema-based classes
 
 =head1 VERSION
 
-version 0.40
+version 0.41
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Fey::Object::Iterator::FromSelect;
 BEGIN {
-  $Fey::Object::Iterator::FromSelect::VERSION = '0.40';
+  $Fey::Object::Iterator::FromSelect::VERSION = '0.41';
 }
 
 use strict;
@@ -122,10 +122,18 @@ sub _get_next_result {
         # explicitly provides a bad attribute_map, or a valid
         # attribute_map and a crazy query. It also can happen pretty
         # easily with DBD::Mock.
-        push @result, eval { $class->new( \%attr ) } || undef;
+        push @result, $self->_new_object( $class, \%attr );
     }
 
     return \@result;
+}
+
+sub _new_object {
+    my $self  = shift;
+    my $class = shift;
+    my $attr  = shift;
+
+    eval { $class->new($attr) } || undef;
 }
 
 sub _build_sth {
@@ -226,7 +234,7 @@ Fey::Object::Iterator::FromSelect - Wraps a DBI statement handle to construct ob
 
 =head1 VERSION
 
-version 0.40
+version 0.41
 
 =head1 SYNOPSIS
 

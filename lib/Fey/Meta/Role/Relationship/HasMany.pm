@@ -1,6 +1,6 @@
 package Fey::Meta::Role::Relationship::HasMany;
 BEGIN {
-  $Fey::Meta::Role::Relationship::HasMany::VERSION = '0.40';
+  $Fey::Meta::Role::Relationship::HasMany::VERSION = '0.41';
 }
 
 use strict;
@@ -129,7 +129,7 @@ Fey::Meta::Role::Relationship::HasMany - A role for has-many metaclasses
 
 =head1 VERSION
 
-version 0.40
+version 0.41
 
 =head1 DESCRIPTION
 

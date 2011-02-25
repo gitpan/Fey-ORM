@@ -1,6 +1,6 @@
 package Fey::Object::Table;
 BEGIN {
-  $Fey::Object::Table::VERSION = '0.40';
+  $Fey::Object::Table::VERSION = '0.41';
 }
 
 use strict;
@@ -19,10 +19,10 @@ use Try::Tiny;
 use Fey::Exceptions qw( param_error );
 use Fey::ORM::Exceptions qw( no_such_row );
 
-use Moose 0.90;
+use Moose;
 use MooseX::StrictConstructor;
 
-sub new {
+override new => sub {
     my $class = shift;
 
     if ( $class->meta()->_object_cache_is_enabled() ) {
@@ -38,7 +38,7 @@ sub new {
     $class->_ClearConstructorError();
 
     try {
-        $instance = $class->SUPER::new(@args);
+        $instance = super();
     }
     catch {
         die $_ unless blessed $_ && $_->isa('Fey::Exception::NoSuchRow');
@@ -51,7 +51,7 @@ sub new {
         if $class->meta()->_object_cache_is_enabled();
 
     return $instance;
-}
+};
 
 # I'd like to use MX::ClassAttribute but trying to apply this to each
 # Fey::ORM::Table-using class causes all sorts of weird errors.
@@ -588,7 +588,7 @@ Fey::Object::Table - Base class for table-based objects
 
 =head1 VERSION
 
-version 0.40
+version 0.41
 
 =head1 SYNOPSIS
 

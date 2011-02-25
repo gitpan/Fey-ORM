@@ -1,6 +1,6 @@
 package Fey::Object::Iterator::FromSelect::Caching;
 BEGIN {
-  $Fey::Object::Iterator::FromSelect::Caching::VERSION = '0.40';
+  $Fey::Object::Iterator::FromSelect::Caching::VERSION = '0.41';
 }
 
 use strict;
@@ -40,7 +40,7 @@ has '_sth_is_exhausted' => (
     init_arg => undef,
 );
 
-sub _get_next_result {
+override _get_next_result => sub {
     my $self = shift;
 
     my $result = $self->_get_cached_result( $self->index() );
@@ -51,7 +51,7 @@ sub _get_next_result {
         # handle. DBD::SQLite can handle this, so it is not tested.
         return if $self->_sth_is_exhausted();
 
-        $result = $self->SUPER::_get_next_result();
+        $result = super();
 
         unless ($result) {
             $self->_set_sth_is_exhausted(1);
@@ -62,7 +62,7 @@ sub _get_next_result {
     }
 
     return $result;
-}
+};
 
 sub reset {
     my $self = shift;
@@ -109,7 +109,7 @@ Fey::Object::Iterator::FromSelect::Caching - A caching subclass of Fey::Object::
 
 =head1 VERSION
 
-version 0.40
+version 0.41
 
 =head1 SYNOPSIS
 

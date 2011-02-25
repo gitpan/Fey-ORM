@@ -1,6 +1,6 @@
 package Fey::ORM::Types;
 BEGIN {
-  $Fey::ORM::Types::VERSION = '0.40';
+  $Fey::ORM::Types::VERSION = '0.41';
 }
 
 use strict;
@@ -26,7 +26,7 @@ Fey::ORM::Types - Types for use in Fey::ORM
 
 =head1 VERSION
 
-version 0.40
+version 0.41
 
 =head1 DESCRIPTION
 

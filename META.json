@@ -4,7 +4,7 @@
       "Dave Rolsky <autarch@urth.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200000, CPAN::Meta::Converter version 2.102400",
+   "generated_by" : "Dist::Zilla version 4.200004, CPAN::Meta::Converter version 2.110240",
    "license" : [
       "perl_5"
    ],
@@ -57,6 +57,6 @@
          "web" : "http://hg.urth.org/hg/Fey-ORM"
       }
    },
-   "version" : "0.40"
+   "version" : "0.41"
 }
 

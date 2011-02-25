@@ -1,6 +1,6 @@
 package Fey::ORM::Table;
 BEGIN {
-  $Fey::ORM::Table::VERSION = '0.40';
+  $Fey::ORM::Table::VERSION = '0.41';
 }
 
 use strict;
@@ -11,7 +11,7 @@ use Class::MOP;
 use Fey::Meta::Class::Table;
 use Fey::Object::Table;
 
-use Moose 0.98 ();
+use Moose 1.15 ();
 use Moose::Exporter;
 use Moose::Util::MetaRole;
 use MooseX::Params::Validate qw( pos_validated_list );
@@ -139,7 +139,7 @@ Fey::ORM::Table - Provides sugar for table-based classes
 
 =head1 VERSION
 
-version 0.40
+version 0.41
 
 =head1 SYNOPSIS
 
