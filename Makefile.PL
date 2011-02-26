@@ -13,7 +13,7 @@ my %WriteMakefileArgs = (
   'AUTHOR' => 'Dave Rolsky <autarch@urth.org>',
   'BUILD_REQUIRES' => {
     'Fey::Test' => '0.05',
-    'Test::Exception' => '0',
+    'Test::Fatal' => '0',
     'Test::More' => '0.88'
   },
   'CONFIGURE_REQUIRES' => {
@@ -30,7 +30,7 @@ my %WriteMakefileArgs = (
     'Fey::DBIManager' => '0.07',
     'List::AllUtils' => '0',
     'Moose' => '1.15',
-    'MooseX::ClassAttribute' => '0.17',
+    'MooseX::ClassAttribute' => '0.24',
     'MooseX::SemiAffordanceAccessor' => '0',
     'MooseX::StrictConstructor' => '0.13',
     'MooseX::Types' => '0',
@@ -39,7 +39,7 @@ my %WriteMakefileArgs = (
     'Sub::Exporter' => '0',
     'namespace::autoclean' => '0'
   },
-  'VERSION' => '0.42',
+  'VERSION' => '0.43',
   'test' => {
     'TESTS' => 't/*.t t/Class/*.t t/Object/*.t t/Object/Iterator/*.t t/Object/Iterator/FromSelect/*.t'
   }

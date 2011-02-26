@@ -1,6 +1,6 @@
 package Fey::Object::Policy;
 BEGIN {
-  $Fey::Object::Policy::VERSION = '0.42';
+  $Fey::Object::Policy::VERSION = '0.43';
 }
 
 use strict;
@@ -67,7 +67,7 @@ Fey::Object::Policy - An object representing a specific policy
 
 =head1 VERSION
 
-version 0.42
+version 0.43
 
 =head1 DESCRIPTION
 

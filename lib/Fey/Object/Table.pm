@@ -1,6 +1,6 @@
 package Fey::Object::Table;
 BEGIN {
-  $Fey::Object::Table::VERSION = '0.42';
+  $Fey::Object::Table::VERSION = '0.43';
 }
 
 use strict;
@@ -20,7 +20,6 @@ use Fey::Exceptions qw( param_error );
 use Fey::ORM::Exceptions qw( no_such_row );
 
 use Moose;
-use MooseX::StrictConstructor;
 
 override new => sub {
     my $class = shift;
@@ -588,7 +587,7 @@ Fey::Object::Table - Base class for table-based objects
 
 =head1 VERSION
 
-version 0.42
+version 0.43
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Fey::ORM::Table;
 BEGIN {
-  $Fey::ORM::Table::VERSION = '0.42';
+  $Fey::ORM::Table::VERSION = '0.43';
 }
 
 use strict;
@@ -12,6 +12,7 @@ use Fey::Meta::Class::Table;
 use Fey::Object::Table;
 
 use Moose 1.15 ();
+use MooseX::StrictConstructor 0.13 ();
 use Moose::Exporter;
 use Moose::Util::MetaRole;
 use MooseX::Params::Validate qw( pos_validated_list );
@@ -20,7 +21,7 @@ Moose::Exporter->setup_import_methods(
     with_meta =>
         [qw( has_table has_policy has_one has_many transform query )],
     as_is => [qw( inflate deflate handles )],
-    also  => 'Moose'
+    also  => [ 'Moose', 'MooseX::StrictConstructor' ],
 );
 
 sub init_meta {
@@ -139,7 +140,7 @@ Fey::ORM::Table - Provides sugar for table-based classes
 
 =head1 VERSION
 
-version 0.42
+version 0.43
 
 =head1 SYNOPSIS
 

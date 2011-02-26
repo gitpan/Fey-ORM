@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 
+use Test::Fatal;
 use Test::More;
 
 use lib 't/lib';
@@ -211,6 +212,20 @@ my $Schema = schema();
 }
 
 {
+    like(
+        exception {
+            User->new(
+                user_id     => 42,
+                bad_attr    => 'x',
+                _from_query => 1,
+            );
+        },
+        qr/Found unknown attribute.+bad_attr/,
+        'User class has a strict constructor'
+    );
+}
+
+{
     package Message;
 
     use Fey::ORM::Table;
@@ -278,10 +293,12 @@ $Schema2->set_name('Schema2');
 
     has_table $Schema2->table('User');
 
-    transform 'email' => inflate { return Email->new( $_[1] ) } =>
-        handles { address => 'as_string' } =>
-        deflate { return $_[1]->as_string() };
-
+    #<<<
+    transform 'email'
+        => inflate { return Email->new( $_[1] ) }
+        => deflate { return $_[1]->as_string() }
+        => handles { address => 'as_string' };
+    #>>>
 }
 
 {

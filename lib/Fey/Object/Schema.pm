@@ -1,6 +1,6 @@
 package Fey::Object::Schema;
 BEGIN {
-  $Fey::Object::Schema::VERSION = '0.42';
+  $Fey::Object::Schema::VERSION = '0.43';
 }
 
 use strict;
@@ -10,7 +10,6 @@ use namespace::autoclean;
 use Fey::Meta::Class::Table;
 
 use Moose;
-use MooseX::StrictConstructor;
 
 sub EnableObjectCaches {
     my $class = shift;
@@ -131,7 +130,7 @@ Fey::Object::Schema - Base class for schema-based objects
 
 =head1 VERSION
 
-version 0.42
+version 0.43
 
 =head1 SYNOPSIS
 
