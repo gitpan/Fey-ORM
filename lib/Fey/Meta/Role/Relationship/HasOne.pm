@@ -1,6 +1,6 @@
 package Fey::Meta::Role::Relationship::HasOne;
 BEGIN {
-  $Fey::Meta::Role::Relationship::HasOne::VERSION = '0.41';
+  $Fey::Meta::Role::Relationship::HasOne::VERSION = '0.42';
 }
 
 use strict;
@@ -133,7 +133,7 @@ Fey::Meta::Role::Relationship::HasOne - A role for has-one metaclasses
 
 =head1 VERSION
 
-version 0.41
+version 0.42
 
 =head1 DESCRIPTION
 

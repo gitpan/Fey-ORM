@@ -1,6 +1,6 @@
 package Fey::ORM::Role::Iterator;
 BEGIN {
-  $Fey::ORM::Role::Iterator::VERSION = '0.41';
+  $Fey::ORM::Role::Iterator::VERSION = '0.42';
 }
 
 use strict;
@@ -121,7 +121,7 @@ Fey::ORM::Role::Iterator - A role for things that iterate over Fey::Object::Tabl
 
 =head1 VERSION
 
-version 0.41
+version 0.42
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Fey::Meta::Class::Schema;
 BEGIN {
-  $Fey::Meta::Class::Schema::VERSION = '0.41';
+  $Fey::Meta::Class::Schema::VERSION = '0.42';
 }
 
 use strict;
@@ -99,7 +99,7 @@ Fey::Meta::Class::Schema - A metaclass for schema classes
 
 =head1 VERSION
 
-version 0.41
+version 0.42
 
 =head1 SYNOPSIS
 

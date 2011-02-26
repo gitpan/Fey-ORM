@@ -1,6 +1,6 @@
 package Fey::Object::Iterator::FromSelect::Caching;
 BEGIN {
-  $Fey::Object::Iterator::FromSelect::Caching::VERSION = '0.41';
+  $Fey::Object::Iterator::FromSelect::Caching::VERSION = '0.42';
 }
 
 use strict;
@@ -109,7 +109,7 @@ Fey::Object::Iterator::FromSelect::Caching - A caching subclass of Fey::Object::
 
 =head1 VERSION
 
-version 0.41
+version 0.42
 
 =head1 SYNOPSIS
 
