@@ -1,6 +1,6 @@
 package Fey::Object::Schema;
-BEGIN {
-  $Fey::Object::Schema::VERSION = '0.43';
+{
+  $Fey::Object::Schema::VERSION = '0.44';
 }
 
 use strict;
@@ -130,7 +130,7 @@ Fey::Object::Schema - Base class for schema-based objects
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Fey::Meta::Attribute::FromSelect;
-BEGIN {
-  $Fey::Meta::Attribute::FromSelect::VERSION = '0.43';
+{
+  $Fey::Meta::Attribute::FromSelect::VERSION = '0.44';
 }
 
 use strict;
@@ -65,7 +65,7 @@ Fey::Meta::Attribute::FromSelect - An attribute metaclass for SELECT-based attri
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 SYNOPSIS
 

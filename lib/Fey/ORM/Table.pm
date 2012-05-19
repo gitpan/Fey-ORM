@@ -1,6 +1,6 @@
 package Fey::ORM::Table;
-BEGIN {
-  $Fey::ORM::Table::VERSION = '0.43';
+{
+  $Fey::ORM::Table::VERSION = '0.44';
 }
 
 use strict;
@@ -40,7 +40,10 @@ sub has_table {
 
     my ($table) = pos_validated_list( \@_, { isa => 'Fey::Table' } );
 
-    $meta->_associate_table($table);
+    $meta->_associate_table(
+        $table,
+        _context(),
+    );
 }
 
 sub has_policy {
@@ -66,7 +69,11 @@ sub transform {
     my %p = _combine_hashes(@p);
 
     for my $name (@_) {
-        $meta->_add_transform( $name => %p );
+        $meta->_add_transform(
+            $name,
+            _context(),
+            %p,
+        );
     }
 }
 
@@ -126,6 +133,13 @@ sub query {
     $meta->add_query_method( name => $name, @_ );
 }
 
+sub _context {
+    my %context;
+    @context{qw(package file line)} = caller(2);
+
+    return \%context;
+}
+
 1;
 
 # ABSTRACT: Provides sugar for table-based classes
@@ -140,7 +154,7 @@ Fey::ORM::Table - Provides sugar for table-based classes
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 SYNOPSIS
 

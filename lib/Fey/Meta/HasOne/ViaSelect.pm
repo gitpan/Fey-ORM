@@ -1,6 +1,6 @@
 package Fey::Meta::HasOne::ViaSelect;
-BEGIN {
-  $Fey::Meta::HasOne::ViaSelect::VERSION = '0.43';
+{
+  $Fey::Meta::HasOne::ViaSelect::VERSION = '0.44';
 }
 
 use strict;
@@ -81,7 +81,7 @@ Fey::Meta::HasOne::ViaSelect - A parent for has-one metaclasses based on a query
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 DESCRIPTION
 

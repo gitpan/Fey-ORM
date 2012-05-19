@@ -1,6 +1,6 @@
 package Fey::Object::Iterator::FromSelect::Caching;
-BEGIN {
-  $Fey::Object::Iterator::FromSelect::Caching::VERSION = '0.43';
+{
+  $Fey::Object::Iterator::FromSelect::Caching::VERSION = '0.44';
 }
 
 use strict;
@@ -109,7 +109,7 @@ Fey::Object::Iterator::FromSelect::Caching - A caching subclass of Fey::Object::
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 SYNOPSIS
 
@@ -135,7 +135,7 @@ version 0.43
 =head1 DESCRIPTION
 
 This class implements a caching subclass of
-L<Fey::Object::Iterator::FromSelect::FromSelect>. This means that it caches
+L<Fey::Object::Iterator::FromSelect>. This means that it caches
 objects it creates internally. When C<< $iterator->reset() >> is
 called it will re-use those objects before fetching more data from the
 DBMS.

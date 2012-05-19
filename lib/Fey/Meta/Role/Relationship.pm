@@ -1,6 +1,6 @@
 package Fey::Meta::Role::Relationship;
-BEGIN {
-  $Fey::Meta::Role::Relationship::VERSION = '0.43';
+{
+  $Fey::Meta::Role::Relationship::VERSION = '0.44';
 }
 
 use strict;
@@ -72,7 +72,7 @@ Fey::Meta::Role::Relationship - A shared role for all foreign HasX metaclasses
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 DESCRIPTION
 

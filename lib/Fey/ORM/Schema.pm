@@ -1,6 +1,6 @@
 package Fey::ORM::Schema;
-BEGIN {
-  $Fey::ORM::Schema::VERSION = '0.43';
+{
+  $Fey::ORM::Schema::VERSION = '0.44';
 }
 
 use strict;
@@ -53,7 +53,7 @@ Fey::ORM::Schema - Provides sugar for schema-based classes
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 SYNOPSIS
 

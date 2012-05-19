@@ -1,6 +1,6 @@
 package Fey::Object::Iterator::FromSelect;
-BEGIN {
-  $Fey::Object::Iterator::FromSelect::VERSION = '0.43';
+{
+  $Fey::Object::Iterator::FromSelect::VERSION = '0.44';
 }
 
 use strict;
@@ -234,7 +234,7 @@ Fey::Object::Iterator::FromSelect - Wraps a DBI statement handle to construct ob
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 SYNOPSIS
 
@@ -316,7 +316,7 @@ See L<ATTRIBUTE MAPPING> for more details.
 
 This returns the current index value of the iterator. When the object
 is first constructed, this index is 0, and it is incremented once for
-each row fetched by calling C<< $iteartor->next() >>.
+each row fetched by calling C<< $iterator->next() >>.
 
 =head2 $iterator->next()
 

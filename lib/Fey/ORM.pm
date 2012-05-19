@@ -1,12 +1,16 @@
 package Fey::ORM;
-BEGIN {
-  $Fey::ORM::VERSION = '0.43';
+{
+  $Fey::ORM::VERSION = '0.44';
 }
 
 use strict;
 use warnings;
 
+use Fey 0.39;
+use Fey::DBIManager 0.07;
 use Moose 1.15 ();
+use MooseX::ClassAttribute 0.24 ();
+use MooseX::StrictConstructor 0.13 ();
 
 1;
 
@@ -22,7 +26,7 @@ Fey::ORM - A Fey-based ORM (If you like SQL, you might like Fey::ORM)
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 SYNOPSIS
 

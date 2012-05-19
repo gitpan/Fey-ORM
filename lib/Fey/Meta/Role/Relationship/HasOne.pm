@@ -1,6 +1,6 @@
 package Fey::Meta::Role::Relationship::HasOne;
-BEGIN {
-  $Fey::Meta::Role::Relationship::HasOne::VERSION = '0.43';
+{
+  $Fey::Meta::Role::Relationship::HasOne::VERSION = '0.44';
 }
 
 use strict;
@@ -8,7 +8,7 @@ use warnings;
 use namespace::autoclean;
 
 use Fey::Exceptions qw( param_error );
-use Fey::ORM::Types qw( Any Bool Maybe );
+use Fey::ORM::Types qw( Bool Item Maybe );
 
 use Moose::Role;
 
@@ -41,7 +41,7 @@ has handles => (
     is => 'ro',
 
     # just gets passed on for attribute creation
-    isa => Any,
+    isa => Item,
 );
 
 sub _build_associated_attribute {
@@ -133,7 +133,7 @@ Fey::Meta::Role::Relationship::HasOne - A role for has-one metaclasses
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 DESCRIPTION
 

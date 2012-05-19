@@ -1,6 +1,6 @@
 package Fey::Meta::Role::Relationship::HasMany;
-BEGIN {
-  $Fey::Meta::Role::Relationship::HasMany::VERSION = '0.43';
+{
+  $Fey::Meta::Role::Relationship::HasMany::VERSION = '0.44';
 }
 
 use strict;
@@ -129,7 +129,7 @@ Fey::Meta::Role::Relationship::HasMany - A role for has-many metaclasses
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 DESCRIPTION
 
@@ -150,8 +150,8 @@ Defaults to false for this class.
 
 This is the class used for iterators over the objects in this
 relationship. By default, if this relationship is cached, it uses
-L<Fey::Object::Iterator::Caching>, otherwise it uses
-L<Fey::Object::Iterator>
+L<Fey::Object::Iterator::FromSelect::Caching>, otherwise it uses
+L<Fey::Object::Iterator::FromSelect>
 
 =back
 

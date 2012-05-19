@@ -1,6 +1,6 @@
 package Fey::Meta::Class::Table;
-BEGIN {
-  $Fey::Meta::Class::Table::VERSION = '0.43';
+{
+  $Fey::Meta::Class::Table::VERSION = '0.44';
 }
 
 use strict;
@@ -229,8 +229,9 @@ sub _write_to_cache {
 }
 
 sub _associate_table {
-    my $self  = shift;
-    my $table = shift;
+    my $self    = shift;
+    my $table   = shift;
+    my $context = shift;
 
     my $caller = $self->name();
 
@@ -258,11 +259,12 @@ sub _associate_table {
 
     $self->_set_table($table);
 
-    $self->_make_column_attributes();
+    $self->_make_column_attributes($context);
 }
 
 sub _make_column_attributes {
-    my $self = shift;
+    my $self    = shift;
+    my $context = shift;
 
     my $table = $self->table();
 
@@ -272,22 +274,23 @@ sub _make_column_attributes {
         next if $self->has_method($name);
 
         my %attr_p = (
-            metaclass => 'Fey::Meta::Attribute::FromColumn',
-            is        => 'rw',
-            isa       => $self->_type_for_column($column),
-            lazy      => 1,
-            default   => sub { $_[0]->_get_column_value($name) },
-            column    => $column,
-            writer    => q{_set_} . $name,
-            clearer   => q{_clear_} . $name,
-            predicate => q{has_} . $name,
+            metaclass          => 'Fey::Meta::Attribute::FromColumn',
+            is                 => 'rw',
+            isa                => $self->_type_for_column($column),
+            lazy               => 1,
+            default            => sub { $_[0]->_get_column_value($name) },
+            column             => $column,
+            writer             => q{_set_} . $name,
+            clearer            => q{_clear_} . $name,
+            predicate          => q{has_} . $name,
+            definition_context => $context,
         );
 
         $self->add_attribute( $name, %attr_p );
 
         if ( my $transform = $self->policy()->transform_for_column($column) )
         {
-            $self->_add_transform( $name, %{$transform} );
+            $self->_add_transform( $name, {}, %{$transform} );
         }
     }
 }
@@ -321,9 +324,10 @@ sub _make_column_attributes {
 }
 
 sub _add_transform {
-    my $self = shift;
-    my $name = shift;
-    my %p    = @_;
+    my $self    = shift;
+    my $name    = shift;
+    my $context = shift;
+    my %p       = @_;
 
     my $attr = $self->get_attribute($name);
 
@@ -331,7 +335,10 @@ sub _add_transform {
         unless $attr;
 
     $self->_add_inflator_to_attribute(
-        $name, $attr, $p{inflate},
+        $name,
+        $context,
+        $attr,
+        $p{inflate},
         $p{handles}
     ) if $p{inflate};
 
@@ -347,6 +354,7 @@ sub _add_transform {
 sub _add_inflator_to_attribute {
     my $self     = shift;
     my $name     = shift;
+    my $context  = shift;
     my $attr     = shift;
     my $inflator = shift;
     my $handles  = shift;
@@ -360,8 +368,9 @@ sub _add_inflator_to_attribute {
 
     # XXX - should the private writer invoke the deflator?
     my $raw_attr = $attr->clone(
-        name   => $raw_name,
-        reader => $raw_name,
+        name               => $raw_name,
+        reader             => $raw_name,
+        definition_context => $context,
     );
 
     $self->add_attribute($raw_attr);
@@ -388,6 +397,7 @@ sub _add_inflator_to_attribute {
         init_arg      => undef,
         raw_attribute => $raw_attr,
         inflator      => $inflator,
+        definition_context => $context,
         %handles,
     );
 
@@ -609,7 +619,7 @@ Fey::Meta::Class::Table - A metaclass for table classes
 
 =head1 VERSION
 
-version 0.43
+version 0.44
 
 =head1 SYNOPSIS
 
