@@ -1,6 +1,6 @@
 package Fey::Meta::Method::FromSelect;
 {
-  $Fey::Meta::Method::FromSelect::VERSION = '0.44';
+  $Fey::Meta::Method::FromSelect::VERSION = '0.45';
 }
 
 use strict;
@@ -55,7 +55,7 @@ __PACKAGE__->meta()->make_immutable( inline_constructor => 0 );
 
 # ABSTRACT: A method metaclass for SELECT-based methods
 
-
+__END__
 
 =pod
 
@@ -65,7 +65,7 @@ Fey::Meta::Method::FromSelect - A method metaclass for SELECT-based methods
 
 =head1 VERSION
 
-version 0.44
+version 0.45
 
 =head1 SYNOPSIS
 
@@ -136,7 +136,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-

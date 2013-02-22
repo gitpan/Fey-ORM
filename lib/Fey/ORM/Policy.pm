@@ -1,6 +1,6 @@
 package Fey::ORM::Policy;
 {
-  $Fey::ORM::Policy::VERSION = '0.44';
+  $Fey::ORM::Policy::VERSION = '0.45';
 }
 
 use strict;
@@ -77,7 +77,7 @@ sub has_many_namer (&) {
 
 # ABSTRACT: Declarative policies for Fey::ORM using classes
 
-
+__END__
 
 =pod
 
@@ -87,7 +87,7 @@ Fey::ORM::Policy - Declarative policies for Fey::ORM using classes
 
 =head1 VERSION
 
-version 0.44
+version 0.45
 
 =head1 SYNOPSIS
 
@@ -213,8 +213,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-
-

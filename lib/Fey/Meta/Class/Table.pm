@@ -1,6 +1,6 @@
 package Fey::Meta::Class::Table;
 {
-  $Fey::Meta::Class::Table::VERSION = '0.44';
+  $Fey::Meta::Class::Table::VERSION = '0.45';
 }
 
 use strict;
@@ -609,7 +609,7 @@ __PACKAGE__->meta()->make_immutable();
 
 # ABSTRACT: A metaclass for table classes
 
-
+__END__
 
 =pod
 
@@ -619,7 +619,7 @@ Fey::Meta::Class::Table - A metaclass for table classes
 
 =head1 VERSION
 
-version 0.44
+version 0.45
 
 =head1 SYNOPSIS
 
@@ -720,7 +720,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-

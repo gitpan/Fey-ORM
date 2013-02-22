@@ -16,11 +16,8 @@ my %WriteMakefileArgs = (
     "Fey::FakeDBI" => 0,
     "Fey::Literal::String" => 0,
     "Fey::Test" => "0.05",
-    "Pod::Coverage::Moose" => 0,
     "Test::Fatal" => 0,
-    "Test::More" => "0.88",
-    "Test::Pod::Coverage" => "1.04",
-    "Test::Spelling" => 0
+    "Test::More" => "0.88"
   },
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
@@ -68,7 +65,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.44",
+  "VERSION" => "0.45",
   "test" => {
     "TESTS" => "t/*.t t/Class/*.t t/Object/*.t t/Object/Iterator/*.t t/Object/Iterator/FromSelect/*.t"
   }

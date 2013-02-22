@@ -1,6 +1,6 @@
 package Fey::Meta::Role::Relationship;
 {
-  $Fey::Meta::Role::Relationship::VERSION = '0.44';
+  $Fey::Meta::Role::Relationship::VERSION = '0.45';
 }
 
 use strict;
@@ -62,7 +62,7 @@ sub _build_name {
 
 # ABSTRACT: A shared role for all foreign HasX metaclasses
 
-
+__END__
 
 =pod
 
@@ -72,7 +72,7 @@ Fey::Meta::Role::Relationship - A shared role for all foreign HasX metaclasses
 
 =head1 VERSION
 
-version 0.44
+version 0.45
 
 =head1 DESCRIPTION
 
@@ -119,7 +119,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-

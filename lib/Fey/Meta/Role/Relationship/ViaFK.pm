@@ -1,6 +1,6 @@
 package Fey::Meta::Role::Relationship::ViaFK;
 {
-  $Fey::Meta::Role::Relationship::ViaFK::VERSION = '0.44';
+  $Fey::Meta::Role::Relationship::ViaFK::VERSION = '0.45';
 }
 
 use strict;
@@ -12,7 +12,7 @@ use Fey::ORM::Types qw( Bool );
 
 use Moose::Role;
 
-has 'fk' => (
+has fk => (
     is        => 'ro',
     isa       => 'Fey::FK',
     lazy      => 1,
@@ -40,8 +40,6 @@ after BUILD => sub {
 
 sub _build_fk {
     my $self = shift;
-
-    my $is_has_many = ( ref $self ) =~ /HasMany/;
 
     $self->_find_one_fk_between_tables(
         $self->table(),

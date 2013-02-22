@@ -1,6 +1,6 @@
 package Fey::Object::Iterator::FromArray;
 {
-  $Fey::Object::Iterator::FromArray::VERSION = '0.44';
+  $Fey::Object::Iterator::FromArray::VERSION = '0.45';
 }
 
 use strict;
@@ -41,7 +41,7 @@ __PACKAGE__->meta()->make_immutable();
 
 # ABSTRACT: An iterator which iterates over an array of objects
 
-
+__END__
 
 =pod
 
@@ -51,7 +51,7 @@ Fey::Object::Iterator::FromArray - An iterator which iterates over an array of o
 
 =head1 VERSION
 
-version 0.44
+version 0.45
 
 =head1 SYNOPSIS
 
@@ -122,7 +122,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-

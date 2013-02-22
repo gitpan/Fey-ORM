@@ -1,6 +1,6 @@
 package Fey::ORM::Schema;
 {
-  $Fey::ORM::Schema::VERSION = '0.44';
+  $Fey::ORM::Schema::VERSION = '0.45';
 }
 
 use strict;
@@ -43,7 +43,7 @@ sub has_schema {
 
 # ABSTRACT: Provides sugar for schema-based classes
 
-
+__END__
 
 =pod
 
@@ -53,7 +53,7 @@ Fey::ORM::Schema - Provides sugar for schema-based classes
 
 =head1 VERSION
 
-version 0.44
+version 0.45
 
 =head1 SYNOPSIS
 
@@ -92,7 +92,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-

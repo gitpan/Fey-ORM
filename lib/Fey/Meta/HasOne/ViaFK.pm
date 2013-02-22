@@ -1,6 +1,6 @@
 package Fey::Meta::HasOne::ViaFK;
 {
-  $Fey::Meta::HasOne::ViaFK::VERSION = '0.44';
+  $Fey::Meta::HasOne::ViaFK::VERSION = '0.45';
 }
 
 use strict;
@@ -57,7 +57,7 @@ __PACKAGE__->meta()->make_immutable();
 
 # ABSTRACT: A parent for has-one metaclasses based on a L<Fey::FK> object
 
-
+__END__
 
 =pod
 
@@ -67,7 +67,7 @@ Fey::Meta::HasOne::ViaFK - A parent for has-one metaclasses based on a L<Fey::FK
 
 =head1 VERSION
 
-version 0.44
+version 0.45
 
 =head1 DESCRIPTION
 
@@ -115,7 +115,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-

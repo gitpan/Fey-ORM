@@ -1,6 +1,6 @@
 package Fey::ORM::Types::Internal;
 {
-  $Fey::ORM::Types::Internal::VERSION = '0.44';
+  $Fey::ORM::Types::Internal::VERSION = '0.45';
 }
 
 use strict;
@@ -64,7 +64,7 @@ coerce IterableArrayRef,
 
 # ABSTRACT: Types for use in Fey::ORM
 
-
+__END__
 
 =pod
 
@@ -74,7 +74,7 @@ Fey::ORM::Types::Internal - Types for use in Fey::ORM
 
 =head1 VERSION
 
-version 0.44
+version 0.45
 
 =head1 DESCRIPTION
 
@@ -98,7 +98,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-
