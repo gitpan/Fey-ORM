@@ -1,6 +1,6 @@
 package Fey::ORM::Exceptions;
 {
-  $Fey::ORM::Exceptions::VERSION = '0.45';
+  $Fey::ORM::Exceptions::VERSION = '0.46';
 }
 
 use strict;
@@ -41,7 +41,7 @@ Fey::ORM::Exceptions - Defines exceptions used for Fey::ORM
 
 =head1 VERSION
 
-version 0.45
+version 0.46
 
 =head1 SYNOPSIS
 

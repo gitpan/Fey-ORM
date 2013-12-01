@@ -1,6 +1,6 @@
 package Fey::ORM::Policy;
 {
-  $Fey::ORM::Policy::VERSION = '0.45';
+  $Fey::ORM::Policy::VERSION = '0.46';
 }
 
 use strict;
@@ -87,7 +87,7 @@ Fey::ORM::Policy - Declarative policies for Fey::ORM using classes
 
 =head1 VERSION
 
-version 0.45
+version 0.46
 
 =head1 SYNOPSIS
 
@@ -186,9 +186,8 @@ A subroutine reference which will be used to generate a name for
 C<has_one()> methods when a name is not explicitly provided.
 
 This sub will receive the foreign table as its first argument, and the
-associate L<Fey::Meta::FK> object as the second argument. In most
-cases, the foreign table will probably be sufficient to generate a
-name.
+associated FK object as the second argument. In most cases, the foreign table
+will probably be sufficient to generate a name.
 
 =head2 has_many_namer { ... }
 

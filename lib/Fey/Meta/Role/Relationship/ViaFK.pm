@@ -1,6 +1,6 @@
 package Fey::Meta::Role::Relationship::ViaFK;
 {
-  $Fey::Meta::Role::Relationship::ViaFK::VERSION = '0.45';
+  $Fey::Meta::Role::Relationship::ViaFK::VERSION = '0.46';
 }
 
 use strict;

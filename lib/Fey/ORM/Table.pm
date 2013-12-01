@@ -1,13 +1,13 @@
 package Fey::ORM::Table;
 {
-  $Fey::ORM::Table::VERSION = '0.45';
+  $Fey::ORM::Table::VERSION = '0.46';
 }
 
 use strict;
 use warnings;
 use namespace::autoclean;
 
-use Class::MOP;
+use Class::Load qw( load_class );
 use Fey::Meta::Class::Table;
 use Fey::Object::Table;
 
@@ -51,7 +51,7 @@ sub has_policy {
     my $policy = shift;
 
     unless ( ref $policy ) {
-        Class::MOP::load_class($policy);
+        load_class($policy);
 
         $policy = $policy->Policy();
     }
@@ -154,7 +154,7 @@ Fey::ORM::Table - Provides sugar for table-based classes
 
 =head1 VERSION
 
-version 0.45
+version 0.46
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,6 @@
 package Fey::Object::Iterator::FromSelect;
 {
-  $Fey::Object::Iterator::FromSelect::VERSION = '0.45';
+  $Fey::Object::Iterator::FromSelect::VERSION = '0.46';
 }
 
 use strict;
@@ -234,7 +234,7 @@ Fey::Object::Iterator::FromSelect - Wraps a DBI statement handle to construct ob
 
 =head1 VERSION
 
-version 0.45
+version 0.46
 
 =head1 SYNOPSIS
 

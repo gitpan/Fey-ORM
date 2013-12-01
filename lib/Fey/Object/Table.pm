@@ -1,6 +1,6 @@
 package Fey::Object::Table;
 {
-  $Fey::Object::Table::VERSION = '0.45';
+  $Fey::Object::Table::VERSION = '0.46';
 }
 
 use strict;
@@ -587,7 +587,7 @@ Fey::Object::Table - Base class for table-based objects
 
 =head1 VERSION
 
-version 0.45
+version 0.46
 
 =head1 SYNOPSIS
 

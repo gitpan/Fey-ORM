@@ -1,6 +1,6 @@
 package Fey::Meta::HasMany::ViaSelect;
 {
-  $Fey::Meta::HasMany::ViaSelect::VERSION = '0.45';
+  $Fey::Meta::HasMany::ViaSelect::VERSION = '0.46';
 }
 
 use strict;
@@ -50,7 +50,7 @@ Fey::Meta::HasMany::ViaSelect - A parent for has-one metaclasses based on a quer
 
 =head1 VERSION
 
-version 0.45
+version 0.46
 
 =head1 DESCRIPTION
 
@@ -82,8 +82,8 @@ This defaults to true.
 
 =head1 METHODS
 
-Besides the methods inherited from L<Fey::Meta::HasMany>, it also
-provides the following methods:
+Besides the methods provided by L<Fey::Meta::Role::Relationship::HasMany>,
+this class also provides the following methods:
 
 =head2 $ho->select()
 

@@ -1,6 +1,6 @@
 package Fey::Meta::Class::Table;
 {
-  $Fey::Meta::Class::Table::VERSION = '0.45';
+  $Fey::Meta::Class::Table::VERSION = '0.46';
 }
 
 use strict;
@@ -619,7 +619,7 @@ Fey::Meta::Class::Table - A metaclass for table classes
 
 =head1 VERSION
 
-version 0.45
+version 0.46
 
 =head1 SYNOPSIS
 
@@ -662,8 +662,7 @@ C<HasOne> meta-object.
 
 =head2 $meta->has_ones()
 
-Returns a list of the L<Fey::Meta::HasOne> objects added to this
-metaclass.
+Returns a list of the C<HasOne> objects added to this metaclass.
 
 =head2 $meta->remove_has_one($name)
 
@@ -679,8 +678,7 @@ C<HasMany> meta-object.
 
 =head2 $meta->has_manies()
 
-Returns a list of the L<Fey::Meta::HasMany> objects added to this
-metaclass.
+Returns a list of the C<HasMany> objects added to this metaclass.
 
 =head2 $meta->remove_has_many($name)
 

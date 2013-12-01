@@ -1,6 +1,6 @@
 package Fey::Meta::HasMany::ViaFK;
 {
-  $Fey::Meta::HasMany::ViaFK::VERSION = '0.45';
+  $Fey::Meta::HasMany::ViaFK::VERSION = '0.46';
 }
 
 use strict;
@@ -70,7 +70,7 @@ Fey::Meta::HasMany::ViaFK - A parent for has-one metaclasses based on a L<Fey::F
 
 =head1 VERSION
 
-version 0.45
+version 0.46
 
 =head1 DESCRIPTION
 
@@ -104,8 +104,9 @@ NULLable, otherwise it defaults to false.
 
 =head1 METHODS
 
-Besides the methods inherited from L<Fey::Meta::HasMany>, it also
-provides the following methods:
+Besides the methods provided by L<Fey::Meta::Role::Relationship::HasMany> and
+L<Fey::Meta::Role::Relationship::ViaFK>, this class also provides the
+following methods:
 
 =head2 $ho->fk()
 

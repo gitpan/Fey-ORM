@@ -11,14 +11,7 @@ use ExtUtils::MakeMaker 6.30;
 my %WriteMakefileArgs = (
   "ABSTRACT" => "A Fey-based ORM (If you like SQL, you might like Fey::ORM)",
   "AUTHOR" => "Dave Rolsky <autarch\@urth.org>",
-  "BUILD_REQUIRES" => {
-    "Exporter" => 0,
-    "Fey::FakeDBI" => 0,
-    "Fey::Literal::String" => 0,
-    "Fey::Test" => "0.05",
-    "Test::Fatal" => 0,
-    "Test::More" => "0.88"
-  },
+  "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
   },
@@ -27,7 +20,7 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Fey::ORM",
   "PREREQ_PM" => {
-    "Class::MOP" => 0,
+    "Class::Load" => 0,
     "Class::MOP::Method::Generated" => 0,
     "Devel::GlobalDestruction" => 0,
     "Exception::Class" => 0,
@@ -65,12 +58,34 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.45",
+  "TEST_REQUIRES" => {
+    "Exporter" => 0,
+    "Fey::FakeDBI" => 0,
+    "Fey::Literal::String" => 0,
+    "Fey::Test" => "0.05",
+    "Test::Fatal" => 0,
+    "Test::More" => "0.88",
+    "lib" => 0
+  },
+  "VERSION" => "0.46",
   "test" => {
     "TESTS" => "t/*.t t/Class/*.t t/Object/*.t t/Object/Iterator/*.t t/Object/Iterator/FromSelect/*.t"
   }
 );
 
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
+  my $tr = delete $WriteMakefileArgs{TEST_REQUIRES};
+  my $br = $WriteMakefileArgs{BUILD_REQUIRES};
+  for my $mod ( keys %$tr ) {
+    if ( exists $br->{$mod} ) {
+      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
+    }
+    else {
+      $br->{$mod} = $tr->{$mod};
+    }
+  }
+}
 
 unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
   my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
